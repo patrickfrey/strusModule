@@ -26,20 +26,19 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
-#define _STRUS_MODULE_LOADER_HPP_INCLUDED
+#ifndef _STRUS_MODULE_VERSION_HPP_INCLUDED
+#define _STRUS_MODULE_VERSION_HPP_INCLUDED
 
-namespace strus
-{
+#define STRUS_MODULE_VERSION (\
+	@STRUS_MAJOR_VERSION@ * 1000000\
+	+ @STRUS_MINOR_VERSION@ * 10000\
+	+ @STRUS_PATCH_VERSION@\
+)
+#define STRUS_MODULE_VERSION_MAJOR @STRUS_MAJOR_VERSION@
+#define STRUS_MODULE_VERSION_MINOR @STRUS_MINOR_VERSION@
 
-class ModuleLoader
-{
-public:
-	virtual ~ModuleLoader(){}
+#define STRUS_MODULE_VERSION_STRING "@STRUS_VERSION@"
+#define STRUS_MODULE_SIGNATURE "strus@STRUS_MAJOR_VERSION@"
 
-	
-};
-
-}//namespace
 #endif
 

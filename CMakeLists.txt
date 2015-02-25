@@ -59,7 +59,7 @@ ENDIF (${strusanalyzer_FOUND})
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
-configure_file( "${PROJECT_SOURCE_DIR}/include/strus/moduleVersion.hpp.in"  "${PROJECT_SOURCE_DIR}/include/strus/moduleVersion.hpp"  @ONLY )
+configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp"  @ONLY )
 
 enable_testing()
 
