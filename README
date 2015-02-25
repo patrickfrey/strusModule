@@ -1,0 +1,5 @@
+strusModule
+=============
+
+Library the provides a module loader and an interface to define loadable modules out of libraries to offer some expandability to strus.
+
