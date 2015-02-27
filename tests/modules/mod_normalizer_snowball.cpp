@@ -26,53 +26,20 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
-#define _STRUS_MODULE_LOADER_HPP_INCLUDED
-#include <string>
-#include "strus/moduleLoaderInterface.hpp"
-#include "objectBuilder.hpp"
+#include "strus/private/dll_tags.hpp"
+#include "strus/analyzerModule.hpp"
+#include "strus/lib/normalizer_snowball.hpp"
 
-namespace strus
+static const strus::NormalizerConstructor normalizers[] =
 {
-/// \brief Forward declaration
-class ModuleEntryPoint;
-/// \brief Forward declaration
-class AnalyzerModule;
-/// \brief Forward declaration
-class StorageModule;
-/// \brief Forward declaration
-class StorageClientInterface;
-/// \brief Forward declaration
-class QueryEvalInterface;
-/// \brief Forward declaration
-class DocumentAnalyzerInterface;
-/// \brief Forward declaration
-class QueryAnalyzerInterface;
-
-
-/// \brief Implementation of ModuleLoaderInterface
-class ModuleLoader
-	:public ModuleLoaderInterface
-{
-public:
-	ModuleLoader(){}
-	virtual ~ModuleLoader(){}
-	virtual void addSystemModulePath();
-	virtual void addModulePath( const std::string& path);
-	virtual void loadModule( const std::string& name);
-
-	virtual const ObjectBuilderInterface& builder() const	{return m_builder;}
-
-private:
-	const ModuleEntryPoint* loadModuleAlt(
-			const std::string& name,
-			const std::vector<std::string>& paths);
-
-private:
-	std::vector<std::string> m_paths;
-	ObjectBuilder m_builder;
+	{"stem", &strus::getNormalizer_snowball},
+	{0,0}	
 };
 
-}//namespace
-#endif
+extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+
+strus::AnalyzerModule entryPoint( 0, normalizers);
+
+
+
 

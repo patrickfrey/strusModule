@@ -52,7 +52,7 @@ struct SegmenterConstructor
 /// \brief Structure to define a proprietary tokenizer of text segments as module
 struct TokenizerConstructor
 {
-	typedef TokenizerInterface* (*Function)();
+	typedef const TokenizerInterface* (*Function)();
 	const char* name;			///< name of the tokenizer
 	Function function;			///< tokenizer function
 };
@@ -60,7 +60,7 @@ struct TokenizerConstructor
 /// \brief Structure to define a proprietary normalizer of tokens as module
 struct NormalizerConstructor
 {
-	typedef NormalizerInterface* (*Function)();
+	typedef const NormalizerInterface* (*Function)();
 	const char* name;			///< name of the normalizer
 	Function function;			///< normalizer function
 };
@@ -75,6 +75,10 @@ struct AnalyzerModule
 	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
 	AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
+		const TokenizerConstructor* tokenizerConstructors_,
+		const NormalizerConstructor* normalizerConstructors_);
+
+	AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_);
 

@@ -32,6 +32,8 @@
 
 namespace strus
 {
+/// \brief Forward declaration
+class ObjectBuilderInterface;
 
 /// \brief Interface providing a mechanism to load modules and to create the objects defined in the modules
 class ModuleLoaderInterface

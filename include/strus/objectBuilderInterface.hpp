@@ -50,20 +50,20 @@ public:
 	/// \brief Creates a storage client and the underlying database out of a configuration string
 	/// \param[in] config configuration string (not a filename!) of both storage and database
 	/// \return the storage client object (with ownership returned)
-	virtual StorageClientInterface* createStorageClient( const std::string& config)=0;
+	virtual StorageClientInterface* createStorageClient( const std::string& config) const=0;
 
 	/// \brief Creates a an interface for query evaluation
 	/// \return the query evaluation object (with ownership returned)
-	virtual QueryEvalInterface* createQueryEval()=0;
+	virtual QueryEvalInterface* createQueryEval() const=0;
 
 	/// \brief Creates a document analyzer object
 	/// \param[in] segmenterName name of the segmenter used (if not specified, find the first one loaded or the default one)
 	/// \return the document analyzer (with ownership returned)
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName=std::string())=0;
+	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName=std::string()) const=0;
 
 	/// \brief Creates a query analyzer object
 	/// \return the query analyzer (with ownership returned)
-	virtual QueryAnalyzerInterface* createQueryAnalyzer()=0;
+	virtual QueryAnalyzerInterface* createQueryAnalyzer() const=0;
 };
 
 }//namespace

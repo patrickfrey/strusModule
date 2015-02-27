@@ -26,53 +26,40 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
-#define _STRUS_MODULE_LOADER_HPP_INCLUDED
-#include <string>
+#include "strus/lib/module.hpp"
 #include "strus/moduleLoaderInterface.hpp"
-#include "objectBuilder.hpp"
+#include "testModuleDirectory.hpp"
+#include <memory>
+#include <string>
+#include <stdexcept>
+#include <iostream>
 
-namespace strus
+int main( int argc, const char** argv)
 {
-/// \brief Forward declaration
-class ModuleEntryPoint;
-/// \brief Forward declaration
-class AnalyzerModule;
-/// \brief Forward declaration
-class StorageModule;
-/// \brief Forward declaration
-class StorageClientInterface;
-/// \brief Forward declaration
-class QueryEvalInterface;
-/// \brief Forward declaration
-class DocumentAnalyzerInterface;
-/// \brief Forward declaration
-class QueryAnalyzerInterface;
+	try
+	{
+		std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader());
+		std::cerr << "setting load module path to '" << STRUS_TEST_MODULE_DIRECTORY << "'" << std::endl;
+		modloader->addModulePath( STRUS_TEST_MODULE_DIRECTORY);
+	
+		int ai = 1, ae = argc;
+		for (; ai != ae; ++ai)
+		{
+			std::cerr << "loading module '" << argv[ai] << "'" << std::endl;
+			modloader->loadModule( argv[ai]);
+		}
+		if (argc == 1)
+		{
+			std::cerr << "no modules loaded." << std::endl;
+		}
+		return 0;
+	}
+	catch (const std::runtime_error& err)
+	{
+		std::cerr << "ERROR " << err.what() << std::endl;
+		return 1;
+	}
+}
 
 
-/// \brief Implementation of ModuleLoaderInterface
-class ModuleLoader
-	:public ModuleLoaderInterface
-{
-public:
-	ModuleLoader(){}
-	virtual ~ModuleLoader(){}
-	virtual void addSystemModulePath();
-	virtual void addModulePath( const std::string& path);
-	virtual void loadModule( const std::string& name);
-
-	virtual const ObjectBuilderInterface& builder() const	{return m_builder;}
-
-private:
-	const ModuleEntryPoint* loadModuleAlt(
-			const std::string& name,
-			const std::vector<std::string>& paths);
-
-private:
-	std::vector<std::string> m_paths;
-	ObjectBuilder m_builder;
-};
-
-}//namespace
-#endif
 

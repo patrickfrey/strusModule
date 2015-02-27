@@ -72,6 +72,7 @@ enable_testing()
 
 # Subdirectories:
 add_subdirectory( src )
+add_subdirectory( tests )
   
 # Message:
 MESSAGE("Platform:")

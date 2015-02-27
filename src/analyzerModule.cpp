@@ -37,7 +37,16 @@ AnalyzerModule::AnalyzerModule(
 		const NormalizerConstructor* normalizerConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( &segmenterConstructor_,tokenizerConstructors_,normalizerConstructors_);
+	init( &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_);
+	//... no need to make query/document analyzer and textprocessor loadable by module yet
+}
+
+AnalyzerModule::AnalyzerModule(
+		const TokenizerConstructor* tokenizerConstructors_,
+		const NormalizerConstructor* normalizerConstructors_)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+{
+	init( 0, tokenizerConstructors_, normalizerConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 

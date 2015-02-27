@@ -39,15 +39,15 @@
 
 using namespace strus;
 
-static addModulePath_( std::vector<std::string>& paths, const char* pt)
+static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 {
 	char const* cc = pt;
 	char const* ee = std::strchr( cc, ';');
 	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, ';'))
 	{
-		paths.append( boost::algorithm::trim_copy( std::string( cc, ee)));
+		paths.push_back( boost::algorithm::trim_copy( std::string( cc, ee)));
 	}
-	paths.append( boost::algorithm::trim_copy( std::string( cc, ee)));
+	paths.push_back( boost::algorithm::trim_copy( std::string( cc)));
 }
 
 void ModuleLoader::addSystemModulePath()
@@ -60,7 +60,7 @@ void ModuleLoader::addModulePath(const std::string& path)
 	addModulePath_( m_paths, path.c_str());
 }
 
-const void ModuleLoader::loadModule(const std::string& name)
+void ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
 	if (m_paths.empty())
@@ -76,22 +76,22 @@ const void ModuleLoader::loadModule(const std::string& name)
 	switch (entryPoint->type)
 	{
 		case ModuleEntryPoint::Analyzer:
-			m_analyzerModules.push_back( reinterpret_cast<const AnalyzerModule*>( entryPoint));
-			m_builder.addAnalyzerModule( m_analyzerModules.back());
+			m_builder.addAnalyzerModule( reinterpret_cast<const AnalyzerModule*>( entryPoint));
 			break;
 		case ModuleEntryPoint::Storage:
-			m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
-			m_builder.addStorageModule( m_storageModules.back());
+			m_builder.addStorageModule( reinterpret_cast<const StorageModule*>( entryPoint));
 			break;
 	}
 }
 
-const ModuleEntryPoint* loadModuleAlt(const std::string& name, std::vector<std::string>& paths)
+const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
+		const std::string& name,
+		const std::vector<std::string>& paths)
 {
 	std::vector<std::string>::const_iterator pi = paths.begin(), pe = paths.end();
 	for (; pi != pe; ++pi)
 	{
-		std::string modfilename( *pi + dirSeparator() + filename);
+		std::string modfilename( *pi + dirSeparator() + name);
 		if (!boost::algorithm::iequals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
@@ -100,9 +100,10 @@ const ModuleEntryPoint* loadModuleAlt(const std::string& name, std::vector<std::
 		}
 		if (isFile( modfilename))
 		{
-			return strus::loadModuleEntryPoint( modfilename);
+			return strus::loadModuleEntryPoint( modfilename.c_str());
 		}
 	}
+	throw std::runtime_error( std::string( "failed to load module '") + name + "' (not found)");
 }
 
 

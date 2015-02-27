@@ -28,7 +28,7 @@
 */
 #include "objectBuilder.hpp"
 #include "strus/lib/queryproc.hpp"
-#include "strus/lib/textprocessor.hpp"
+#include "strus/lib/textproc.hpp"
 #include "strus/lib/queryproc.hpp"
 #include "strus/lib/database_leveldb.hpp"
 #include "strus/lib/segmenter_textwolf.hpp"
