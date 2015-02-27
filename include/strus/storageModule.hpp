@@ -26,10 +26,9 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_ANALYZER_HPP_INCLUDED
-#define _STRUS_MODULE_ANALYZER_HPP_INCLUDED
+#ifndef _STRUS_MODULE_STORAGE_HPP_INCLUDED
+#define _STRUS_MODULE_STORAGE_HPP_INCLUDED
 #include "strus/moduleEntryPoint.hpp"
-#include "strus/lib/configType.hpp"
 #include <string>
 #include <cstring>
 
@@ -39,14 +38,6 @@ namespace strus
 /// \brief Forward declaration
 class DatabaseInterface;
 /// \brief Forward declaration
-class StorageInterface;
-/// \brief Forward declaration
-class StorageAlterMetaDataTableInterface;
-/// \brief Forward declaration
-class QueryEvalInterface;
-/// \brief Forward declaration
-class QueryProcessorInterface;
-/// \brief Forward declaration
 class WeightingFunctionInterface;
 /// \brief Forward declaration
 class SummarizerFunctionInterface;
@@ -54,72 +45,37 @@ class SummarizerFunctionInterface;
 class PostingJoinOperatorInterface;
 
 
-struct DatabaseConstructor
+/// \brief Structure to declare the key value store database to use by the storage as module object
+struct DatabaseReference
 {
-	typedef DatabaseInterface* (*DatabaseClientConstructor)( const std::string& configsource);
-	typedef void (*CreateDatabaseFunction)( const std::string& configsource);
-	typedef void (*DestroyDatabaseFunction)( const std::string& configsource);
-	typedef void (*DatabaseConfigDescriptionFunction)( ConfigType type);
-	typedef void (*DatabaseConfigParametersFunction)( ConfigType type);
-
-	DatabaseClientConstructor createDatabaseClient;
-	CreateDatabaseFunction createDatabase;
-	DestroyDatabaseFunction destroyDatabase;
-	DatabaseConfigDescriptionFunction getDatabaseConfigDescription;
-	DatabaseConfigParametersFunction getDatabaseConfigParameters;
-
-	void init();
-	void init( const DatabaseConstructor& o);
+	typedef const DatabaseInterface* (*Get)();
+	const char* name;				///< name of the database implementation
+	Get get;					///< getter function to reference the database object
 };
 
-struct StorageConstructor
-{
-	typedef StorageInterface* (*StorageClientConstructor)( const std::string& configsource, DatabaseInterface* database);
-	typedef void (*CreateStorageFunction)( const std::string& configsource, DatabaseInterface* database);
-	typedef StorageAlterMetaDataTableInterface* (*StorageAlterMetaDataTableConstructor)( DatabaseInterface* database);
-	typedef void (*StorageConfigDescriptionFunction)( ConfigType type);
-	typedef void (*StorageConfigParametersFunction)( ConfigType type);
-
-	StorageClientConstructor createStorageClient;
-	CreateStorageFunction createStorage;
-	StorageAlterMetaDataTableConstructor storageAlterMetaDataTableConstructor;
-	StorageConfigDescriptionFunction getStorageConfigDescription;
-	StorageConfigParametersFunction getStorageConfigParameters;
-
-	void init();
-	void init( const StorageConstructor& o);
-};
-
-struct QueryProcessorConstructor
-{
-	typedef QueryProcessorInterface* (*Function)( const StorageInterface* storage);
-	Function function;
-};
-
-struct QueryEvalConstructor
-{
-	typedef QueryEvalInterface* (*Function)( const QueryProcessorInterface* processor);
-	Function function;
-};
-
+/// \brief Structure to declare an operator to join sets of postings represented as iterator as module object
 struct PostingIteratorJoinConstructor
 {
 	typedef PostingJoinOperatorInterface* (*Function)();
-	Function function;
+	const char* name;				///< name of the join operator
+	Function function;				///< join function
 };
 
+/// \brief Structure to declare a query evaluation weighting function as module object
 struct WeightingFunctionConstructor
 {
 	typedef WeightingFunctionInterface* (*Function)();
-	Function function;
+	const char* name;				///< name of the weighting function
+	Function function;				///< weighting function
 };
 
+/// \brief Structure to declare a query evaluation summarizer function as module object
 struct SummarizerFunctionConstructor
 {
 	typedef SummarizerFunctionInterface* (*Function)();
-	Function function;
+	const char* name;				///< name of the summarizer function
+	Function function;				///< summarizer function
 };
-
 
 
 struct StorageModule
@@ -134,20 +90,14 @@ struct StorageModule
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
-	DatabaseConstructor databaseConstructor;
-	StorageConstructor storageConstructor;
-	QueryProcessorConstructor queryProcessorConstructor;
-	QueryEvalConstructor queryEvalConstructor;
+	DatabaseReference databaseReference;
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;
 	const WeightingFunctionConstructor* weightingFunctionConstructor;
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;
 
 private:
 	void init(
-		const DatabaseConstructor* databaseConstructor_,
-		const StorageConstructor* storageConstructor_,
-		const QueryProcessorConstructor* queryProcessorConstructor_,
-		const QueryEvalConstructor* queryEvalConstructor_,
+		const DatabaseReference* databaseReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);

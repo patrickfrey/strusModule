@@ -35,59 +35,34 @@ namespace strus
 {
 
 /// \brief Forward declaration
-class QueryAnalyzerInterface;
-/// \brief Forward declaration
-class DocumentAnalyzerInterface;
-/// \brief Forward declaration
-class TextProcessorInterface;
-/// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
 class TokenizerInterface;
 /// \brief Forward declaration
 class NormalizerInterface;
 
-struct QueryAnalyzerConstructor
-{
-	typedef QueryAnalyzerInterface* (*Function)(
-			const TextProcessorInterface* textProcessor);
-	Function function;
-};
-
-struct DocumentAnalyzerConstructor
-{
-	typedef DocumentAnalyzerInterface* (*Function)( 
-			const TextProcessorInterface* textProcessor,
-			SegmenterInterface* segmenter);
-
-	Function function;
-};
-
-struct TextProcessorConstructor
-{
-	typedef TextProcessorInterface* (*Function)();
-	Function function;
-};
-
+/// \brief Structure to define a segmenter for an alternative document format (like XML) as module
 struct SegmenterConstructor
 {
-	typedef SegmenterInterface* (*Function)();
-	const char* name;
-	Function function;
+	typedef SegmenterInterface* (*Create)();
+	const char* name;			///< name of the segmenter
+	Create create;				///< segmenter constructor
 };
 
+/// \brief Structure to define a proprietary tokenizer of text segments as module
 struct TokenizerConstructor
 {
 	typedef TokenizerInterface* (*Function)();
-	const char* name;
-	Function function;
+	const char* name;			///< name of the tokenizer
+	Function function;			///< tokenizer function
 };
 
+/// \brief Structure to define a proprietary normalizer of tokens as module
 struct NormalizerConstructor
 {
 	typedef NormalizerInterface* (*Function)();
-	const char* name;
-	Function function;
+	const char* name;			///< name of the normalizer
+	Function function;			///< normalizer function
 };
 
 
@@ -95,27 +70,21 @@ struct AnalyzerModule
 	:public ModuleEntryPoint
 {
 	/// \brief Analyzer module constructor
-	/// \param[in] segmenterConstructor_ (0,0) terminated list of segmenters or 0
+	/// \param[in] segmenterConstructor_ segmenter definition
 	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
 	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
 	AnalyzerModule(
-		const SegmenterConstructor* segmenterConstructors_,
+		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_);
 
-	QueryAnalyzerConstructor queryAnalyzerConstructor;		///< query analyzer constructor
-	DocumentAnalyzerConstructor documentAnalyzerConstructor;	///< document analyzer constructor
-	TextProcessorConstructor textProcessorConstructor;		///< text processor constructor
-	const SegmenterConstructor* segmenterConstructors;		///< 0 terminated list of segmenters
+	SegmenterConstructor segmenterConstructor;			///< a segmenter definition
 	const TokenizerConstructor* tokenizerConstructors;		///< 0 terminated list of tokenizers
 	const NormalizerConstructor* normalizerConstructors;		///< 0 terminated list of normalizers
 
 private:
 	void init(
-		const QueryAnalyzerConstructor* queryAnalyzerConstructor_,
-		const DocumentAnalyzerConstructor* documentAnalyzerConstructor_,
-		const TextProcessorConstructor* textProcessorConstructor_,
-		const SegmenterConstructor* segmenterConstructors_,
+		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_);
 };

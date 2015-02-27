@@ -26,31 +26,10 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/moduleStorage.hpp"
+#include "strus/storageModule.hpp"
 #include <cstring>
 
 using namespace strus;
-
-void DatabaseConstructor::init()
-{
-	std::memset( this, 0, sizeof(*this));
-}
-
-void DatabaseConstructor::init( const DatabaseConstructor& o)
-{
-	std::memcpy( this, &o, sizeof(*this));
-}
-
-void StorageConstructor::init()
-{
-	std::memset( this, 0, sizeof(*this));
-}
-
-void StorageConstructor::init( const StorageConstructor& o)
-{
-	std::memcpy( this, &o, sizeof(*this));
-}
-
 
 StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
@@ -58,31 +37,26 @@ StorageModule::StorageModule(
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage)
 {
-	init( 0,0,0,0,postingIteratorJoinConstructor_,weightingFunctionConstructor_,summarizerFunctionConstructor_);
-	//... no need to make database, storage, queryprocessor and query evaluation loadable by module yet
+	init( 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_);
+	//... no need to make database loadable by module yet
 }
 
 void StorageModule::init(
-		const DatabaseConstructor* databaseConstructor_,
-		const StorageConstructor* storageConstructor_,
-		const QueryProcessorConstructor* queryProcessorConstructor_,
-		const QueryEvalConstructor* queryEvalConstructor_,
+		const DatabaseReference* databaseReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
 {
-	if (databaseConstructor_) {
-		databaseConstructor.init(*databaseConstructor_);
-	} else {
-		databaseConstructor.init();
+	if (databaseReference_)
+	{
+		databaseReference.name = databaseReference_->name;
+		databaseReference.get = databaseReference_->get;
 	}
-	if (storageConstructor_) {
-		storageConstructor.init(*storageConstructor_);
-	} else {
-		storageConstructor.init();
+	else
+	{
+		databaseReference.name = 0;
+		databaseReference.get = 0;
 	}
-	queryProcessorConstructor.function = (queryProcessorConstructor_)?queryProcessorConstructor_->function:0;
-	queryEvalConstructor.function = (queryEvalConstructor_)?queryEvalConstructor_->function:0;
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;
 	summarizerFunctionConstructor = summarizerFunctionConstructor_;

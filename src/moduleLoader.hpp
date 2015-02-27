@@ -26,38 +26,51 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
-#define _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
+#ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
+#define _STRUS_MODULE_LOADER_HPP_INCLUDED
 #include <string>
+#include "strus/moduleLoaderInterface.hpp"
+#include "objectBuilder.hpp"
 
 namespace strus
 {
+/// \brief Forward declaration
+class ModuleEntryPoint;
+/// \brief Forward declaration
+class AnalyzerModule;
+/// \brief Forward declaration
+class StorageModule;
+/// \brief Forward declaration
+class StorageClientInterface;
+/// \brief Forward declaration
+class QueryEvalInterface;
+/// \brief Forward declaration
+class DocumentAnalyzerInterface;
+/// \brief Forward declaration
+class QueryAnalyzerInterface;
 
-/// \brief Interface providing a mechanism to load modules and to create the objects defined in the modules
-class ModuleLoaderInterface
+
+/// \brief Implementation of ModuleLoaderInterface
+class ModuleLoader
+	:public ModuleLoaderInterface
 {
 public:
-	/// \brief Destructor
-	virtual ~ModuleLoaderInterface(){}
+	ModuleLoader(){}
+	virtual ~ModuleLoader();
+	virtual void addSystemModulePath();
+	virtual void addModulePath( const std::string& path);
+	virtual void loadModule( const std::string& name);
 
-	/// \brief Add the path defined by the system depending on the platform where to seek modules to load
-	/// \note If you do not define any path with 'addSystemModulePath()' or 'addModulePath(const std::string&)' then the system module path is used for loading modules.
-	virtual void addSystemModulePath()=0;
+	virtual const ObjectBuilderInterface& builder() const	{return m_builder;}
 
-	/// \brief Add a new path where to seek modules to load
-	/// \param[in] path full path of the modules
-	virtual void addModulePath( const std::string& path)=0;
+private:
+	const ModuleEntryPoint* loadModuleAlt( const std::string& name, std::vector<std::string>& paths);
 
-	/// \brief Load a module with name 'name' seeking in all module paths defined in the order of their definition
-	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
-	virtual void loadModule( const std::string& name)=0;
-
-	/// \brief Get the builder of objects defined this loader or the defaults
-	/// \return the builder object
-	virtual const ObjectBuilderInterface& builder() const=0;
+private:
+	std::vector<std::string> m_paths;
+	ObjectBuilder m_builder;
 };
 
 }//namespace
 #endif
-
 

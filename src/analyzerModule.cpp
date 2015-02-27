@@ -26,33 +26,36 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/moduleAnalyzer.hpp"
+#include "strus/analyzerModule.hpp"
 #include <string>
 
 using namespace strus;
 
 AnalyzerModule::AnalyzerModule(
-		const SegmenterConstructor* segmenterConstructors_,
+		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( 0,0,0,segmenterConstructors_,tokenizerConstructors_,normalizerConstructors_);
+	init( &segmenterConstructor_,tokenizerConstructors_,normalizerConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
 void AnalyzerModule::init(
-		const QueryAnalyzerConstructor* queryAnalyzerConstructor_,
-		const DocumentAnalyzerConstructor* documentAnalyzerConstructor_,
-		const TextProcessorConstructor* textProcessorConstructor_,
-		const SegmenterConstructor* segmenterConstructors_,
+		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_)
 {
-	queryAnalyzerConstructor.function = (queryAnalyzerConstructor_)?queryAnalyzerConstructor_->function:0;
-	documentAnalyzerConstructor.function = (documentAnalyzerConstructor_)?documentAnalyzerConstructor_->function:0;
-	textProcessorConstructor.function = (textProcessorConstructor_)?textProcessorConstructor_->function:0;
-	segmenterConstructors = segmenterConstructors_;
+	if (segmenterConstructor_)
+	{
+		segmenterConstructor.name = segmenterConstructor_->name;
+		segmenterConstructor.create = segmenterConstructor_->create;
+	}
+	else
+	{
+		segmenterConstructor.name = 0;
+		segmenterConstructor.create = 0;
+	}
 	tokenizerConstructors = tokenizerConstructors_;
 	normalizerConstructors = normalizerConstructors_;
 }

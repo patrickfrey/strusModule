@@ -56,10 +56,17 @@ ELSE (${strusanalyzer_FOUND})
    MESSAGE( STATUS  "Set strusanalyzer linking directories to ${strusanalyzer_LIBRARY_DIRS}" )
    MESSAGE( STATUS  "Set strusanalyzer libraries to ${strusanalyzer_LIBRARIES}" )
 ENDIF (${strusanalyzer_FOUND})
+set( STRUS_MODULE_DIRECTORIES  "${strus_LIBRARY_DIRS};${strusanalyzer_LIBRARY_DIRS}" )
+IF (WIN32)
+set( STRUS_MODULE_EXTENSION  ".dll" )
+ELSE (WIN32)
+set( STRUS_MODULE_EXTENSION  ".so" )
+ENDIF (WIN32)
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
 configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp"  @ONLY )
+configure_file( "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp.in"  "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp"  @ONLY )
 
 enable_testing()
 

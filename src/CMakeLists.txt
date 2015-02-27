@@ -5,8 +5,9 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 # --------------------------------------
 set( source_files
 	moduleEntryPoint.cpp
-	moduleAnalyzer.cpp
-	moduleStorage.cpp
+	analyzerModule.cpp
+	storageModule.cpp
+	objectBuilder.cpp
 )
 
 include_directories( "${PROJECT_SOURCE_DIR}/include"  "${strus_INCLUDE_DIRS}"  "${strusanalyzer_INCLUDE_DIRS}" )

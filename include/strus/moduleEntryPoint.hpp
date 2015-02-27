@@ -89,6 +89,8 @@ struct ModuleEntryPoint
 	static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode);
 };
 
+const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename);
+
 }//namespace
 #endif
 
