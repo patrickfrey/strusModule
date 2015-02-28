@@ -78,6 +78,9 @@ struct AnalyzerModule
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_);
 
+	/// \brief Analyzer module constructor without segmenter definition
+	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
+	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
 	AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_);

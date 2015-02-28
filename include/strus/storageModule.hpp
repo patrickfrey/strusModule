@@ -90,10 +90,10 @@ struct StorageModule
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
-	DatabaseReference databaseReference;
-	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;
-	const WeightingFunctionConstructor* weightingFunctionConstructor;
-	const SummarizerFunctionConstructor* summarizerFunctionConstructor;
+	DatabaseReference databaseReference;					///< alternative key value store database 
+	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
+	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
+	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
 
 private:
 	void init(
