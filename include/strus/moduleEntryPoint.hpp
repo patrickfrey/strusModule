@@ -46,12 +46,12 @@ struct ModuleEntryPoint
 	};
 	enum
 	{
-		ErrorNone=0,
-		ErrorUnknownModuleType=1,
-		ErrorSignature=11,
-		ErrorModMinorVersion=12,
-		ErrorCompMajorVersion=21,
-		ErrorCompMinorVersion=22
+		ErrorNone=0,			///< no error
+		ErrorUnknownModuleType=1,	///< the 'type' field has an unknown value
+		ErrorSignature=11,		///< the signature (composition of a string and the major module version number) does not match
+		ErrorModMinorVersion=12,	///< the loaded module minor version is higher than the one of the module loader. This means that the module potentially implementents features that are not known to the module loader. The loading of such a module is thus refused.
+		ErrorCompMajorVersion=21,	///< the components implemented in the module have a major version number than expected
+		ErrorCompMinorVersion=22	///< the components minor version is smaller than required. The module may not implement the objects loaded as required. Thus the loading of the module is refused.
 	};
 
 	char signature[ 8];			///< signature of the module (string + major version)
