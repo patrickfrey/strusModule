@@ -32,6 +32,7 @@
 #include "strus/storageModule.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/private/fileio.hpp"
+#include "strus/private/dll_tags.hpp"
 #include <string>
 #include <cstring>
 #include <memory>
@@ -50,17 +51,17 @@ static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 	paths.push_back( boost::algorithm::trim_copy( std::string( cc)));
 }
 
-void ModuleLoader::addSystemModulePath()
+DLL_PUBLIC void ModuleLoader::addSystemModulePath()
 {
 	addModulePath_( m_paths, STRUS_MODULE_DIRECTORIES);
 }
 
-void ModuleLoader::addModulePath(const std::string& path)
+DLL_PUBLIC void ModuleLoader::addModulePath(const std::string& path)
 {
 	addModulePath_( m_paths, path.c_str());
 }
 
-void ModuleLoader::loadModule(const std::string& name)
+DLL_PUBLIC void ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
 	if (m_paths.empty())
@@ -84,7 +85,7 @@ void ModuleLoader::loadModule(const std::string& name)
 	}
 }
 
-const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
+DLL_PUBLIC const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		const std::string& name,
 		const std::vector<std::string>& paths)
 {
@@ -92,15 +93,21 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 	for (; pi != pe; ++pi)
 	{
 		std::string modfilename( *pi + dirSeparator() + name);
+		std::string altmodfilename( *pi + dirSeparator() + "modstrus_" + name);
 		if (!boost::algorithm::iequals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
 		{
 			modfilename.append( STRUS_MODULE_EXTENSION);
+			altmodfilename.append( STRUS_MODULE_EXTENSION);
 		}
 		if (isFile( modfilename))
 		{
 			return strus::loadModuleEntryPoint( modfilename.c_str());
+		}
+		if (isFile( altmodfilename))
+		{
+			return strus::loadModuleEntryPoint( altmodfilename.c_str());
 		}
 	}
 	throw std::runtime_error( std::string( "failed to load module '") + name + "' (not found)");

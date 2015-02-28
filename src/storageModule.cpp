@@ -27,11 +27,12 @@
 --------------------------------------------------------------------
 */
 #include "strus/storageModule.hpp"
+#include "strus/private/dll_tags.hpp"
 #include <cstring>
 
 using namespace strus;
 
-StorageModule::StorageModule(
+DLL_PUBLIC StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)

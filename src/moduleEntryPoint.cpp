@@ -27,6 +27,7 @@
 --------------------------------------------------------------------
 */
 #include "strus/moduleEntryPoint.hpp"
+#include "strus/private/dll_tags.hpp"
 #include <cstring>
 #include <vector>
 #include <sstream>
@@ -41,7 +42,7 @@
 
 using namespace strus;
 
-bool ModuleEntryPoint::matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
+DLL_PUBLIC bool ModuleEntryPoint::matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
 {
 	const char* loader_signature = STRUS_MODULE_SIGNATURE;
 	//... signature contains major version number in it
@@ -133,7 +134,7 @@ static const char* errorMessage( int error)
 }
 
 
-const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename)
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename)
 {
 	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
 

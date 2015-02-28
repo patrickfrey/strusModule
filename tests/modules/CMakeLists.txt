@@ -17,8 +17,8 @@ link_directories(
 # -------------------------------------------
 # TEST MODULES
 # -------------------------------------------
-add_library( mod_normalizer_snowball  MODULE  mod_normalizer_snowball.cpp)
-set_target_properties( mod_normalizer_snowball PROPERTIES PREFIX "")
-target_link_libraries( mod_normalizer_snowball strus_module strus_normalizer_snowball stemmer )
+add_library( modstrus_normalizer_snowball  MODULE  modstrus_normalizer_snowball.cpp)
+set_target_properties( modstrus_normalizer_snowball PROPERTIES PREFIX "")
+target_link_libraries( modstrus_normalizer_snowball strus_module strus_normalizer_snowball stemmer )
 
 

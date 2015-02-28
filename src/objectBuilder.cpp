@@ -43,6 +43,7 @@
 #include "strus/storageClientInterface.hpp"
 #include "strus/private/fileio.hpp"
 #include "strus/private/configParser.hpp"
+#include "strus/private/dll_tags.hpp"
 #include <string>
 #include <cstring>
 #include <memory>
@@ -50,45 +51,62 @@
 
 using namespace strus;
 
-ObjectBuilder::ObjectBuilder()
+DLL_PUBLIC ObjectBuilder::ObjectBuilder()
 	:m_queryProcessor( strus::createQueryProcessor())
 	,m_textProcessor( strus::createTextProcessor())
 {}
 
-void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
+DLL_PUBLIC void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
-	TokenizerConstructor const* ti = mod->tokenizerConstructors;
-	for (; ti->function != 0; ++ti)
+	if (mod->tokenizerConstructors)
 	{
-		m_textProcessor->defineTokenizer( ti->name, ti->function());
+		TokenizerConstructor const* ti = mod->tokenizerConstructors;
+		for (; ti->function != 0; ++ti)
+		{
+			m_textProcessor->defineTokenizer( ti->name, ti->function());
+		}
 	}
-	NormalizerConstructor const* ni = mod->normalizerConstructors;
-	for (; ni->function != 0; ++ni)
+	if (mod->normalizerConstructors)
 	{
-		m_textProcessor->defineNormalizer( ni->name, ni->function());
+		NormalizerConstructor const* ni = mod->normalizerConstructors;
+		for (; ni->function != 0; ++ni)
+		{
+			m_textProcessor->defineNormalizer( ni->name, ni->function());
+		}
 	}
+	m_analyzerModules.push_back( mod);
 }
 
-void ObjectBuilder::addStorageModule( const StorageModule* mod)
+DLL_PUBLIC void ObjectBuilder::addStorageModule( const StorageModule* mod)
 {
-	PostingIteratorJoinConstructor const* pi = mod->postingIteratorJoinConstructor;
-	for (; pi->function != 0; ++pi)
+	if (mod->postingIteratorJoinConstructor)
 	{
-		m_queryProcessor->definePostingJoinOperator( pi->name, pi->function());
+		PostingIteratorJoinConstructor const* pi = mod->postingIteratorJoinConstructor;
+		for (; pi->function != 0; ++pi)
+		{
+			m_queryProcessor->definePostingJoinOperator( pi->name, pi->function());
+		}
 	}
-	WeightingFunctionConstructor const* wi = mod->weightingFunctionConstructor;
-	for (; wi->function != 0; ++wi)
+	if (mod->weightingFunctionConstructor)
 	{
-		m_queryProcessor->defineWeightingFunction( wi->name, wi->function());
+		WeightingFunctionConstructor const* wi = mod->weightingFunctionConstructor;
+		for (; wi->function != 0; ++wi)
+		{
+			m_queryProcessor->defineWeightingFunction( wi->name, wi->function());
+		}
 	}
-	SummarizerFunctionConstructor const* si = mod->summarizerFunctionConstructor;
-	for (; si->function != 0; ++si)
+	if (mod->summarizerFunctionConstructor)
 	{
-		m_queryProcessor->defineSummarizerFunction( si->name, si->function());
+		SummarizerFunctionConstructor const* si = mod->summarizerFunctionConstructor;
+		for (; si->function != 0; ++si)
+		{
+			m_queryProcessor->defineSummarizerFunction( si->name, si->function());
+		}
 	}
+	m_storageModules.push_back( mod);
 }
 
-const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& name) const
+DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& name) const
 {
 	std::vector<const StorageModule*>::const_iterator
 		mi = m_storageModules.begin(), 
@@ -107,7 +125,7 @@ const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& name) co
 	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
 }
 
-SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) const
+DLL_PUBLIC SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) const
 {
 	std::vector<const AnalyzerModule*>::const_iterator
 		ai = m_analyzerModules.begin(), 
@@ -126,7 +144,7 @@ SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) con
 	throw std::runtime_error( std::string( "undefined segmenter '") + name + "'");
 }
 
-StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
+DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
 {
 	std::string dbname;
 	std::string configstr( config);
@@ -154,12 +172,12 @@ StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& c
 }
 
 
-QueryEvalInterface* ObjectBuilder::createQueryEval() const
+DLL_PUBLIC QueryEvalInterface* ObjectBuilder::createQueryEval() const
 {
 	return strus::createQueryEval( m_queryProcessor.get());
 }
 
-DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
+DLL_PUBLIC DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
 {
 	std::auto_ptr<SegmenterInterface> segmenter( createSegmenter( segmenterName));
 	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter.get());
@@ -167,7 +185,7 @@ DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::str
 	return rt;
 }
 
-QueryAnalyzerInterface* ObjectBuilder::createQueryAnalyzer() const
+DLL_PUBLIC QueryAnalyzerInterface* ObjectBuilder::createQueryAnalyzer() const
 {
 	return strus::createQueryAnalyzer( m_textProcessor.get());
 }

@@ -27,11 +27,12 @@
 --------------------------------------------------------------------
 */
 #include "strus/analyzerModule.hpp"
+#include "strus/private/dll_tags.hpp"
 #include <string>
 
 using namespace strus;
 
-AnalyzerModule::AnalyzerModule(
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_)
@@ -41,7 +42,7 @@ AnalyzerModule::AnalyzerModule(
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
-AnalyzerModule::AnalyzerModule(
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
