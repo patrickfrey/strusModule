@@ -116,8 +116,12 @@ DLL_PUBLIC void ObjectBuilder::addStorageModule( const StorageModule* mod)
 	m_storageModules.push_back( mod);
 }
 
-DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& name) const
+DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& config) const
 {
+	std::string configstr( config);
+	std::string name;
+	(void)strus::extractStringFromConfigString( name, configstr, "database");
+
 	std::vector<const StorageModule*>::const_iterator
 		mi = m_storageModules.begin(), 
 		me = m_storageModules.end();
