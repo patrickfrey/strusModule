@@ -34,23 +34,55 @@ namespace strus
 {
 
 /// \brief Forward declaration
+class DatabaseInterface;
+/// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration
+class StorageInterface;
+/// \brief Forward declaration
 class QueryEvalInterface;
+/// \brief Forward declaration
+class QueryProcessorInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
 class QueryAnalyzerInterface;
+/// \brief Forward declaration
+class TextProcessorInterface;
+/// \brief Forward declaration
+class StorageAlterMetaDataTableInterface;
 
 
 /// \brief Interface providing a mechanism to create complex objects used in strus
 class ObjectBuilderInterface
 {
 public:
-	/// \brief Creates a storage client and the underlying database out of a configuration string
+	/// \brief Get the storage interface
+	/// \return the storage interface reference
+	virtual const StorageInterface* getStorage() const=0;
+
+	/// \brief Get the database interface as loaded from modules and optionally specified in the configuration string
+	/// \param[in] config configuration string (not a filename!) optionally containing an assignment database=<...> that specifies the database to use
+	/// \return the database interface reference
+	virtual const DatabaseInterface* getDatabase( const std::string& config) const=0;
+
+	/// \brief Get the query processor interface
+	/// \return the query processor interface reference
+	virtual const QueryProcessorInterface* getQueryProcessor() const=0;
+
+	/// \brief Get the analyzer text processor interface
+	/// \return the analyzer text processor interface reference
+	virtual const TextProcessorInterface* getTextProcessor() const=0;
+
+	/// \brief Creates a storage client with its database client out of a configuration string
 	/// \param[in] config configuration string (not a filename!) of both storage and database
 	/// \return the storage client object (with ownership returned)
 	virtual StorageClientInterface* createStorageClient( const std::string& config) const=0;
+
+	/// \brief Creates an interface for altering the storage meta data table with its database client out of a configuration string
+	/// \param[in] config configuration string (not a filename!) of both storage and database
+	/// \return the interface for altering the storage meta data table (with ownership returned)
+	virtual StorageAlterMetaDataTableInterface* createAlterMetaDataTable( const std::string& config) const=0;
 
 	/// \brief Creates a an interface for query evaluation
 	/// \return the query evaluation object (with ownership returned)

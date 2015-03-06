@@ -44,11 +44,19 @@ class StorageModule;
 /// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration
+class StorageAlterMetaDataTableInterface;
+/// \brief Forward declaration
+class StorageInterface;
+/// \brief Forward declaration
 class QueryEvalInterface;
+/// \brief Forward declaration
+class QueryProcessorInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
 class QueryAnalyzerInterface;
+/// \brief Forward declaration
+class TextProcessorInterface;
 /// \brief Forward declaration
 class DatabaseInterface;
 /// \brief Forward declaration
@@ -63,17 +71,22 @@ public:
 	ObjectBuilder();
 	virtual ~ObjectBuilder(){}
 
+	virtual const StorageInterface* getStorage() const;
+	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
+	virtual const QueryProcessorInterface* getQueryProcessor() const;
+	virtual const TextProcessorInterface* getTextProcessor() const;
+
 	virtual StorageClientInterface* createStorageClient( const std::string& config) const;
 	virtual QueryEvalInterface* createQueryEval() const;
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
+	virtual StorageAlterMetaDataTableInterface* createAlterMetaDataTable( const std::string& config) const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 	void addAnalyzerModule( const AnalyzerModule* mod);
 
 private:
-	const DatabaseInterface* getDatabase( const std::string& name) const;
 	SegmenterInterface* createSegmenter( const std::string& name) const;
 
 private:

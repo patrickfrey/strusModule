@@ -56,6 +56,16 @@ DLL_PUBLIC ObjectBuilder::ObjectBuilder()
 	,m_textProcessor( strus::createTextProcessor())
 {}
 
+DLL_PUBLIC const QueryProcessorInterface* ObjectBuilder::getQueryProcessor() const
+{
+	return m_queryProcessor.get();
+}
+
+DLL_PUBLIC const TextProcessorInterface* ObjectBuilder::getTextProcessor() const
+{
+	return m_textProcessor.get();
+}
+
 DLL_PUBLIC void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
 	if (mod->tokenizerConstructors)
@@ -125,7 +135,7 @@ DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::strin
 	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
 }
 
-DLL_PUBLIC SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) const
+SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) const
 {
 	std::vector<const AnalyzerModule*>::const_iterator
 		ai = m_analyzerModules.begin(), 
@@ -144,6 +154,11 @@ DLL_PUBLIC SegmenterInterface* ObjectBuilder::createSegmenter( const std::string
 	throw std::runtime_error( std::string( "undefined segmenter '") + name + "'");
 }
 
+DLL_PUBLIC const StorageInterface* ObjectBuilder::getStorage() const
+{
+	return strus::getStorage();
+}
+
 DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
 {
 	std::string dbname;
@@ -152,7 +167,7 @@ DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std
 	(void)strus::extractStringFromConfigString( dbname, configstr, "database");
 
 	const DatabaseInterface* dbi = getDatabase( dbname);
-	const StorageInterface* sti = strus::getStorage();
+	const StorageInterface* sti = getStorage();
 
 	std::string databasecfg( configstr);
 	std::string storagecfg( configstr);
@@ -163,12 +178,35 @@ DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std
 	strus::removeKeysFromConfigString(
 			storagecfg,
 			dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient));
-	//... In storage_cfg is now the pure storage configuration without the database settings
+	//... In storagecfg is now the pure storage configuration without the database settings
 
 	std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
 	std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
 	(void)database.release(); //... ownership passed to storage
 	return storage.release(); //... ownership returned
+}
+
+
+DLL_PUBLIC StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDataTable( const std::string& config) const
+{
+	std::string dbname;
+	std::string configstr( config);
+
+	(void)strus::extractStringFromConfigString( dbname, configstr, "database");
+
+	const DatabaseInterface* dbi = getDatabase( dbname);
+	const StorageInterface* sti = getStorage();
+
+	std::string databasecfg( configstr);
+	strus::removeKeysFromConfigString(
+			databasecfg,
+			sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
+	//... In storagecfg is now the pure storage configuration without the database settings
+
+	std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
+	std::auto_ptr<StorageAlterMetaDataTableInterface> altermetatable( sti->createAlterMetaDataTable( database.get()));
+	(void)database.release(); //... ownership passed to storage
+	return altermetatable.release(); //... ownership returned
 }
 
 
