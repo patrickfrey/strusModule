@@ -44,10 +44,10 @@
 #include "strus/private/fileio.hpp"
 #include "strus/private/configParser.hpp"
 #include "strus/private/dll_tags.hpp"
+#include "utils.hpp"
 #include <string>
 #include <cstring>
 #include <memory>
-#include <boost/algorithm/string.hpp>
 
 using namespace strus;
 
@@ -127,12 +127,12 @@ DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::strin
 		me = m_storageModules.end();
 	for (; mi != me; ++mi)
 	{
-		if (name.empty() || boost::algorithm::iequals( name, (*mi)->databaseReference.name))
+		if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
 		{
 			return (*mi)->databaseReference.get();
 		}
 	}
-	if (name.empty() || boost::algorithm::iequals( name, "leveldb"))
+	if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
 	{
 		return strus::getDatabase_leveldb();
 	}
@@ -146,12 +146,12 @@ SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) con
 		ae = m_analyzerModules.end();
 	for (; ai != ae; ++ai)
 	{
-		if (name.empty() || boost::algorithm::iequals( name, (*ai)->segmenterConstructor.name))
+		if (name.empty() || utils::caseInsensitiveEquals( name, (*ai)->segmenterConstructor.name))
 		{
 			return (*ai)->segmenterConstructor.create();
 		}
 	}
-	if (name.empty() || boost::algorithm::iequals( name, "textwolf"))
+	if (name.empty() || utils::caseInsensitiveEquals( name, "textwolf"))
 	{
 		return createSegmenter_textwolf();
 	}

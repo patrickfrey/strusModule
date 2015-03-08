@@ -10,6 +10,7 @@ set( source_files
 	storageModule.cpp
 	objectBuilder.cpp
 	moduleLoader.cpp
+	utils.cpp
 )
 
 include_directories(

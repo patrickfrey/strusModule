@@ -33,10 +33,10 @@
 #include "strus/analyzerModule.hpp"
 #include "strus/private/fileio.hpp"
 #include "strus/private/dll_tags.hpp"
+#include "utils.hpp"
 #include <string>
 #include <cstring>
 #include <memory>
-#include <boost/algorithm/string.hpp>
 
 using namespace strus;
 
@@ -46,9 +46,9 @@ static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 	char const* ee = std::strchr( cc, ';');
 	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, ';'))
 	{
-		paths.push_back( boost::algorithm::trim_copy( std::string( cc, ee)));
+		paths.push_back( utils::trim( std::string( cc, ee)));
 	}
-	paths.push_back( boost::algorithm::trim_copy( std::string( cc)));
+	paths.push_back( utils::trim( std::string( cc)));
 }
 
 DLL_PUBLIC void ModuleLoader::addSystemModulePath()
@@ -94,7 +94,7 @@ DLL_PUBLIC const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 	{
 		std::string modfilename( *pi + dirSeparator() + name);
 		std::string altmodfilename( *pi + dirSeparator() + "modstrus_" + name);
-		if (!boost::algorithm::iequals(
+		if (!utils::caseInsensitiveEquals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
 		{
