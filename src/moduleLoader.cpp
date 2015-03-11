@@ -37,8 +37,11 @@
 #include <string>
 #include <cstring>
 #include <memory>
+#include <iostream>
 
 using namespace strus;
+
+#define STRUS_LOWLEVEL_DEBUG
 
 static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 {
@@ -101,10 +104,16 @@ DLL_PUBLIC const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 			modfilename.append( STRUS_MODULE_EXTENSION);
 			altmodfilename.append( STRUS_MODULE_EXTENSION);
 		}
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "try to load module '" << modfilename << "'" << std::endl;
+#endif
 		if (isFile( modfilename))
 		{
 			return strus::loadModuleEntryPoint( modfilename.c_str());
 		}
+#ifdef STRUS_LOWLEVEL_DEBUG
+		std::cerr << "try to load module '" << altmodfilename << "'" << std::endl;
+#endif
 		if (isFile( altmodfilename))
 		{
 			return strus::loadModuleEntryPoint( altmodfilename.c_str());

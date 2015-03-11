@@ -146,7 +146,8 @@ SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) con
 		ae = m_analyzerModules.end();
 	for (; ai != ae; ++ai)
 	{
-		if (name.empty() || utils::caseInsensitiveEquals( name, (*ai)->segmenterConstructor.name))
+		if ((*ai)->segmenterConstructor.name
+		&&  (name.empty() || utils::caseInsensitiveEquals( name, (*ai)->segmenterConstructor.name)))
 		{
 			return (*ai)->segmenterConstructor.create();
 		}
