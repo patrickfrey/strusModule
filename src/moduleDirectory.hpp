@@ -29,8 +29,8 @@
 #ifndef _STRUS_MODULE_DIRECTORY_HPP_INCLUDED
 #define _STRUS_MODULE_DIRECTORY_HPP_INCLUDED
 
-#define STRUS_MODULE_DIRECTORIES	"/usr/local/lib/strus/modules;/usr/local/lib/strus/modules"
-#define STRUS_MODULE_EXTENSION		".so"
-
+#define STRUS_MODULE_DIRECTORIES	"/usr/local/lib/strus/modules':'/usr/local/lib/strus/modules"
+#define STRUS_MODULE_EXTENSION		  ".so"
+#define STRUS_MODULE_PATHSEP                ':'
 #endif
 

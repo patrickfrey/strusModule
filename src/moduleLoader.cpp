@@ -45,8 +45,8 @@ using namespace strus;
 static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 {
 	char const* cc = pt;
-	char const* ee = std::strchr( cc, ':');
-	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, ':'))
+	char const* ee = std::strchr( cc, STRUS_MODULE_PATHSEP);
+	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, STRUS_MODULE_PATHSEP))
 	{
 		paths.push_back( utils::trim( std::string( cc, ee)));
 	}
