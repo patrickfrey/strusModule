@@ -43,7 +43,6 @@
 #include "strus/storageClientInterface.hpp"
 #include "strus/private/fileio.hpp"
 #include "strus/private/configParser.hpp"
-#include "strus/private/dll_tags.hpp"
 #include "utils.hpp"
 #include <string>
 #include <cstring>
@@ -51,22 +50,22 @@
 
 using namespace strus;
 
-DLL_PUBLIC ObjectBuilder::ObjectBuilder()
+ObjectBuilder::ObjectBuilder()
 	:m_queryProcessor( strus::createQueryProcessor())
 	,m_textProcessor( strus::createTextProcessor())
 {}
 
-DLL_PUBLIC const QueryProcessorInterface* ObjectBuilder::getQueryProcessor() const
+const QueryProcessorInterface* ObjectBuilder::getQueryProcessor() const
 {
 	return m_queryProcessor.get();
 }
 
-DLL_PUBLIC const TextProcessorInterface* ObjectBuilder::getTextProcessor() const
+const TextProcessorInterface* ObjectBuilder::getTextProcessor() const
 {
 	return m_textProcessor.get();
 }
 
-DLL_PUBLIC void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
+void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
 	if (mod->tokenizerConstructors)
 	{
@@ -87,7 +86,7 @@ DLL_PUBLIC void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 	m_analyzerModules.push_back( mod);
 }
 
-DLL_PUBLIC void ObjectBuilder::addStorageModule( const StorageModule* mod)
+void ObjectBuilder::addStorageModule( const StorageModule* mod)
 {
 	if (mod->postingIteratorJoinConstructor)
 	{
@@ -116,7 +115,7 @@ DLL_PUBLIC void ObjectBuilder::addStorageModule( const StorageModule* mod)
 	m_storageModules.push_back( mod);
 }
 
-DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& config) const
+const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& config) const
 {
 	std::string configstr( config);
 	std::string name;
@@ -139,7 +138,7 @@ DLL_PUBLIC const DatabaseInterface* ObjectBuilder::getDatabase( const std::strin
 	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
 }
 
-SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) const
+SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& segmenterName) const
 {
 	std::vector<const AnalyzerModule*>::const_iterator
 		ai = m_analyzerModules.begin(), 
@@ -147,24 +146,24 @@ SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& name) con
 	for (; ai != ae; ++ai)
 	{
 		if ((*ai)->segmenterConstructor.name
-		&&  (name.empty() || utils::caseInsensitiveEquals( name, (*ai)->segmenterConstructor.name)))
+		&&  (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, (*ai)->segmenterConstructor.name)))
 		{
 			return (*ai)->segmenterConstructor.create();
 		}
 	}
-	if (name.empty() || utils::caseInsensitiveEquals( name, "textwolf"))
+	if (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, "textwolf"))
 	{
 		return createSegmenter_textwolf();
 	}
-	throw std::runtime_error( std::string( "undefined segmenter '") + name + "'");
+	throw std::runtime_error( std::string( "undefined segmenter '") + segmenterName + "'");
 }
 
-DLL_PUBLIC const StorageInterface* ObjectBuilder::getStorage() const
+const StorageInterface* ObjectBuilder::getStorage() const
 {
 	return strus::getStorage();
 }
 
-DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
+StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
 {
 	std::string dbname;
 	std::string configstr( config);
@@ -192,7 +191,7 @@ DLL_PUBLIC StorageClientInterface* ObjectBuilder::createStorageClient( const std
 }
 
 
-DLL_PUBLIC StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDataTable( const std::string& config) const
+StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDataTable( const std::string& config) const
 {
 	std::string dbname;
 	std::string configstr( config);
@@ -215,12 +214,12 @@ DLL_PUBLIC StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDat
 }
 
 
-DLL_PUBLIC QueryEvalInterface* ObjectBuilder::createQueryEval() const
+QueryEvalInterface* ObjectBuilder::createQueryEval() const
 {
 	return strus::createQueryEval( m_queryProcessor.get());
 }
 
-DLL_PUBLIC DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
+DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
 {
 	std::auto_ptr<SegmenterInterface> segmenter( createSegmenter( segmenterName));
 	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter.get());
@@ -228,7 +227,7 @@ DLL_PUBLIC DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( con
 	return rt;
 }
 
-DLL_PUBLIC QueryAnalyzerInterface* ObjectBuilder::createQueryAnalyzer() const
+QueryAnalyzerInterface* ObjectBuilder::createQueryAnalyzer() const
 {
 	return strus::createQueryAnalyzer( m_textProcessor.get());
 }

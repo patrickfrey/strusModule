@@ -32,7 +32,6 @@
 #include "strus/storageModule.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/private/fileio.hpp"
-#include "strus/private/dll_tags.hpp"
 #include "utils.hpp"
 #include <string>
 #include <cstring>
@@ -46,25 +45,25 @@ using namespace strus;
 static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 {
 	char const* cc = pt;
-	char const* ee = std::strchr( cc, ';');
-	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, ';'))
+	char const* ee = std::strchr( cc, ':');
+	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, ':'))
 	{
 		paths.push_back( utils::trim( std::string( cc, ee)));
 	}
 	paths.push_back( utils::trim( std::string( cc)));
 }
 
-DLL_PUBLIC void ModuleLoader::addSystemModulePath()
+void ModuleLoader::addSystemModulePath()
 {
 	addModulePath_( m_paths, STRUS_MODULE_DIRECTORIES);
 }
 
-DLL_PUBLIC void ModuleLoader::addModulePath(const std::string& path)
+void ModuleLoader::addModulePath(const std::string& path)
 {
 	addModulePath_( m_paths, path.c_str());
 }
 
-DLL_PUBLIC void ModuleLoader::loadModule(const std::string& name)
+void ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
 	if (m_paths.empty())
@@ -88,7 +87,7 @@ DLL_PUBLIC void ModuleLoader::loadModule(const std::string& name)
 	}
 }
 
-DLL_PUBLIC const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
+const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		const std::string& name,
 		const std::vector<std::string>& paths)
 {

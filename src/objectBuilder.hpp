@@ -81,13 +81,11 @@ public:
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 	virtual StorageAlterMetaDataTableInterface* createAlterMetaDataTable( const std::string& config) const;
+	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName) const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 	void addAnalyzerModule( const AnalyzerModule* mod);
-
-private:
-	SegmenterInterface* createSegmenter( const std::string& name) const;
 
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;

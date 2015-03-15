@@ -46,6 +46,8 @@ class QueryProcessorInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
+class SegmenterInterface;
+/// \brief Forward declaration
 class QueryAnalyzerInterface;
 /// \brief Forward declaration
 class TextProcessorInterface;
@@ -87,6 +89,11 @@ public:
 	/// \brief Creates a an interface for query evaluation
 	/// \return the query evaluation object (with ownership returned)
 	virtual QueryEvalInterface* createQueryEval() const=0;
+
+	/// \brief Creates a document segmenter object
+	/// \param[in] segmenterName name of the segmenter used (if not specified, find the first one loaded or the default one)
+	/// \return the document segmenter (with ownership returned)
+	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName=std::string()) const=0;
 
 	/// \brief Creates a document analyzer object
 	/// \param[in] segmenterName name of the segmenter used (if not specified, find the first one loaded or the default one)
