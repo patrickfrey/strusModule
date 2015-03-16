@@ -60,6 +60,7 @@ public:
 	virtual void addSystemModulePath();
 	virtual void addModulePath( const std::string& path);
 	virtual void loadModule( const std::string& name);
+	virtual void addResourcePath( const std::string& path);
 
 	virtual const ObjectBuilderInterface& builder() const	{return m_builder;}
 
@@ -69,7 +70,8 @@ private:
 			const std::vector<std::string>& paths);
 
 private:
-	std::vector<std::string> m_paths;
+	std::vector<std::string> m_modulePaths;
+	std::vector<std::string> m_resourcePaths;
 	ObjectBuilder m_builder;
 };
 

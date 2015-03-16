@@ -54,6 +54,10 @@ public:
 	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
 	virtual void loadModule( const std::string& name)=0;
 
+	/// \brief Declare a path for analyzer components to find resource files
+	/// \param[in] path path to add
+	virtual void addResourcePath( const std::string& path)=0;
+
 	/// \brief Get the builder of objects defined this loader or the defaults
 	/// \return the builder object
 	virtual const ObjectBuilderInterface& builder() const=0;

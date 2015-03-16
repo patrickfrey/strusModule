@@ -86,6 +86,7 @@ public:
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 	void addAnalyzerModule( const AnalyzerModule* mod);
+	void addResourcePath( const std::string& path);
 
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;

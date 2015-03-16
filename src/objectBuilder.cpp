@@ -65,6 +65,11 @@ const TextProcessorInterface* ObjectBuilder::getTextProcessor() const
 	return m_textProcessor.get();
 }
 
+void ObjectBuilder::addResourcePath( const std::string& path)
+{
+	m_textProcessor->addResourcePath( path);
+}
+
 void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
 	if (mod->tokenizerConstructors)

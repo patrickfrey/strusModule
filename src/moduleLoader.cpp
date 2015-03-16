@@ -42,7 +42,7 @@ using namespace strus;
 
 #define STRUS_LOWLEVEL_DEBUG
 
-static void addModulePath_( std::vector<std::string>& paths, const char* pt)
+static void addPath_( std::vector<std::string>& paths, const char* pt)
 {
 	char const* cc = pt;
 	char const* ee = std::strchr( cc, STRUS_MODULE_PATHSEP);
@@ -55,26 +55,31 @@ static void addModulePath_( std::vector<std::string>& paths, const char* pt)
 
 void ModuleLoader::addSystemModulePath()
 {
-	addModulePath_( m_paths, STRUS_MODULE_DIRECTORIES);
+	addPath_( m_modulePaths, STRUS_MODULE_DIRECTORIES);
 }
 
 void ModuleLoader::addModulePath(const std::string& path)
 {
-	addModulePath_( m_paths, path.c_str());
+	addPath_( m_modulePaths, path.c_str());
+}
+
+void ModuleLoader::addResourcePath( const std::string& path)
+{
+	m_builder.addResourcePath( path);
 }
 
 void ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
-	if (m_paths.empty())
+	if (m_modulePaths.empty())
 	{
 		std::vector<std::string> paths;
-		addModulePath_( paths, STRUS_MODULE_DIRECTORIES);
+		addPath_( paths, STRUS_MODULE_DIRECTORIES);
 		entryPoint = loadModuleAlt( name, paths);
 	}
 	else
 	{
-		entryPoint = loadModuleAlt( name, m_paths);
+		entryPoint = loadModuleAlt( name, m_modulePaths);
 	}
 	switch (entryPoint->type)
 	{
