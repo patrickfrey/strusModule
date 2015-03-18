@@ -40,7 +40,7 @@
 
 using namespace strus;
 
-#define STRUS_LOWLEVEL_DEBUG
+#undef STRUS_LOWLEVEL_DEBUG
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
 {
