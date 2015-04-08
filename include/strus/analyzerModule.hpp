@@ -37,9 +37,9 @@ namespace strus
 /// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
-class TokenizerInterface;
+class TokenizerConstructorInterface;
 /// \brief Forward declaration
-class NormalizerInterface;
+class NormalizerConstructorInterface;
 
 /// \brief Structure to define a segmenter for an alternative document format (like XML) as module
 struct SegmenterConstructor
@@ -52,7 +52,7 @@ struct SegmenterConstructor
 /// \brief Structure to define a proprietary tokenizer of text segments as module
 struct TokenizerConstructor
 {
-	typedef const TokenizerInterface* (*Function)();
+	typedef const TokenizerConstructorInterface* (*Function)();
 	const char* name;			///< name of the tokenizer
 	Function function;			///< tokenizer function
 };
@@ -60,7 +60,7 @@ struct TokenizerConstructor
 /// \brief Structure to define a proprietary normalizer of tokens as module
 struct NormalizerConstructor
 {
-	typedef const NormalizerInterface* (*Function)();
+	typedef const NormalizerConstructorInterface* (*Function)();
 	const char* name;			///< name of the normalizer
 	Function function;			///< normalizer function
 };
