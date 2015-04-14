@@ -31,6 +31,8 @@
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/analyzerModule.hpp"
+#include "storageObjectBuilder.hpp"
+#include "analyzerObjectBuilder.hpp"
 #include "strus/private/fileio.hpp"
 #include "utils.hpp"
 #include <string>
@@ -65,7 +67,7 @@ void ModuleLoader::addModulePath(const std::string& path)
 
 void ModuleLoader::addResourcePath( const std::string& path)
 {
-	m_builder.addResourcePath( path);
+	addPath_( m_resourcePaths, path.c_str());
 }
 
 void ModuleLoader::loadModule(const std::string& name)
@@ -84,12 +86,42 @@ void ModuleLoader::loadModule(const std::string& name)
 	switch (entryPoint->type)
 	{
 		case ModuleEntryPoint::Analyzer:
-			m_builder.addAnalyzerModule( reinterpret_cast<const AnalyzerModule*>( entryPoint));
+			m_analyzerModules.push_back( reinterpret_cast<const AnalyzerModule*>( entryPoint));
 			break;
 		case ModuleEntryPoint::Storage:
-			m_builder.addStorageModule( reinterpret_cast<const StorageModule*>( entryPoint));
+			m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
 			break;
 	}
+}
+
+StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
+{
+	std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder());
+	std::vector<const StorageModule*>::const_iterator
+		mi = m_storageModules.begin(), me = m_storageModules.end();
+	for (; mi != me; ++mi)
+	{
+		builder->addStorageModule( *mi);
+	}
+	return builder.release();
+}
+
+AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() const
+{
+	std::auto_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder());
+	std::vector<std::string>::const_iterator
+		pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
+	for (; pi != pe; ++pi)
+	{
+		builder->addResourcePath( *pi);
+	}
+	std::vector<const AnalyzerModule*>::const_iterator
+		mi = m_analyzerModules.begin(), me = m_analyzerModules.end();
+	for (; mi != me; ++mi)
+	{
+		builder->addAnalyzerModule( *mi);
+	}
+	return builder.release();
 }
 
 const ModuleEntryPoint* ModuleLoader::loadModuleAlt(

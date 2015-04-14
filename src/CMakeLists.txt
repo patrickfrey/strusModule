@@ -8,7 +8,8 @@ set( source_files
 	moduleEntryPoint.cpp
 	analyzerModule.cpp
 	storageModule.cpp
-	objectBuilder.cpp
+	storageObjectBuilder.cpp
+	analyzerObjectBuilder.cpp
 	moduleLoader.cpp
 	utils.cpp
 )

@@ -26,17 +26,13 @@
 
 --------------------------------------------------------------------
 */
-#include "objectBuilder.hpp"
+#include "storageObjectBuilder.hpp"
 #include "strus/lib/queryproc.hpp"
-#include "strus/lib/textproc.hpp"
 #include "strus/lib/queryproc.hpp"
 #include "strus/lib/database_leveldb.hpp"
-#include "strus/lib/segmenter_textwolf.hpp"
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
-#include "strus/lib/analyzer.hpp"
 #include "strus/storageModule.hpp"
-#include "strus/analyzerModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
@@ -50,48 +46,16 @@
 
 using namespace strus;
 
-ObjectBuilder::ObjectBuilder()
+StorageObjectBuilder::StorageObjectBuilder()
 	:m_queryProcessor( strus::createQueryProcessor())
-	,m_textProcessor( strus::createTextProcessor())
 {}
 
-const QueryProcessorInterface* ObjectBuilder::getQueryProcessor() const
+const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
 {
 	return m_queryProcessor.get();
 }
 
-const TextProcessorInterface* ObjectBuilder::getTextProcessor() const
-{
-	return m_textProcessor.get();
-}
-
-void ObjectBuilder::addResourcePath( const std::string& path)
-{
-	m_textProcessor->addResourcePath( path);
-}
-
-void ObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
-{
-	if (mod->tokenizerConstructors)
-	{
-		TokenizerConstructor const* ti = mod->tokenizerConstructors;
-		for (; ti->function != 0; ++ti)
-		{
-			m_textProcessor->defineTokenizer( ti->name, ti->function());
-		}
-	}
-	if (mod->normalizerConstructors)
-	{
-		NormalizerConstructor const* ni = mod->normalizerConstructors;
-		for (; ni->function != 0; ++ni)
-		{
-			m_textProcessor->defineNormalizer( ni->name, ni->function());
-		}
-	}
-	m_analyzerModules.push_back( mod);
-}
-
-void ObjectBuilder::addStorageModule( const StorageModule* mod)
+void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
 	if (mod->postingIteratorJoinConstructor)
 	{
@@ -120,7 +84,7 @@ void ObjectBuilder::addStorageModule( const StorageModule* mod)
 	m_storageModules.push_back( mod);
 }
 
-const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& config) const
+const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& config) const
 {
 	std::string configstr( config);
 	std::string name;
@@ -143,32 +107,12 @@ const DatabaseInterface* ObjectBuilder::getDatabase( const std::string& config) 
 	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
 }
 
-SegmenterInterface* ObjectBuilder::createSegmenter( const std::string& segmenterName) const
-{
-	std::vector<const AnalyzerModule*>::const_iterator
-		ai = m_analyzerModules.begin(), 
-		ae = m_analyzerModules.end();
-	for (; ai != ae; ++ai)
-	{
-		if ((*ai)->segmenterConstructor.name
-		&&  (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, (*ai)->segmenterConstructor.name)))
-		{
-			return (*ai)->segmenterConstructor.create();
-		}
-	}
-	if (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, "textwolf"))
-	{
-		return createSegmenter_textwolf();
-	}
-	throw std::runtime_error( std::string( "undefined segmenter '") + segmenterName + "'");
-}
-
-const StorageInterface* ObjectBuilder::getStorage() const
+const StorageInterface* StorageObjectBuilder::getStorage() const
 {
 	return strus::getStorage();
 }
 
-StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& config) const
+StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::string& config) const
 {
 	std::string dbname;
 	std::string configstr( config);
@@ -196,7 +140,7 @@ StorageClientInterface* ObjectBuilder::createStorageClient( const std::string& c
 }
 
 
-StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDataTable( const std::string& config) const
+StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTable( const std::string& config) const
 {
 	std::string dbname;
 	std::string configstr( config);
@@ -219,22 +163,9 @@ StorageAlterMetaDataTableInterface* ObjectBuilder::createAlterMetaDataTable( con
 }
 
 
-QueryEvalInterface* ObjectBuilder::createQueryEval() const
+QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 {
 	return strus::createQueryEval( m_queryProcessor.get());
-}
-
-DocumentAnalyzerInterface* ObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
-{
-	std::auto_ptr<SegmenterInterface> segmenter( createSegmenter( segmenterName));
-	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter.get());
-	(void)segmenter.release(); //... ownership passed to analyzer created
-	return rt;
-}
-
-QueryAnalyzerInterface* ObjectBuilder::createQueryAnalyzer() const
-{
-	return strus::createQueryAnalyzer( m_textProcessor.get());
 }
 
 

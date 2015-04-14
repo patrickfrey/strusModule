@@ -26,58 +26,50 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
-#define _STRUS_MODULE_LOADER_HPP_INCLUDED
-#include "strus/moduleLoaderInterface.hpp"
+#ifndef _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
+#define _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
+#include "strus/analyzerObjectBuilderInterface.hpp"
+#include "strus/reference.hpp"
+#include "strus/queryProcessorInterface.hpp"
+#include "strus/textProcessorInterface.hpp"
 #include <string>
 #include <vector>
 
 namespace strus
 {
 /// \brief Forward declaration
-class ModuleEntryPoint;
-/// \brief Forward declaration
 class AnalyzerModule;
-/// \brief Forward declaration
-class StorageModule;
-/// \brief Forward declaration
-class StorageClientInterface;
-/// \brief Forward declaration
-class QueryEvalInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
 class QueryAnalyzerInterface;
 /// \brief Forward declaration
-class StorageObjectBuilderInterface;
+class TextProcessorInterface;
 /// \brief Forward declaration
-class AnalyzerObjectBuilderInterface;
+class SegmenterInterface;
 
-/// \brief Implementation of ModuleLoaderInterface
-class ModuleLoader
-	:public ModuleLoaderInterface
+
+/// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
+class AnalyzerObjectBuilder
+	:public AnalyzerObjectBuilderInterface
 {
 public:
-	ModuleLoader(){}
-	virtual ~ModuleLoader(){}
-	virtual void addSystemModulePath();
-	virtual void addModulePath( const std::string& path);
-	virtual void loadModule( const std::string& name);
-	virtual void addResourcePath( const std::string& path);
+	AnalyzerObjectBuilder();
+	virtual ~AnalyzerObjectBuilder(){}
 
-	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
-	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
+	virtual const TextProcessorInterface* getTextProcessor() const;
 
-private:
-	const ModuleEntryPoint* loadModuleAlt(
-			const std::string& name,
-			const std::vector<std::string>& paths);
+	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
+	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
+	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName) const;
+
+public/*ModuleLoader*/:
+	void addAnalyzerModule( const AnalyzerModule* mod);
+	void addResourcePath( const std::string& path);
 
 private:
-	std::vector<std::string> m_modulePaths;
-	std::vector<std::string> m_resourcePaths;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
-	std::vector<const StorageModule*> m_storageModules;
+	Reference<TextProcessorInterface> m_textProcessor;
 };
 
 }//namespace

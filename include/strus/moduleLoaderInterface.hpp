@@ -33,7 +33,9 @@
 namespace strus
 {
 /// \brief Forward declaration
-class ObjectBuilderInterface;
+class StorageObjectBuilderInterface;
+/// \brief Forward declaration
+class AnalyzerObjectBuilderInterface;
 
 /// \brief Interface providing a mechanism to load modules and to create the objects defined in the modules
 class ModuleLoaderInterface
@@ -58,9 +60,13 @@ public:
 	/// \param[in] path path to add
 	virtual void addResourcePath( const std::string& path)=0;
 
-	/// \brief Get the builder of objects defined this loader or the defaults
+	/// \brief Get the builder for storage objects build from components loaded from module or the defaults defined.
 	/// \return the builder object
-	virtual const ObjectBuilderInterface& builder() const=0;
+	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const=0;
+
+	/// \brief Get the builder for analyzer objects build from components loaded from module or the defaults defined.
+	/// \return the builder object
+	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const=0;
 };
 
 }//namespace

@@ -26,9 +26,9 @@
 
 --------------------------------------------------------------------
 */
-#ifndef _STRUS_MODULE_OBJECT_BUILDER_HPP_INCLUDED
-#define _STRUS_MODULE_OBJECT_BUILDER_HPP_INCLUDED
-#include "strus/objectBuilderInterface.hpp"
+#ifndef _STRUS_MODULE_STORAGE_OBJECT_BUILDER_HPP_INCLUDED
+#define _STRUS_MODULE_STORAGE_OBJECT_BUILDER_HPP_INCLUDED
+#include "strus/storageObjectBuilderInterface.hpp"
 #include "strus/reference.hpp"
 #include "strus/queryProcessorInterface.hpp"
 #include "strus/textProcessorInterface.hpp"
@@ -37,8 +37,6 @@
 
 namespace strus
 {
-/// \brief Forward declaration
-class AnalyzerModule;
 /// \brief Forward declaration
 class StorageModule;
 /// \brief Forward declaration
@@ -52,47 +50,33 @@ class QueryEvalInterface;
 /// \brief Forward declaration
 class QueryProcessorInterface;
 /// \brief Forward declaration
-class DocumentAnalyzerInterface;
-/// \brief Forward declaration
 class QueryAnalyzerInterface;
 /// \brief Forward declaration
-class TextProcessorInterface;
-/// \brief Forward declaration
 class DatabaseInterface;
-/// \brief Forward declaration
-class SegmenterInterface;
 
 
-/// \brief Implementation of ObjectBuilderInterface for the module loader
-class ObjectBuilder
-	:public ObjectBuilderInterface
+/// \brief Implementation of StorageObjectBuilderInterface for the module loader
+class StorageObjectBuilder
+	:public StorageObjectBuilderInterface
 {
 public:
-	ObjectBuilder();
-	virtual ~ObjectBuilder(){}
+	StorageObjectBuilder();
+	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
 	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
 	virtual const QueryProcessorInterface* getQueryProcessor() const;
-	virtual const TextProcessorInterface* getTextProcessor() const;
 
 	virtual StorageClientInterface* createStorageClient( const std::string& config) const;
 	virtual QueryEvalInterface* createQueryEval() const;
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
-	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 	virtual StorageAlterMetaDataTableInterface* createAlterMetaDataTable( const std::string& config) const;
-	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName) const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
-	void addAnalyzerModule( const AnalyzerModule* mod);
-	void addResourcePath( const std::string& path);
 
 private:
-	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
 	Reference<QueryProcessorInterface> m_queryProcessor;
-	Reference<TextProcessorInterface> m_textProcessor;
 };
 
 }//namespace
