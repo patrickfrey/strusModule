@@ -99,7 +99,7 @@ SegmenterInterface* AnalyzerObjectBuilder::createSegmenter( const std::string& s
 DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
 {
 	std::auto_ptr<SegmenterInterface> segmenter( createSegmenter( segmenterName));
-	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter.get());
+	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( segmenter.get());
 	(void)segmenter.release(); //... ownership passed to analyzer created
 	return rt;
 }
@@ -107,7 +107,7 @@ DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const 
 
 QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
 {
-	return strus::createQueryAnalyzer( m_textProcessor.get());
+	return strus::createQueryAnalyzer();
 }
 
 

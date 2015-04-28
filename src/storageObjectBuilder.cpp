@@ -165,7 +165,7 @@ StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTab
 
 QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 {
-	return strus::createQueryEval( m_queryProcessor.get());
+	return strus::createQueryEval();
 }
 
 
