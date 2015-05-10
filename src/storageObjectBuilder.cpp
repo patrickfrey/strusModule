@@ -95,9 +95,12 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 		me = m_storageModules.end();
 	for (; mi != me; ++mi)
 	{
-		if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
+		if ((*mi)->databaseReference.get)
 		{
-			return (*mi)->databaseReference.get();
+			if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
+			{
+				return (*mi)->databaseReference.get();
+			}
 		}
 	}
 	if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
