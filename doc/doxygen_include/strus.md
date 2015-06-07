@@ -6,20 +6,25 @@ objects from dynamically loadable modules. With strusModule functions and object
 can be added to strus without modification of the original source code.
 You can create your own project for these extensions, build and deploy them separately.
 
-How to implement extensions
----------------------------
+Types of extensions
+-------------------
 With strusModule you can define two classes of loadable modules:
 1. [storage module] (@ref strus::StorageModule)
-* In a storage module you write extensions of the following type
-** postings join operations
-** weighting functions
-** summarization functions
-
 2. [analyzer module] (@ref strus::AnalyzerModule)
-* In an analyzer module you write extensions of the following type
-** document segmentation
-** segment tokenization
-** token normalization
+
+How to implement a storage module
+---------------------------------
+In a storage module you write extensions of the following type
+* postings join operations (PostingJoinOperatorInterface)
+* weighting functions (WeightingFunctionInterface)
+* summarization functions (SummarizerFunctionInterface)
+
+How to implement an analyzer module
+---------------------------------
+In an analyzer module you write extensions of the following type
+* document segmentation (SegmenterInterface)
+* segment tokenization (TokenizerFunctionInterface)
+* token normalization (NormalizerFunctionInterface)
 
 
 How to use loadable extensions
