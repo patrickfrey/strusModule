@@ -101,7 +101,7 @@ static const strus::SummarizerFunctionConstructor summarizerFunctions[] =
 extern "C" DLL_PUBLIC strus::StorageModule entryPoint;
 
 strus::StorageModule entryPoint( postingJoinOperators, weightingFunctions, summarizerFunctions);
-\code
+\endcode
 
 
 How to implement an analyzer module
@@ -169,6 +169,8 @@ static const strus::NormalizerConstructor normalizers[] =
 	{0,0}
 };
 
+
+/*--- Module declaration */
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
 
 strus::AnalyzerModule entryPoint( tokenizers, normalizers);
@@ -180,6 +182,7 @@ The next example shows another analyzer module template for implementing a docum
 #include "strus/strus.hpp"
 #include "strus/private/dll_tags.hpp"
 
+/*--- Document segmenter */
 class DummySegmenter
 	:public strus::SegmenterInterface
 {
