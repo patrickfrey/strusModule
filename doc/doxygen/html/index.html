@@ -55,19 +55,105 @@
 <li>weighting functions (WeightingFunctionInterface)</li>
 <li>summarization functions (SummarizerFunctionInterface)</li>
 </ul>
-<h2>How to implement an analyzer module </h2>
-<p>In an analyzer module you write extensions of the following type</p>
-<ul>
-<li>document segmentation (SegmenterInterface)</li>
-<li>segment tokenization (TokenizerFunctionInterface)</li>
-<li>token normalization (NormalizerFunctionInterface)</li>
-</ul>
-<p>The following example shows a dummy analyzer module: </p>
+<p>The following example shows a storage module template. It includes the main header file "strus/strus.hpp" with all strus core and analyzer declarations. For better built times it is recommended to include the needed headers separately instead of including them all by including "strus/strus.hpp". All parameters of the <a class="el" href="structstrus_1_1StorageModule.html">strus::StorageModule</a> object that declares the module entry point are optional. You can pass 0, if no object of the parameter type is declared in the module.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="strus_8hpp.html">strus/strus.hpp</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;strus/private/dll_tags.hpp&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="analyzerModule_8hpp.html">strus/analyzerModule.hpp</a>&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="storageModule_8hpp.html">strus/storageModule.hpp</a>&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="comment">/*--- Posting join operators */</span></div>
+<div class="line"><span class="keyword">class </span>DummyJoinOperator</div>
+<div class="line">        :<span class="keyword">public</span> strus::PostingJoinOperatorInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the posting join <span class="keyword">operator</span> <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line">const strus::PostingJoinOperatorInterface* dummy_join()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummyJoinOperator dummy_join_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_join_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1PostingIteratorJoinConstructor.html">strus::PostingIteratorJoinConstructor</a> postingJoinOperators[] =</div>
+<div class="line">{</div>
+<div class="line">        {<span class="stringliteral">&quot;dummy_join&quot;</span>, dummy_join},</div>
+<div class="line">        {0,0}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Weighting functions */</span></div>
+<div class="line"><span class="keyword">class </span>DummyWeightingFunction</div>
+<div class="line">        :<span class="keyword">public</span> strus::WeightingFunctionInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the weighting <span class="keyword">function</span> <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line">const strus::WeightingFunctionInterface* dummy_weighting()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummyWeightingFunction dummy_weighting_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_weighting_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1WeightingFunctionConstructor.html">strus::WeightingFunctionConstructor</a> weightingFunctions[] =</div>
+<div class="line">{</div>
+<div class="line">        {<span class="stringliteral">&quot;dummy_weighting&quot;</span>, dummy_weighting},</div>
+<div class="line">        {0,0}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Summarizer functions */</span></div>
+<div class="line"><span class="keyword">class </span>DummySummarizerFunction</div>
+<div class="line">        :<span class="keyword">public</span> strus::SummarizerFunctionInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the summarizer <span class="keyword">function</span> <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line">const strus::SummarizerFunctionInterface* dummy_summarizer()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummySummarizerFunction dummy_summarizer_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_summarizer_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1SummarizerFunctionConstructor.html">strus::SummarizerFunctionConstructor</a> summarizerFunctions[] =</div>
+<div class="line">{</div>
+<div class="line">        {<span class="stringliteral">&quot;dummy_summarizer&quot;</span>, dummy_summarizer},</div>
+<div class="line">        {0,0}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Module declaration */</span></div>
+<div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> DLL_PUBLIC <a class="code" href="structstrus_1_1StorageModule.html">strus::StorageModule</a> entryPoint;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="structstrus_1_1StorageModule.html">strus::StorageModule</a> entryPoint( postingJoinOperators, weightingFunctions, summarizerFunctions);</div>
+<div class="line">\code</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">How to implement an analyzer module</div>
+<div class="line">---------------------------------</div>
+<div class="line">In an analyzer module you write extensions of the following type</div>
+<div class="line">* document segmentation (SegmenterInterface)</div>
+<div class="line">* segment tokenization (TokenizerFunctionInterface)</div>
+<div class="line">* token normalization (NormalizerFunctionInterface)</div>
+<div class="line"></div>
+<div class="line">The following examples show two analyzer module templates.</div>
+<div class="line">Both include the main header file &quot;strus/strus.hpp&quot; with all strus</div>
+<div class="line">core and analyzer declarations. For better built times it is </div>
+<div class="line">recommended to include the needed headers separately instead of including </div>
+<div class="line">them all by including &quot;strus/strus.hpp&quot;. All parameters of the</div>
+<div class="line">strus::AnalyzerModule <span class="keywordtype">object</span> that declares the module entry point are</div>
+<div class="line">optional. You can pass 0 for arrays, if no <span class="keywordtype">object</span> of the parameter type is declared</div>
+<div class="line">in the module and you can ommit the segmenter argument, if no segmenter is declared.</div>
+<div class="line"></div>
+<div class="line">The first example shows a dummy analyzer module implementing a tokenizer and</div>
+<div class="line">a normalizer:</div>
+<div class="line">\code</div>
+<div class="line"><span class="preprocessor">#include &quot;strus/strus.hpp&quot;</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &quot;strus/private/dll_tags.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Tokenizer functions */</span></div>
 <div class="line"><span class="keyword">class </span>DummyTokenizerFunction</div>
 <div class="line">        :<span class="keyword">public</span> strus::TokenizerFunctionInterface</div>
 <div class="line">{</div>
@@ -88,6 +174,8 @@
 <div class="line">        {0,0}</div>
 <div class="line">};</div>
 <div class="line"></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Normalizer functions */</span></div>
 <div class="line"><span class="keyword">class </span>DummyNormalizerFunction</div>
 <div class="line">        :<span class="keyword">public</span> strus::NormalizerFunctionInterface</div>
 <div class="line">{</div>
@@ -111,12 +199,40 @@
 <div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> DLL_PUBLIC <a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint;</div>
 <div class="line"></div>
 <div class="line"><a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint( tokenizers, normalizers);</div>
+</div><!-- fragment --><p>The next example shows another analyzer module template for implementing a document segmenter. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="strus_8hpp.html">strus/strus.hpp</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;strus/private/dll_tags.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>DummySegmenter</div>
+<div class="line">        :<span class="keyword">public</span> strus::SegmenterInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the segmenter <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};      </div>
+<div class="line"></div>
+<div class="line">const strus::SegmenterInterface* dummy_segmenter()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummySegmenter dummy_segmenter_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_segmenter_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1SegmenterConstructor.html">strus::SegmenterConstructor</a> segmenter =</div>
+<div class="line">{</div>
+<div class="line">        <span class="stringliteral">&quot;dummy_segmenter&quot;</span>, dummy_segmenter</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*--- Module declaration */</span></div>
+<div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> DLL_PUBLIC <a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint( segmenter, 0, 0);</div>
 </div><!-- fragment --><h2>How to use loadable extensions </h2>
 <p>The strus <a class="el" href="classstrus_1_1ModuleLoaderInterface.html">module loader interface</a> is constructed by calling the createModuleLoader function implemented in the strus_module library. The module loader allows you to load modules one by one. After loading all modules you can construct the objects needed for your strus project. The module loader provides you two objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 7 2015 12:50:07 for strus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jun 7 2015 13:12:56 for strus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
