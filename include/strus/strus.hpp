@@ -26,6 +26,8 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Main header file with all include of (strus,strusAnalyzer,strusModule)
+/// \file strus.hpp
 #ifndef _STRUS_MAIN_INCLUDE_HPP_INCLUDED
 #define _STRUS_MAIN_INCLUDE_HPP_INCLUDED
 // Basic storage data types:

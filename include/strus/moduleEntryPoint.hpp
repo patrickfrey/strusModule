@@ -26,6 +26,8 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Header with object types needed for declaration of a strus module
+/// \file moduleEntryPoint.hpp
 #ifndef _STRUS_MODULE_HEADER_HPP_INCLUDED
 #define _STRUS_MODULE_HEADER_HPP_INCLUDED
 #include "strus/versionModule.hpp"
@@ -33,9 +35,10 @@
 #include "strus/versionStorage.hpp"
 #include <cstring>
 
+/// \brief strus toplevel namespace
 namespace strus {
 
-/// \brief Entry point of a module to verify correctness
+/// \brief Entry point of a module with signature and version info to verify correctness of the dynamic linking
 struct ModuleEntryPoint
 {
 	/// \brief The module types supported

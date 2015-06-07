@@ -26,10 +26,13 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Interface of the strus module loader
+/// \file moduleLoaderInterface.hpp
 #ifndef _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
 #define _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
 #include <string>
 
+/// \brief strus toplevel namespace
 namespace strus
 {
 /// \brief Forward declaration

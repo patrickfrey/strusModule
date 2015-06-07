@@ -26,18 +26,25 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Header with the version info of the module loader
+/// \file versionModule.hpp
 #ifndef _STRUS_MODULE_VERSION_HPP_INCLUDED
 #define _STRUS_MODULE_VERSION_HPP_INCLUDED
 
+/// \brief Version number of the module loader
 #define STRUS_MODULE_VERSION (\
 	0 * 1000000\
 	+ 0 * 10000\
 	+ 1\
 )
+/// \brief Major version number of the module loader
 #define STRUS_MODULE_VERSION_MAJOR 0
+/// \brief Minor version number of the module loader
 #define STRUS_MODULE_VERSION_MINOR 0
 
+/// \brief The version of the module loader as string
 #define STRUS_MODULE_VERSION_STRING "0.0.1"
+/// \brief The signature of the module loader including the major version number
 #define STRUS_MODULE_SIGNATURE "strus0"
 
 #endif
