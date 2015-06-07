@@ -69,6 +69,7 @@ struct NormalizerConstructor
 };
 
 
+/// \brief Structure that contains all analyzer module objects
 struct AnalyzerModule
 	:public ModuleEntryPoint
 {

@@ -81,6 +81,7 @@ struct SummarizerFunctionConstructor
 };
 
 
+/// \brief Structure that contains all storage module objects
 struct StorageModule
 	:public ModuleEntryPoint
 {
