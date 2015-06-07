@@ -60,16 +60,63 @@
 <ul>
 <li>document segmentation (SegmenterInterface)</li>
 <li>segment tokenization (TokenizerFunctionInterface)</li>
-<li>token normalization (NormalizerFunctionInterface) The following example shows a dummy analyzer module: <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;textwolf/xmlscanner.hpp&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;textwolf/cstringiterator.hpp&quot;</span></div>
-</div><!-- fragment --></li>
+<li>token normalization (NormalizerFunctionInterface)</li>
 </ul>
-<h2>How to use loadable extensions </h2>
+<p>The following example shows a dummy analyzer module: </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="strus_8hpp.html">strus/strus.hpp</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;strus/private/dll_tags.hpp&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="analyzerModule_8hpp.html">strus/analyzerModule.hpp</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="storageModule_8hpp.html">strus/storageModule.hpp</a>&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>DummyTokenizerFunction</div>
+<div class="line">        :<span class="keyword">public</span> strus::TokenizerFunctionInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the tokenizer <span class="keyword">function</span> <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line">const strus::TokenizerFunctionInterface* dummy_tokenizer()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummyTokenizerFunction dummy_tokenizer_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_tokenizer_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1TokenizerConstructor.html">strus::TokenizerConstructor</a> tokenizers[] =</div>
+<div class="line">{</div>
+<div class="line">        {<span class="stringliteral">&quot;dummy_tokenizer&quot;</span>, dummy_tokenizer},</div>
+<div class="line">        {0,0}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>DummyNormalizerFunction</div>
+<div class="line">        :<span class="keyword">public</span> strus::NormalizerFunctionInterface</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">        ... Implement the normalizer <span class="keyword">function</span> <span class="keyword">interface </span>here ...</div>
+<div class="line">private:</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line">const strus::NormalizerFunctionInterface* dummy_normalizer()</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> DummyNormalizerFunction dummy_normalizer_obj;</div>
+<div class="line">        <span class="keywordflow">return</span> &amp;dummy_normalizer_obj;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structstrus_1_1NormalizerConstructor.html">strus::NormalizerConstructor</a> normalizers[] =</div>
+<div class="line">{</div>
+<div class="line">        {<span class="stringliteral">&quot;dummy_normalizer&quot;</span>, dummy_normalizer},</div>
+<div class="line">        {0,0}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> DLL_PUBLIC <a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="structstrus_1_1AnalyzerModule.html">strus::AnalyzerModule</a> entryPoint( tokenizers, normalizers);</div>
+</div><!-- fragment --><h2>How to use loadable extensions </h2>
 <p>The strus <a class="el" href="classstrus_1_1ModuleLoaderInterface.html">module loader interface</a> is constructed by calling the createModuleLoader function implemented in the strus_module library. The module loader allows you to load modules one by one. After loading all modules you can construct the objects needed for your strus project. The module loader provides you two objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 7 2015 12:05:38 for strus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jun 7 2015 12:50:07 for strus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
