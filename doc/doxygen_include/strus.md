@@ -26,12 +26,17 @@ In an analyzer module you write extensions of the following type
 * segment tokenization (TokenizerFunctionInterface)
 * token normalization (NormalizerFunctionInterface)
 
-The following example shows a dummy analyzer module:
+The following examples show two analyzer module templates.
+Both include the main header file "strus/strus.hpp" with all strus
+core and analyzer declarations. For better built times it is 
+recommended to include the needed headers separately instead of including 
+them all by including "strus/strus.hpp":
+
+The first example shows a dummy analyzer module implementing a tokenizer and
+a normalizer:
 \code
 #include "strus/strus.hpp"
 #include "strus/private/dll_tags.hpp"
-#include "strus/analyzerModule.hpp"
-#include "strus/storageModule.hpp"
 
 class DummyTokenizerFunction
 	:public strus::TokenizerFunctionInterface
@@ -79,6 +84,36 @@ strus::AnalyzerModule entryPoint( tokenizers, normalizers);
 \endcode
 
 
+The next example shows another analyzer module template for implementing a document segmenter.
+\code
+#include "strus/strus.hpp"
+#include "strus/private/dll_tags.hpp"
+
+class DummySegmenter
+	:public strus::SegmenterInterface
+{
+public:
+	... Implement the segmenter interface here ...
+private:
+};	
+
+const strus::SegmenterInterface* dummy_segmenter()
+{
+	static const DummySegmenter dummy_segmenter_obj;
+	return &dummy_segmenter_obj;
+}
+
+static const strus::SegmenterConstructor segmenter =
+{
+	"dummy_segmenter", dummy_segmenter
+}
+
+extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+
+strus::AnalyzerModule entryPoint( segmenter, 0, 0);
+\endcode
+
+
 How to use loadable extensions
 ------------------------------
 The strus [module loader interface] (@ref strus::ModuleLoaderInterface) is constructed by
@@ -86,8 +121,6 @@ calling the createModuleLoader function implemented in the strus_module library.
 The module loader allows you to load modules one by one. After loading all modules you can
 construct the objects needed for your strus project. The module loader provides you two
 objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface.
-
-
 
 
 
