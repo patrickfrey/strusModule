@@ -19,6 +19,91 @@ In a storage module you write extensions of the following type
 * weighting functions (WeightingFunctionInterface)
 * summarization functions (SummarizerFunctionInterface)
 
+The following example shows a storage module template.
+It includes the main header file "strus/strus.hpp" with all strus
+core and analyzer declarations. For better built times it is 
+recommended to include the needed headers separately instead of including 
+them all by including "strus/strus.hpp". All parameters of the
+strus::StorageModule object that declares the module entry point are
+optional. You can pass 0, if no object of the parameter type is declared
+in the module.
+
+\code
+#include "strus/strus.hpp"
+#include "strus/private/dll_tags.hpp"
+
+/*--- Posting join operators */
+class DummyJoinOperator
+	:public strus::PostingJoinOperatorInterface
+{
+public:
+	... Implement the posting join operator interface here ...
+private:
+};
+
+const strus::PostingJoinOperatorInterface* dummy_join()
+{
+	static const DummyJoinOperator dummy_join_obj;
+	return &dummy_join_obj;
+}
+
+static const strus::PostingIteratorJoinConstructor postingJoinOperators[] =
+{
+	{"dummy_join", dummy_join},
+	{0,0}
+};
+
+/*--- Weighting functions */
+class DummyWeightingFunction
+	:public strus::WeightingFunctionInterface
+{
+public:
+	... Implement the weighting function interface here ...
+private:
+};
+
+const strus::WeightingFunctionInterface* dummy_weighting()
+{
+	static const DummyWeightingFunction dummy_weighting_obj;
+	return &dummy_weighting_obj;
+}
+
+static const strus::WeightingFunctionConstructor weightingFunctions[] =
+{
+	{"dummy_weighting", dummy_weighting},
+	{0,0}
+};
+
+
+/*--- Summarizer functions */
+class DummySummarizerFunction
+	:public strus::SummarizerFunctionInterface
+{
+public:
+	... Implement the summarizer function interface here ...
+private:
+};
+
+const strus::SummarizerFunctionInterface* dummy_summarizer()
+{
+	static const DummySummarizerFunction dummy_summarizer_obj;
+	return &dummy_summarizer_obj;
+}
+
+static const strus::SummarizerFunctionConstructor summarizerFunctions[] =
+{
+	{"dummy_summarizer", dummy_summarizer},
+	{0,0}
+};
+
+
+/*--- Module declaration */
+extern "C" DLL_PUBLIC strus::StorageModule entryPoint;
+
+strus::StorageModule entryPoint( postingJoinOperators, weightingFunctions, summarizerFunctions);
+\code
+
+
 How to implement an analyzer module
 ---------------------------------
 In an analyzer module you write extensions of the following type
@@ -30,7 +115,10 @@ The following examples show two analyzer module templates.
 Both include the main header file "strus/strus.hpp" with all strus
 core and analyzer declarations. For better built times it is 
 recommended to include the needed headers separately instead of including 
-them all by including "strus/strus.hpp":
+them all by including "strus/strus.hpp". All parameters of the
+strus::AnalyzerModule object that declares the module entry point are
+optional. You can pass 0 for arrays, if no object of the parameter type is declared
+in the module and you can ommit the segmenter argument, if no segmenter is declared.
 
 The first example shows a dummy analyzer module implementing a tokenizer and
 a normalizer:
@@ -38,6 +126,7 @@ a normalizer:
 #include "strus/strus.hpp"
 #include "strus/private/dll_tags.hpp"
 
+/*--- Tokenizer functions */
 class DummyTokenizerFunction
 	:public strus::TokenizerFunctionInterface
 {
@@ -58,6 +147,8 @@ static const strus::TokenizerConstructor tokenizers[] =
 	{0,0}
 };
 
+
+/*--- Normalizer functions */
 class DummyNormalizerFunction
 	:public strus::NormalizerFunctionInterface
 {
@@ -108,6 +199,8 @@ static const strus::SegmenterConstructor segmenter =
 	"dummy_segmenter", dummy_segmenter
 }
 
+
+/*--- Module declaration */
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
 
 strus::AnalyzerModule entryPoint( segmenter, 0, 0);
