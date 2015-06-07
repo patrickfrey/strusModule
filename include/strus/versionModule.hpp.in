@@ -26,7 +26,7 @@
 
 --------------------------------------------------------------------
 */
-/// \brief Header with the version info of the module loader
+/// \brief Header with the version info of the strus module loader
 /// \file versionModule.hpp
 #ifndef _STRUS_MODULE_VERSION_HPP_INCLUDED
 #define _STRUS_MODULE_VERSION_HPP_INCLUDED
