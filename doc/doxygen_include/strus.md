@@ -4,7 +4,7 @@ strusModule	 {#mainpage}
 The project strusModule provides a module loader a mechanism to load strus core or anaylzer 
 objects from dynamically loadable modules. With strusModule functions and objects 
 can be added to strus without modification of the original source code.
-You can create your own project for these extensions, build and deploy them separately.
+You can create your own project for these extensions and build and deploy them separately.
 
 Types of extensions
 -------------------
