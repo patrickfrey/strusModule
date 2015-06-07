@@ -41,7 +41,7 @@
 <div class="title">strusModule </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The project strusModule provides a module loader a mechanism to load strus core or anaylzer objects from dynamically loadable modules. With strusModule functions and objects can be added to strus without modification of the original source code. You can create your own project for these extensions, build and deploy them separately.</p>
+<div class="textblock"><p>The project strusModule provides a module loader a mechanism to load strus core or anaylzer objects from dynamically loadable modules. With strusModule functions and objects can be added to strus without modification of the original source code. You can create your own project for these extensions and build and deploy them separately.</p>
 <h2>Types of extensions </h2>
 <p>With strusModule you can define two classes of loadable modules:</p>
 <ol type="1">
@@ -60,14 +60,16 @@
 <ul>
 <li>document segmentation (SegmenterInterface)</li>
 <li>segment tokenization (TokenizerFunctionInterface)</li>
-<li>token normalization (NormalizerFunctionInterface)</li>
+<li>token normalization (NormalizerFunctionInterface) The following example shows a dummy analyzer module: <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;textwolf/xmlscanner.hpp&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;textwolf/cstringiterator.hpp&quot;</span></div>
+</div><!-- fragment --></li>
 </ul>
 <h2>How to use loadable extensions </h2>
-<p>The strus <a class="el" href="classstrus_1_1ModuleLoaderInterface.html">module loader interface</a> is constructed by calling the createModuleLoader function implemented in the strus_module library. The module loader allows you to load modules one by one. After loading all modules you can construct the objects needed for your strus project. </p>
+<p>The strus <a class="el" href="classstrus_1_1ModuleLoaderInterface.html">module loader interface</a> is constructed by calling the createModuleLoader function implemented in the strus_module library. The module loader allows you to load modules one by one. After loading all modules you can construct the objects needed for your strus project. The module loader provides you two objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 7 2015 11:10:24 for strus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jun 7 2015 12:05:38 for strus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

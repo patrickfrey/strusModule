@@ -25,10 +25,57 @@ In an analyzer module you write extensions of the following type
 * document segmentation (SegmenterInterface)
 * segment tokenization (TokenizerFunctionInterface)
 * token normalization (NormalizerFunctionInterface)
+
 The following example shows a dummy analyzer module:
 \code
-#include "textwolf/xmlscanner.hpp"
-#include "textwolf/cstringiterator.hpp"
+#include "strus/strus.hpp"
+#include "strus/private/dll_tags.hpp"
+#include "strus/analyzerModule.hpp"
+#include "strus/storageModule.hpp"
+
+class DummyTokenizerFunction
+	:public strus::TokenizerFunctionInterface
+{
+public:
+	... Implement the tokenizer function interface here ...
+private:
+};
+
+const strus::TokenizerFunctionInterface* dummy_tokenizer()
+{
+	static const DummyTokenizerFunction dummy_tokenizer_obj;
+	return &dummy_tokenizer_obj;
+}
+
+static const strus::TokenizerConstructor tokenizers[] =
+{
+	{"dummy_tokenizer", dummy_tokenizer},
+	{0,0}
+};
+
+class DummyNormalizerFunction
+	:public strus::NormalizerFunctionInterface
+{
+public:
+	... Implement the normalizer function interface here ...
+private:
+};
+
+const strus::NormalizerFunctionInterface* dummy_normalizer()
+{
+	static const DummyNormalizerFunction dummy_normalizer_obj;
+	return &dummy_normalizer_obj;
+}
+
+static const strus::NormalizerConstructor normalizers[] =
+{
+	{"dummy_normalizer", dummy_normalizer},
+	{0,0}
+};
+
+extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+
+strus::AnalyzerModule entryPoint( tokenizers, normalizers);
 \endcode
 
 
