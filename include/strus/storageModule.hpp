@@ -26,12 +26,15 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Storage module object type declarations
+/// \file storageModule.hpp
 #ifndef _STRUS_MODULE_STORAGE_HPP_INCLUDED
 #define _STRUS_MODULE_STORAGE_HPP_INCLUDED
 #include "strus/moduleEntryPoint.hpp"
 #include <string>
 #include <cstring>
 
+/// \brief strus toplevel namespace
 namespace strus
 {
 

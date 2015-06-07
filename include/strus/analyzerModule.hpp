@@ -26,11 +26,14 @@
 
 --------------------------------------------------------------------
 */
+/// \brief Analyzer module object type declarations
+/// \file analyzerModule.hpp
 #ifndef _STRUS_MODULE_ANALYZER_HPP_INCLUDED
 #define _STRUS_MODULE_ANALYZER_HPP_INCLUDED
 #include "strus/moduleEntryPoint.hpp"
 #include <string>
 
+/// \brief strus toplevel namespace
 namespace strus
 {
 

@@ -26,14 +26,19 @@
 
 --------------------------------------------------------------------
 */
-/// \brief Exported functions of the strus module loader
+/// \brief Exported functions of the strus module loader library
+/// \file module.hpp
 #ifndef _STRUS_LIB_MODULE_HPP_INCLUDED
 #define _STRUS_LIB_MODULE_HPP_INCLUDED
 
+/// \brief strus toplevel namespace
 namespace strus {
 
+/// \brief Forward declaration
 class ModuleLoaderInterface;
 
+/// \brief Create a module loader interface with the functions needed for creating strus objects.
+/// \return the allocated module loader interface
 ModuleLoaderInterface* createModuleLoader();
 
 }//namespace
