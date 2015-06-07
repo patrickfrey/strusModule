@@ -4,7 +4,7 @@ strusModule	 {#mainpage}
 The project strusModule provides a module loader a mechanism to load strus core or anaylzer 
 objects from dynamically loadable modules. With strusModule functions and objects 
 can be added to strus without modification of the original source code.
-You can create your own project for these extensions, build and deploy them separately.
+You can create your own project for these extensions and build and deploy them separately.
 
 Types of extensions
 -------------------
@@ -25,6 +25,11 @@ In an analyzer module you write extensions of the following type
 * document segmentation (SegmenterInterface)
 * segment tokenization (TokenizerFunctionInterface)
 * token normalization (NormalizerFunctionInterface)
+The following example shows a dummy analyzer module:
+\code
+#include "textwolf/xmlscanner.hpp"
+#include "textwolf/cstringiterator.hpp"
+\endcode
 
 
 How to use loadable extensions
@@ -32,7 +37,10 @@ How to use loadable extensions
 The strus [module loader interface] (@ref strus::ModuleLoaderInterface) is constructed by
 calling the createModuleLoader function implemented in the strus_module library.
 The module loader allows you to load modules one by one. After loading all modules you can
-construct the objects needed for your strus project.
+construct the objects needed for your strus project. The module loader provides you two
+objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface.
+
+
 
 
 
