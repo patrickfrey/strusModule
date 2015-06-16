@@ -72,6 +72,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			m_textProcessor->defineNormalizer( ni->name, ni->function());
 		}
 	}
+	if (mod->statisticsConstructors)
+	{
+		StatisticsConstructor const* ni = mod->statisticsConstructors;
+		for (; ni->function != 0; ++ni)
+		{
+			m_textProcessor->defineStatisticsFunction( ni->name, ni->function());
+		}
+	}
 	m_analyzerModules.push_back( mod);
 }
 
