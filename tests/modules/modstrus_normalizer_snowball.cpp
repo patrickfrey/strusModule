@@ -38,7 +38,7 @@ static const strus::NormalizerConstructor normalizers[] =
 
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
 
-strus::AnalyzerModule entryPoint( 0, normalizers);
+strus::AnalyzerModule entryPoint( 0, normalizers, 0);
 
 
 

@@ -43,6 +43,8 @@ class SegmenterInterface;
 class TokenizerFunctionInterface;
 /// \brief Forward declaration
 class NormalizerFunctionInterface;
+/// \brief Forward declaration
+class StatisticsFunctionInterface;
 
 /// \brief Structure to define a segmenter for an alternative document format (like XML) as module
 struct SegmenterConstructor
@@ -68,6 +70,14 @@ struct NormalizerConstructor
 	Function function;			///< normalizer function
 };
 
+/// \brief Structure to define a proprietary function to collect statistics for a document as meta data (counting, classification, etc.)
+struct StatisticsConstructor
+{
+	typedef const StatisticsFunctionInterface* (*Function)();
+	const char* name;			///< name of the statistics collector function
+	Function function;			///< statistics collector function
+};
+
 
 /// \brief Structure that contains all analyzer module objects
 struct AnalyzerModule
@@ -77,27 +87,33 @@ struct AnalyzerModule
 	/// \param[in] segmenterConstructor_ segmenter definition
 	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
 	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
+	/// \param[in] statisticsConstructor_ (0,0) terminated list of statistic functions or 0
 	AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_);
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_);
 
 	/// \brief Analyzer module constructor without segmenter definition
 	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
 	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
+	/// \param[in] statisticsConstructor_ (0,0) terminated list of statistic functions or 0
 	AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_);
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_);
 
 	SegmenterConstructor segmenterConstructor;			///< a segmenter definition
 	const TokenizerConstructor* tokenizerConstructors;		///< 0 terminated list of tokenizers
 	const NormalizerConstructor* normalizerConstructors;		///< 0 terminated list of normalizers
+	const StatisticsConstructor* statisticsConstructors;		///< 0 terminated list of statistics collector functions
 
 private:
 	void init(
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_);
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_);
 };
 }//namespace
 #endif

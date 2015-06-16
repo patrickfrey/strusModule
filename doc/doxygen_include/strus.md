@@ -219,5 +219,9 @@ construct the objects needed for your strus project. The module loader provides 
 objects to do this, the StorageObjectBuilderInterface and the AnalyzerObjectBuilderInterface.
 
 
+Module naming convention
+------------------------
+Strus modules should have the prefix "modstrus_". This is not a requirement but a development
+guideline.
 
 

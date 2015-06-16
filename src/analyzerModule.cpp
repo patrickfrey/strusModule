@@ -35,26 +35,29 @@ using namespace strus;
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_)
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_);
+	init( &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, statisticsConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_)
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( 0, tokenizerConstructors_, normalizerConstructors_);
+	init( 0, tokenizerConstructors_, normalizerConstructors_, statisticsConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
 void AnalyzerModule::init(
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_)
+		const NormalizerConstructor* normalizerConstructors_,
+		const StatisticsConstructor* statisticsConstructors_)
 {
 	if (segmenterConstructor_)
 	{
@@ -68,5 +71,6 @@ void AnalyzerModule::init(
 	}
 	tokenizerConstructors = tokenizerConstructors_;
 	normalizerConstructors = normalizerConstructors_;
+	statisticsConstructors = statisticsConstructors_;
 }
 
