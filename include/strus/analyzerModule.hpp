@@ -85,9 +85,9 @@ struct AnalyzerModule
 {
 	/// \brief Analyzer module constructor
 	/// \param[in] segmenterConstructor_ segmenter definition
-	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
-	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
-	/// \param[in] statisticsConstructor_ (0,0) terminated list of statistic functions or 0
+	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
+	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
+	/// \param[in] statisticsConstructors_ (0,0) terminated list of statistic functions or 0
 	AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
@@ -95,9 +95,9 @@ struct AnalyzerModule
 		const StatisticsConstructor* statisticsConstructors_);
 
 	/// \brief Analyzer module constructor without segmenter definition
-	/// \param[in] tokenizerConstructor_ (0,0) terminated list of tokenizers or 0
-	/// \param[in] normalizerConstructor_ (0,0) terminated list of normalizers or 0
-	/// \param[in] statisticsConstructor_ (0,0) terminated list of statistic functions or 0
+	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
+	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
+	/// \param[in] statisticsConstructors_ (0,0) terminated list of statistic functions or 0
 	AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
