@@ -1,6 +1,5 @@
-strusModule
-=============
-
-Library the provides a module loader and an interface to define loadable modules out of libraries to offer some expandability to strus.
+Library that provides a module loader and an interface to define loadable modules out of libraries to offer some expandability to strus.
 
 Interface documentation at http://patrickfrey.github.io/strusModule/doc/doxygen/html/index.html.
+
+Strus project homepage at http://project-strus.net.
