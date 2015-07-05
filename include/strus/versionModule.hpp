@@ -34,16 +34,16 @@
 /// \brief Version number of the module loader
 #define STRUS_MODULE_VERSION (\
 	0 * 1000000\
-	+ 0 * 10000\
-	+ 1\
+	+ 1 * 10000\
+	+ 2\
 )
 /// \brief Major version number of the module loader
 #define STRUS_MODULE_VERSION_MAJOR 0
 /// \brief Minor version number of the module loader
-#define STRUS_MODULE_VERSION_MINOR 0
+#define STRUS_MODULE_VERSION_MINOR 1
 
 /// \brief The version of the module loader as string
-#define STRUS_MODULE_VERSION_STRING "0.0.1"
+#define STRUS_MODULE_VERSION_STRING "0.1.2"
 /// \brief The signature of the module loader including the major version number
 #define STRUS_MODULE_SIGNATURE "strus0"
 

@@ -173,7 +173,7 @@ static const strus::NormalizerConstructor normalizers[] =
 /*--- Module declaration */
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
 
-strus::AnalyzerModule entryPoint( tokenizers, normalizers);
+strus::AnalyzerModule entryPoint( tokenizers, normalizers, 0/*no aggregators*/);
 \endcode
 
 

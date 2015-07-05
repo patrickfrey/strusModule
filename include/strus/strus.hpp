@@ -112,6 +112,10 @@
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInstanceInterface.hpp"
 
+// Aggregators (functions for values aggregated from many document properties like statistics)
+#include "strus/aggregatorFunctionInterface.hpp"
+#include "strus/aggregatorFunctionInstanceInterface.hpp"
+
 // Loading and building strus objects from source (some parsers for languages to configure strus objects from source):
 #include "strus/programLoader.hpp"
 

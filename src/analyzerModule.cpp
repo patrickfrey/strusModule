@@ -36,20 +36,20 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
-		const StatisticsConstructor* statisticsConstructors_)
+		const AggregatorConstructor* aggregatorConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, statisticsConstructors_);
+	init( &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
-		const StatisticsConstructor* statisticsConstructors_)
+		const AggregatorConstructor* aggregatorConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( 0, tokenizerConstructors_, normalizerConstructors_, statisticsConstructors_);
+	init( 0, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
@@ -57,7 +57,7 @@ void AnalyzerModule::init(
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
-		const StatisticsConstructor* statisticsConstructors_)
+		const AggregatorConstructor* aggregatorConstructors_)
 {
 	if (segmenterConstructor_)
 	{
@@ -71,6 +71,6 @@ void AnalyzerModule::init(
 	}
 	tokenizerConstructors = tokenizerConstructors_;
 	normalizerConstructors = normalizerConstructors_;
-	statisticsConstructors = statisticsConstructors_;
+	aggregatorConstructors = aggregatorConstructors_;
 }
 
