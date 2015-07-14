@@ -38,7 +38,7 @@ namespace strus
 {
 
 /// \brief Forward declaration
-class ContentDetectorInterface;
+class DocumentClassDetectorInterface;
 /// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
@@ -49,11 +49,11 @@ class NormalizerFunctionInterface;
 class AggregatorFunctionInterface;
 
 /// \brief Structure to define a content detector for an alternative document format
-struct ContentDetectorConstructor
+struct DocumentClassDetectorConstructor
 {
-	typedef const ContentDetectorInterface* (*Get)();
+	typedef const DocumentClassDetectorInterface* (*Get)();
 	const char* title;			///< title of the detector (informal name)
-	Get get;				///< segmenter constructor
+	Get get;				///< get the detector interface
 };
 
 /// \brief Structure to define a segmenter for an alternative document format (like XML) as module
@@ -94,20 +94,20 @@ struct AnalyzerModule
 	:public ModuleEntryPoint
 {
 	/// \brief Analyzer module constructor
-	/// \param[in] contentDetectorConstructor_ content detector definition
+	/// \param[in] DocumentClassDetectorConstructor_ content detector definition
 	/// \param[in] segmenterConstructor_ segmenter definition
 	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
 	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
 	/// \param[in] aggregatorConstructors_ (0,0) terminated list of aggregators or 0
 	AnalyzerModule(
-		const ContentDetectorConstructor& contentDetectorConstructor_,
+		const DocumentClassDetectorConstructor& DocumentClassDetectorConstructor_,
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_);
 
 	/// \brief Analyzer module constructor
-	/// \param[in] contentDetectorConstructor_ content detector definition
+	/// \param[in] DocumentClassDetectorConstructor_ content detector definition
 	/// \param[in] segmenterConstructor_ segmenter definition
 	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
 	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
@@ -127,15 +127,15 @@ struct AnalyzerModule
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_);
 
-	ContentDetectorConstructor contentDetectorConstructor;		///< a content detector definition
-	SegmenterConstructor segmenterConstructor;			///< a segmenter definition
-	const TokenizerConstructor* tokenizerConstructors;		///< 0 terminated list of tokenizers
-	const NormalizerConstructor* normalizerConstructors;		///< 0 terminated list of normalizers
-	const AggregatorConstructor* aggregatorConstructors;		///< 0 terminated list of aggregators
+	DocumentClassDetectorConstructor documentClassDetectorConstructor;	///< a content detector definition
+	SegmenterConstructor segmenterConstructor;				///< a segmenter definition
+	const TokenizerConstructor* tokenizerConstructors;			///< 0 terminated list of tokenizers
+	const NormalizerConstructor* normalizerConstructors;			///< 0 terminated list of normalizers
+	const AggregatorConstructor* aggregatorConstructors;			///< 0 terminated list of aggregators
 
 private:
 	void init(
-		const ContentDetectorConstructor* contentDetectorConstructor_,
+		const DocumentClassDetectorConstructor* documentClassDetectorConstructor_,
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,

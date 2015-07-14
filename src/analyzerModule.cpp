@@ -33,14 +33,14 @@
 using namespace strus;
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
-		const ContentDetectorConstructor& contentDetectorConstructor_,
+		const DocumentClassDetectorConstructor& documentClassDetectorConstructor_,
 		const SegmenterConstructor& segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
 {
-	init( &contentDetectorConstructor_, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
+	init( &documentClassDetectorConstructor_, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
 }
 
@@ -66,21 +66,21 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 }
 
 void AnalyzerModule::init(
-		const ContentDetectorConstructor* contentDetectorConstructor_,
+		const DocumentClassDetectorConstructor* documentClassDetectorConstructor_,
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
 {
-	if (contentDetectorConstructor_)
+	if (documentClassDetectorConstructor_)
 	{
-		contentDetectorConstructor.title = contentDetectorConstructor_->title;
-		contentDetectorConstructor.get = contentDetectorConstructor_->get;
+		documentClassDetectorConstructor.title = documentClassDetectorConstructor_->title;
+		documentClassDetectorConstructor.get = documentClassDetectorConstructor_->get;
 	}
 	else
 	{
-		contentDetectorConstructor.title = 0;
-		contentDetectorConstructor.get = 0;
+		documentClassDetectorConstructor.title = 0;
+		documentClassDetectorConstructor.get = 0;
 	}
 	if (segmenterConstructor_)
 	{
