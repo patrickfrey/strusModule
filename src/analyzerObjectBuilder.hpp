@@ -58,7 +58,6 @@ public:
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
-
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName) const;
