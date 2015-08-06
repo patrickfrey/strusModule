@@ -118,9 +118,6 @@
 #include "strus/aggregatorFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInstanceInterface.hpp"
 
-// Loading and building strus objects from source (some parsers for languages to configure strus objects from source):
-#include "strus/programLoader.hpp"
-
 // Loading strus objects from modules
 #include "strus/analyzerModule.hpp"
 #include "strus/storageModule.hpp"
