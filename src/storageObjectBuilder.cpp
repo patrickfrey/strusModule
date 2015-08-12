@@ -32,6 +32,7 @@
 #include "strus/lib/database_leveldb.hpp"
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
+#include "strus/lib/peermsgproc.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
@@ -46,8 +47,8 @@
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder()
-	:m_queryProcessor( strus::createQueryProcessor())
+StorageObjectBuilder::StorageObjectBuilder( const char* peermsgproc_)
+	:m_queryProcessor( strus::createQueryProcessor()),m_peermsgproc(peermsgproc_)
 {}
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
@@ -110,6 +111,28 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
 }
 
+const PeerMessageProcessorInterface* StorageObjectBuilder::getPeerMessageProcessor( const std::string& name) const
+{
+	std::vector<const StorageModule*>::const_iterator
+		mi = m_storageModules.begin(), 
+		me = m_storageModules.end();
+	for (; mi != me; ++mi)
+	{
+		if ((*mi)->peerMessageProcessorReference.get)
+		{
+			if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->peerMessageProcessorReference.name))
+			{
+				return (*mi)->peerMessageProcessorReference.get();
+			}
+		}
+	}
+	if (name.empty() || utils::caseInsensitiveEquals( name, "standard"))
+	{
+		return strus::getPeerMessageProcessor();
+	}
+	throw std::runtime_error( std::string( "undefined peer message processor '") + name + "'");
+}
+
 const StorageInterface* StorageObjectBuilder::getStorage() const
 {
 	return strus::getStorage();
@@ -118,6 +141,7 @@ const StorageInterface* StorageObjectBuilder::getStorage() const
 StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::string& config) const
 {
 	std::string dbname;
+	std::string peermsgproc;
 	std::string configstr( config);
 
 	(void)strus::extractStringFromConfigString( dbname, configstr, "database");
@@ -139,6 +163,12 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 	std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
 	std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
 	(void)database.release(); //... ownership passed to storage
+
+	if (m_peermsgproc)
+	{
+		const PeerMessageProcessorInterface* peermsgproc = getPeerMessageProcessor( m_peermsgproc);
+		storage->definePeerMessageProcessor( peermsgproc);
+	}
 	return storage.release(); //... ownership returned
 }
 

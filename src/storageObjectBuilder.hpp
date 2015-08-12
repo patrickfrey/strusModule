@@ -53,6 +53,8 @@ class QueryProcessorInterface;
 class QueryAnalyzerInterface;
 /// \brief Forward declaration
 class DatabaseInterface;
+/// \brief Forward declaration
+class PeerMessageProcessorInterface;
 
 
 /// \brief Implementation of StorageObjectBuilderInterface for the module loader
@@ -60,7 +62,7 @@ class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
 {
 public:
-	StorageObjectBuilder();
+	explicit StorageObjectBuilder( const char* peermsgproc);
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
@@ -75,8 +77,12 @@ public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 
 private:
+	const PeerMessageProcessorInterface* getPeerMessageProcessor( const std::string& name) const;
+
+private:
 	std::vector<const StorageModule*> m_storageModules;
 	Reference<QueryProcessorInterface> m_queryProcessor;
+	const char* m_peermsgproc;
 };
 
 }//namespace
