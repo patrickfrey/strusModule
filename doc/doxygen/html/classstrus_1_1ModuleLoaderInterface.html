@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.0</span>
+   &#160;<span id="projectnumber">0.1</span>
    </div>
   </td>
  </tr>
@@ -88,6 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d787c3639d41343dbf7439b73ee0777"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a> (const std::string &amp;path)=0</td></tr>
 <tr class="memdesc:a2d787c3639d41343dbf7439b73ee0777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare a path for analyzer components to find resource files.  <a href="#a2d787c3639d41343dbf7439b73ee0777">More...</a><br/></td></tr>
 <tr class="separator:a2d787c3639d41343dbf7439b73ee0777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fc756572e7f54995afc5405d0b6c8c0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a1fc756572e7f54995afc5405d0b6c8c0">enablePeerMessageProcessor</a> (const std::string &amp;name)=0</td></tr>
+<tr class="memdesc:a1fc756572e7f54995afc5405d0b6c8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable and declare the processor for packing/unpacking messages sent to peers.  <a href="#a1fc756572e7f54995afc5405d0b6c8c0">More...</a><br/></td></tr>
+<tr class="separator:a1fc756572e7f54995afc5405d0b6c8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca31e5f08b483516de6b87d0c616c070"><td class="memItemLeft" align="right" valign="top">virtual <br class="typebreak"/>
 StorageObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a> () const =0</td></tr>
 <tr class="memdesc:aca31e5f08b483516de6b87d0c616c070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the builder for storage objects build from components loaded from module or the defaults defined.  <a href="#aca31e5f08b483516de6b87d0c616c070">More...</a><br/></td></tr>
@@ -268,6 +271,38 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 
 </div>
 </div>
+<a class="anchor" id="a1fc756572e7f54995afc5405d0b6c8c0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void strus::ModuleLoaderInterface::enablePeerMessageProcessor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable and declare the processor for packing/unpacking messages sent to peers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>of the processor </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="acba34565a7a9c3773688166b53309118"></a>
 <div class="memitem">
 <div class="memproto">
@@ -307,7 +342,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 25 2015 12:22:30 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 16 2015 21:12:11 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

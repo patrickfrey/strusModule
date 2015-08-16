@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.0</span>
+   &#160;<span id="projectnumber">0.1</span>
    </div>
   </td>
  </tr>
@@ -118,9 +118,9 @@
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &quot;strus/forwardIteratorInterface.hpp&quot;</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &quot;strus/postingIteratorInterface.hpp&quot;</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &quot;strus/postingJoinOperatorInterface.hpp&quot;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &quot;strus/storagePeerTransactionInterface.hpp&quot;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &quot;strus/storagePeerInterface.hpp&quot;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &quot;strus/peerStorageTransactionInterface.hpp&quot;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &quot;strus/peerMessageProcessorInterface.hpp&quot;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &quot;strus/peerMessageViewerInterface.hpp&quot;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &quot;strus/peerMessageBuilderInterface.hpp&quot;</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">// Query processor (functions for the query evaluation used for ranking and summarization):</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &quot;strus/lib/queryproc.hpp&quot;</span></div>
@@ -178,22 +178,19 @@
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#include &quot;strus/aggregatorFunctionInterface.hpp&quot;</span></div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#include &quot;strus/aggregatorFunctionInstanceInterface.hpp&quot;</span></div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">// Loading and building strus objects from source (some parsers for languages to configure strus objects from source):</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#include &quot;strus/programLoader.hpp&quot;</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">// Loading strus objects from modules</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="analyzerModule_8hpp.html">strus/analyzerModule.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="storageModule_8hpp.html">strus/storageModule.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="moduleEntryPoint_8hpp.html">strus/moduleEntryPoint.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="moduleLoaderInterface_8hpp.html">strus/moduleLoaderInterface.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">// Version info</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="versionModule_8hpp.html">strus/versionModule.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#include &quot;strus/versionAnalyzer.hpp&quot;</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#include &quot;strus/versionStorage.hpp&quot;</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">// Loading strus objects from modules</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="analyzerModule_8hpp.html">strus/analyzerModule.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="storageModule_8hpp.html">strus/storageModule.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="moduleEntryPoint_8hpp.html">strus/moduleEntryPoint.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="moduleLoaderInterface_8hpp.html">strus/moduleLoaderInterface.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">// Version info</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="versionModule_8hpp.html">strus/versionModule.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#include &quot;strus/versionAnalyzer.hpp&quot;</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#include &quot;strus/versionStorage.hpp&quot;</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="moduleLoaderInterface_8hpp_html"><div class="ttname"><a href="moduleLoaderInterface_8hpp.html">moduleLoaderInterface.hpp</a></div><div class="ttdoc">Interface of the strus module loader. </div></div>
 <div class="ttc" id="versionModule_8hpp_html"><div class="ttname"><a href="versionModule_8hpp.html">versionModule.hpp</a></div><div class="ttdoc">Header with the version info of the strus module loader. </div></div>
 <div class="ttc" id="storageModule_8hpp_html"><div class="ttname"><a href="storageModule_8hpp.html">storageModule.hpp</a></div><div class="ttdoc">Storage module object type declarations. </div></div>
@@ -203,7 +200,7 @@
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 25 2015 12:22:30 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 16 2015 21:12:11 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
