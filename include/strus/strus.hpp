@@ -58,9 +58,9 @@
 #include "strus/forwardIteratorInterface.hpp"
 #include "strus/postingIteratorInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
-#include "strus/storagePeerTransactionInterface.hpp"
-#include "strus/storagePeerInterface.hpp"
-#include "strus/peerStorageTransactionInterface.hpp"
+#include "strus/peerMessageProcessorInterface.hpp"
+#include "strus/peerMessageViewerInterface.hpp"
+#include "strus/peerMessageBuilderInterface.hpp"
 
 // Query processor (functions for the query evaluation used for ranking and summarization):
 #include "strus/lib/queryproc.hpp"
@@ -117,9 +117,6 @@
 // Aggregators (functions for values aggregated from many document properties like statistics)
 #include "strus/aggregatorFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInstanceInterface.hpp"
-
-// Loading and building strus objects from source (some parsers for languages to configure strus objects from source):
-#include "strus/programLoader.hpp"
 
 // Loading strus objects from modules
 #include "strus/analyzerModule.hpp"

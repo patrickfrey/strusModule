@@ -58,12 +58,14 @@ class ModuleLoader
 	:public ModuleLoaderInterface
 {
 public:
-	ModuleLoader(){}
+	ModuleLoader()
+		:m_peermsgproc_enabled(false){}
 	virtual ~ModuleLoader(){}
 	virtual void addSystemModulePath();
 	virtual void addModulePath( const std::string& path);
 	virtual void loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
+	virtual void enablePeerMessageProcessor( const std::string& name);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
@@ -78,6 +80,8 @@ private:
 	std::vector<std::string> m_resourcePaths;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
+	std::string m_peermsgproc;
+	bool m_peermsgproc_enabled;
 };
 
 }//namespace

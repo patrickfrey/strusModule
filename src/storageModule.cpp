@@ -38,12 +38,13 @@ DLL_PUBLIC StorageModule::StorageModule(
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage)
 {
-	init( 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_);
+	init( 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_);
 	//... no need to make database loadable by module yet
 }
 
 void StorageModule::init(
 		const DatabaseReference* databaseReference_,
+		const PeerMessageProcessorReference* peerMessageProcessorReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
@@ -57,6 +58,16 @@ void StorageModule::init(
 	{
 		databaseReference.name = 0;
 		databaseReference.get = 0;
+	}
+	if (peerMessageProcessorReference_)
+	{
+		peerMessageProcessorReference.name = peerMessageProcessorReference_->name;
+		peerMessageProcessorReference.get = peerMessageProcessorReference_->get;
+	}
+	else
+	{
+		peerMessageProcessorReference.name = 0;
+		peerMessageProcessorReference.get = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

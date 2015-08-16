@@ -70,6 +70,12 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	addPath_( m_resourcePaths, path.c_str());
 }
 
+void ModuleLoader::enablePeerMessageProcessor( const std::string& name)
+{
+	m_peermsgproc = name;
+	m_peermsgproc_enabled = true;
+}
+
 void ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
@@ -96,7 +102,7 @@ void ModuleLoader::loadModule(const std::string& name)
 
 StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
-	std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder());
+	std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_peermsgproc_enabled?m_peermsgproc.c_str():0));
 	std::vector<const StorageModule*>::const_iterator
 		mi = m_storageModules.begin(), me = m_storageModules.end();
 	for (; mi != me; ++mi)

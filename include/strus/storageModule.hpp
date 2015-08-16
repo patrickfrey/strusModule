@@ -41,6 +41,8 @@ namespace strus
 /// \brief Forward declaration
 class DatabaseInterface;
 /// \brief Forward declaration
+class PeerMessageProcessorInterface;
+/// \brief Forward declaration
 class WeightingFunctionInterface;
 /// \brief Forward declaration
 class SummarizerFunctionInterface;
@@ -54,6 +56,14 @@ struct DatabaseReference
 	typedef const DatabaseInterface* (*Get)();
 	const char* name;				///< name of the database implementation
 	Get get;					///< getter function to reference the database object
+};
+
+/// \brief Structure to declare an alternative packing/unpacking of peer messages
+struct PeerMessageProcessorReference
+{
+	typedef const PeerMessageProcessorInterface* (*Get)();
+	const char* name;				///< name of the implementation
+	Get get;					///< getter function to reference the object
 };
 
 /// \brief Structure to declare an operator to join sets of postings represented as iterator as module object
@@ -95,6 +105,7 @@ struct StorageModule
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
 	DatabaseReference databaseReference;					///< alternative key value store database 
+	PeerMessageProcessorReference peerMessageProcessorReference;		///< alternative packing/unpacking of peer messages
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
@@ -102,6 +113,7 @@ struct StorageModule
 private:
 	void init(
 		const DatabaseReference* databaseReference_,
+		const PeerMessageProcessorReference* peerMessageProcessorReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
