@@ -138,7 +138,7 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 {
 	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
 
-	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
+	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_GLOBAL);
 	if (!hnd)
 	{
 		std::ostringstream msg;

@@ -61,7 +61,7 @@ struct SegmenterConstructor
 {
 	typedef SegmenterInterface* (*Create)();
 	const char* name;			///< name of the segmenter
-	Create create;				///< segmenter constructor
+	Create create;				///< segmenter
 };
 
 /// \brief Structure to define a proprietary tokenizer of text segments as module
