@@ -39,30 +39,27 @@
 
 int main( int argc, const char** argv)
 {
-	try
+	std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr));
+	std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
+	std::cerr << "setting load module path to '" << STRUS_TEST_MODULE_DIRECTORY << "'" << std::endl;
+	modloader->addModulePath( STRUS_TEST_MODULE_DIRECTORY);
+
+	int ai = 1, ae = argc;
+	for (; ai != ae; ++ai)
 	{
-		std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr));
-		std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
-		std::cerr << "setting load module path to '" << STRUS_TEST_MODULE_DIRECTORY << "'" << std::endl;
-		modloader->addModulePath( STRUS_TEST_MODULE_DIRECTORY);
-	
-		int ai = 1, ae = argc;
-		for (; ai != ae; ++ai)
-		{
-			std::cerr << "loading module '" << argv[ai] << "'" << std::endl;
-			modloader->loadModule( argv[ai]);
-		}
-		if (argc == 1)
-		{
-			std::cerr << "no modules loaded." << std::endl;
-		}
-		return 0;
+		std::cerr << "loading module '" << argv[ai] << "'" << std::endl;
+		modloader->loadModule( argv[ai]);
 	}
-	catch (const std::runtime_error& err)
+	if (argc == 1)
 	{
-		std::cerr << "ERROR " << err.what() << std::endl;
-		return 1;
+		std::cerr << "no modules loaded." << std::endl;
 	}
+	if (errorbuf->hasError())
+	{
+		std::cerr << "error testing module loader: " << errorbuf->fetchError() << std::endl;
+		return -1;
+	}
+	return 0;
 }
 
 
