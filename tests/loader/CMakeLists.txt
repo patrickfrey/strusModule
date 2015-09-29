@@ -23,4 +23,4 @@ configure_file( "testModuleDirectory.hpp.in"  "testModuleDirectory.hpp"  @ONLY )
 add_executable( testModuleLoader testModuleLoader.cpp )
 target_link_libraries( testModuleLoader ${strusanalyzer_LIBRARIES} ${strus_LIBRARIES} strus_module strus_error )
 
-
+add_test( LoadNormalizerModule testModuleLoader normalizer_snowball )
