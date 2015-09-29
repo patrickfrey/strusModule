@@ -26,20 +26,29 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/private/dll_tags.hpp"
-#include "strus/analyzerModule.hpp"
-#include "strus/lib/normalizer_snowball.hpp"
+#ifndef _STRUS_INTERNATIONALIZATION_HPP_INCLUDED
+#define _STRUS_INTERNATIONALIZATION_HPP_INCLUDED
+#include <libintl.h>
+#include <stdexcept>
 
-static const strus::NormalizerConstructor normalizers[] =
+#define _TXT(STRING) gettext(STRING)
+
+namespace strus
 {
-	{"stem", &strus::createNormalizer_snowball},
-	{0,0}	
-};
 
-extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+/// \brief Substitute for std::runtime_error with arguments
+/// \param[in] msg c printf format string
+/// \param[in] nofargs number of arguments passed to be substituted in the format string
+std::runtime_error runtime_error( const char* format, ...);
 
-strus::AnalyzerModule entryPoint( 0, normalizers, 0);
+/// \brief Substitute for std::logic_error with arguments
+/// \param[in] msg c printf format string
+/// \param[in] nofargs number of arguments passed to be substituted in the format string
+std::logic_error logic_error( const char* format, ...);
 
+/// \brief Declare the message domain used by this package for the exception constructors declared in this module for gettext
+void initMessageTextDomain();
 
-
+}//namespace
+#endif
 

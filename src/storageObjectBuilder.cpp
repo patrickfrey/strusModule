@@ -38,18 +38,27 @@
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/storageClientInterface.hpp"
+#include "strus/errorBufferInterface.hpp"
+#include "strus/postingJoinOperatorInterface.hpp"
+#include "strus/weightingFunctionInterface.hpp"
+#include "strus/summarizerFunctionInterface.hpp"
 #include "strus/private/fileio.hpp"
 #include "strus/private/configParser.hpp"
 #include "utils.hpp"
+#include "errorUtils.hpp"
+#include "internationalization.hpp"
 #include <string>
 #include <cstring>
 #include <memory>
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder( const char* peermsgproc_)
-	:m_queryProcessor( strus::createQueryProcessor()),m_peermsgproc(peermsgproc_)
-{}
+StorageObjectBuilder::StorageObjectBuilder( const char* peermsgprocname_, ErrorBufferInterface* errorhnd_)
+	:m_queryProcessor( strus::createQueryProcessor(errorhnd_)),m_storage(strus::createStorage(errorhnd_)),m_peermsgprocname(peermsgprocname_),m_errorhnd(errorhnd_)
+{
+	if (!m_queryProcessor.get()) throw std::runtime_error("error creating query processor");
+	if (!m_storage.get()) throw std::runtime_error("error creating storage");
+}
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
 {
@@ -58,147 +67,239 @@ const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
 
 void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
+	if (!m_errorhnd->hasError())
+	{
+		m_errorhnd->report(_TXT("cannot add storage module with previous unhandled errors"));
+		return;
+	}
 	if (mod->postingIteratorJoinConstructor)
 	{
 		PostingIteratorJoinConstructor const* pi = mod->postingIteratorJoinConstructor;
-		for (; pi->function != 0; ++pi)
+		for (; pi->create != 0; ++pi)
 		{
-			m_queryProcessor->definePostingJoinOperator( pi->name, pi->function());
+			PostingJoinOperatorInterface* func = pi->create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating posting join operator"));
+				return;
+			}
+			else
+			{
+				m_queryProcessor->definePostingJoinOperator( pi->name, func);
+				if (m_errorhnd->hasError())
+				{
+					delete func;
+					m_errorhnd->report(_TXT("error defining posting join operator"));
+					return;
+				}
+			}
 		}
 	}
 	if (mod->weightingFunctionConstructor)
 	{
 		WeightingFunctionConstructor const* wi = mod->weightingFunctionConstructor;
-		for (; wi->function != 0; ++wi)
+		for (; wi->create != 0; ++wi)
 		{
-			m_queryProcessor->defineWeightingFunction( wi->name, wi->function());
+			WeightingFunctionInterface* func = wi->create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating weighting function"));
+				return;
+			}
+			m_queryProcessor->defineWeightingFunction( wi->name, func);
+			if (m_errorhnd->hasError())
+			{
+				delete func;
+				m_errorhnd->report(_TXT("error defining weighting function"));
+				return;
+			}
 		}
 	}
 	if (mod->summarizerFunctionConstructor)
 	{
 		SummarizerFunctionConstructor const* si = mod->summarizerFunctionConstructor;
-		for (; si->function != 0; ++si)
+		for (; si->create != 0; ++si)
 		{
-			m_queryProcessor->defineSummarizerFunction( si->name, si->function());
+			SummarizerFunctionInterface* func = si->create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating summarizer function"));
+				return;
+			}
+			m_queryProcessor->defineSummarizerFunction( si->name, func);
+			if (m_errorhnd->hasError())
+			{
+				delete func;
+				m_errorhnd->report(_TXT("error defining summarizer function"));
+				return;
+			}
 		}
 	}
-	m_storageModules.push_back( mod);
+	try
+	{
+		m_storageModules.push_back( mod);
+	}
+	catch (const std::bad_alloc&)
+	{
+		m_errorhnd->report(_TXT("out of memory constructing storage object builder"));
+	}
 }
 
 const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& config) const
 {
-	std::string configstr( config);
-	std::string name;
-	(void)strus::extractStringFromConfigString( name, configstr, "database");
-
-	std::vector<const StorageModule*>::const_iterator
-		mi = m_storageModules.begin(), 
-		me = m_storageModules.end();
-	for (; mi != me; ++mi)
+	try
 	{
-		if ((*mi)->databaseReference.get)
+		std::string configstr( config);
+		std::string name;
+		(void)strus::extractStringFromConfigString( name, configstr, "database");
+	
+		std::string::iterator ni = name.begin(), ne = name.end();
+		for (; ni != ne; ++ ni) *ni = ::tolower(*ni);
+		std::map<std::string,DatabaseReference>::const_iterator di = m_dbmap.find( name);
+		if (di == m_dbmap.end())
 		{
-			if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
+			std::vector<const StorageModule*>::const_iterator
+				mi = m_storageModules.begin(), 
+				me = m_storageModules.end();
+			for (; mi != me; ++mi)
 			{
-				return (*mi)->databaseReference.get();
+				if ((*mi)->databaseReference.create)
+				{
+					if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
+					{
+						DatabaseReference dbref( (*mi)->databaseReference.create( m_errorhnd));
+						m_dbmap[ name] = dbref;
+						return dbref.get();
+					}
+				}
 			}
+			if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
+			{
+				DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
+				m_dbmap[ name] = dbref;
+				return dbref.get();
+			}
+			throw strus::runtime_error( _TXT( "undefined key value store database '%s'"), name.c_str());
+		}
+		else
+		{
+			return di->second.get();
 		}
 	}
-	if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
-	{
-		return strus::getDatabase_leveldb();
-	}
-	throw std::runtime_error( std::string( "undefined key value store database '") + name + "'");
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting database from storage object builder: %s"), *m_errorhnd, 0);
 }
 
-const PeerMessageProcessorInterface* StorageObjectBuilder::getPeerMessageProcessor( const std::string& name) const
+const PeerMessageProcessorInterface* StorageObjectBuilder::getPeerMessageProcessor() const
 {
-	std::vector<const StorageModule*>::const_iterator
-		mi = m_storageModules.begin(), 
-		me = m_storageModules.end();
-	for (; mi != me; ++mi)
+	try
 	{
-		if ((*mi)->peerMessageProcessorReference.get)
+		if (!m_peermsgproc.get())
 		{
-			if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->peerMessageProcessorReference.name))
+			std::vector<const StorageModule*>::const_iterator
+				mi = m_storageModules.begin(), 
+				me = m_storageModules.end();
+			for (; mi != me; ++mi)
 			{
-				return (*mi)->peerMessageProcessorReference.get();
+				if ((*mi)->peerMessageProcessorReference.create)
+				{
+					if (!m_peermsgprocname[0] || utils::caseInsensitiveEquals( m_peermsgprocname, (*mi)->peerMessageProcessorReference.name))
+					{
+						m_peermsgproc.reset( (*mi)->peerMessageProcessorReference.create( m_errorhnd));
+						break;
+					}
+				}
+			}
+			if (mi == me)
+			{
+				if (!m_peermsgprocname[0] || utils::caseInsensitiveEquals( m_peermsgprocname, "standard"))
+				{
+					m_peermsgproc.reset( strus::createPeerMessageProcessor( m_errorhnd));
+				}
+				else
+				{
+					throw std::runtime_error( std::string( "undefined peer message processor '") + m_peermsgprocname + "'");
+				}
 			}
 		}
+		return m_peermsgproc.get();
 	}
-	if (name.empty() || utils::caseInsensitiveEquals( name, "standard"))
-	{
-		return strus::getPeerMessageProcessor();
-	}
-	throw std::runtime_error( std::string( "undefined peer message processor '") + name + "'");
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting peer message processor from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const
 {
-	return strus::getStorage();
+	return m_storage.get();
 }
 
 StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::string& config) const
 {
-	std::string dbname;
-	std::string peermsgproc;
-	std::string configstr( config);
-
-	(void)strus::extractStringFromConfigString( dbname, configstr, "database");
-
-	const DatabaseInterface* dbi = getDatabase( dbname);
-	const StorageInterface* sti = getStorage();
-
-	std::string databasecfg( configstr);
-	std::string storagecfg( configstr);
-	strus::removeKeysFromConfigString(
-			databasecfg,
-			sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
-
-	strus::removeKeysFromConfigString(
-			storagecfg,
-			dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient));
-	//... In storagecfg is now the pure storage configuration without the database settings
-
-	std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
-	std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
-	(void)database.release(); //... ownership passed to storage
-
-	if (m_peermsgproc)
+	try
 	{
-		const PeerMessageProcessorInterface* peermsgproc = getPeerMessageProcessor( m_peermsgproc);
-		storage->definePeerMessageProcessor( peermsgproc);
+		std::string dbname;
+		std::string peermsgproc;
+		std::string configstr( config);
+	
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database");
+	
+		const DatabaseInterface* dbi = getDatabase( dbname);
+		const StorageInterface* sti = getStorage();
+	
+		std::string databasecfg( configstr);
+		std::string storagecfg( configstr);
+		strus::removeKeysFromConfigString(
+				databasecfg,
+				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
+	
+		strus::removeKeysFromConfigString(
+				storagecfg,
+				dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient));
+		//... In storagecfg is now the pure storage configuration without the database settings
+	
+		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
+		std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
+		(void)database.release(); //... ownership passed to storage
+	
+		if (m_peermsgprocname)
+		{
+			const PeerMessageProcessorInterface* peermsgproc = getPeerMessageProcessor();
+			storage->definePeerMessageProcessor( peermsgproc);
+		}
+		return storage.release(); //... ownership returned
 	}
-	return storage.release(); //... ownership returned
+	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating storage: %s"), *m_errorhnd, 0);
 }
 
 
 StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTable( const std::string& config) const
 {
-	std::string dbname;
-	std::string configstr( config);
-
-	(void)strus::extractStringFromConfigString( dbname, configstr, "database");
-
-	const DatabaseInterface* dbi = getDatabase( dbname);
-	const StorageInterface* sti = getStorage();
-
-	std::string databasecfg( configstr);
-	strus::removeKeysFromConfigString(
-			databasecfg,
-			sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
-	//... In storagecfg is now the pure storage configuration without the database settings
-
-	std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
-	std::auto_ptr<StorageAlterMetaDataTableInterface> altermetatable( sti->createAlterMetaDataTable( database.get()));
-	(void)database.release(); //... ownership passed to storage
-	return altermetatable.release(); //... ownership returned
+	try
+	{
+		std::string dbname;
+		std::string configstr( config);
+	
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database");
+	
+		const DatabaseInterface* dbi = getDatabase( dbname);
+		const StorageInterface* sti = getStorage();
+	
+		std::string databasecfg( configstr);
+		strus::removeKeysFromConfigString(
+				databasecfg,
+				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
+		//... In storagecfg is now the pure storage configuration without the database settings
+	
+		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
+		std::auto_ptr<StorageAlterMetaDataTableInterface> altermetatable( sti->createAlterMetaDataTable( database.get()));
+		(void)database.release(); //... ownership passed to storage
+		return altermetatable.release(); //... ownership returned
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating alter meta data table: %s"), *m_errorhnd, 0);
 }
 
 
 QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 {
-	return strus::createQueryEval();
+	return strus::createQueryEval( m_errorhnd);
 }
 
 

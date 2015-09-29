@@ -52,22 +52,22 @@ void StorageModule::init(
 	if (databaseReference_)
 	{
 		databaseReference.name = databaseReference_->name;
-		databaseReference.get = databaseReference_->get;
+		databaseReference.create = databaseReference_->create;
 	}
 	else
 	{
 		databaseReference.name = 0;
-		databaseReference.get = 0;
+		databaseReference.create = 0;
 	}
 	if (peerMessageProcessorReference_)
 	{
 		peerMessageProcessorReference.name = peerMessageProcessorReference_->name;
-		peerMessageProcessorReference.get = peerMessageProcessorReference_->get;
+		peerMessageProcessorReference.create = peerMessageProcessorReference_->create;
 	}
 	else
 	{
 		peerMessageProcessorReference.name = 0;
-		peerMessageProcessorReference.get = 0;
+		peerMessageProcessorReference.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

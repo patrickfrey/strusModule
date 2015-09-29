@@ -75,12 +75,12 @@ void AnalyzerModule::init(
 	if (documentClassDetectorConstructor_)
 	{
 		documentClassDetectorConstructor.title = documentClassDetectorConstructor_->title;
-		documentClassDetectorConstructor.get = documentClassDetectorConstructor_->get;
+		documentClassDetectorConstructor.create = documentClassDetectorConstructor_->create;
 	}
 	else
 	{
 		documentClassDetectorConstructor.title = 0;
-		documentClassDetectorConstructor.get = 0;
+		documentClassDetectorConstructor.create = 0;
 	}
 	if (segmenterConstructor_)
 	{

@@ -30,8 +30,6 @@
 #include "strus/private/dll_tags.hpp"
 #include <cstring>
 #include <vector>
-#include <sstream>
-#include <iostream>
 #include <stdexcept>
 
 #if defined(_WIN32)
@@ -128,39 +126,51 @@ static const char* errorMessage( int error)
 		case ModuleEntryPoint::ErrorModMinorVersion: return "module newer in minor version than module loader, it is compatible but may contain objects that cannot be loaded";
 		case ModuleEntryPoint::ErrorCompMajorVersion: return "loaded objects major version mismatch";
 		case ModuleEntryPoint::ErrorCompMinorVersion: return "loaded objects minor version smaller than required by the loader";
+		case ModuleEntryPoint::ErrorOpenModule: return "system error loading module";
+		case ModuleEntryPoint::ErrorNoEntryPoint:return "no module entry point found";
+
 		default: return "unknown error";
 	};
-	
 }
 
-
-DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename)
+static void initStatusMessage( ModuleEntryPoint::Status& status, const char* msg)
 {
+	std::size_t msglen = msg?std::strlen(msg):0;
+	if (msglen >= sizeof(status.errormsg))
+	{
+		msglen = sizeof(status.errormsg)-1;
+	}
+	std::memcpy( status.errormsg, msg, msglen);
+	status.errormsg[ msglen] = '\0';
+}
+
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status)
+{
+	status.errorcode = 0;
+	status.errormsg[0] = '\0';
+
 	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
 
 	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_GLOBAL);
 	if (!hnd)
 	{
-		std::ostringstream msg;
-		msg << "error opening module " << modfilename << " (" << ::dlerror() << ")";
-		throw std::runtime_error( std::string(msg.str()));
+		status.errorcode = ModuleEntryPoint::ErrorOpenModule;
+		initStatusMessage( status, ::dlerror());
+		return 0;
 	}
 	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)dlsym( hnd, "entryPoint");
 	if (!entryPoint)
 	{
-		std::ostringstream msg;
-		msg << "no entry point found in module " << modfilename << " (" << ::dlerror() << ")";
-		::dlclose( hnd);
-		throw std::runtime_error( std::string( msg.str()));
+		status.errorcode = ModuleEntryPoint::ErrorNoEntryPoint;
+		initStatusMessage( status, errorMessage( status.errorcode));
+		return 0;
 	}
 	int errorcode = 0;
 	if (ModuleEntryPoint::matchModuleVersion( entryPoint, errorcode))
 	{
-		std::ostringstream msg;
-		msg << "incompatible content in the module " << modfilename << " (" << errorMessage( errorcode) << ")";
-		::dlclose( hnd);
-		throw std::runtime_error( std::string( msg.str()));
-		
+		status.errorcode = errorcode;
+		initStatusMessage( status, errorMessage( status.errorcode));
+		return 0;
 	}
 	g_moduleHandleList.addHandle( hnd);
 	return entryPoint;

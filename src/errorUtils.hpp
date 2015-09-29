@@ -26,20 +26,47 @@
 
 --------------------------------------------------------------------
 */
-#include "strus/private/dll_tags.hpp"
-#include "strus/analyzerModule.hpp"
-#include "strus/lib/normalizer_snowball.hpp"
+/// \brief Macros, classes and functions supporting error handling
+/// \file errorUtils.hpp
+#ifndef _STRUS_STORAGE_ERROR_UTILITIES_HPP_INCLUDED
+#define _STRUS_STORAGE_ERROR_UTILITIES_HPP_INCLUDED
+#include <stdexcept>
+#include "internationalization.hpp"
 
-static const strus::NormalizerConstructor normalizers[] =
+/// \brief strus toplevel namespace
+namespace strus
 {
-	{"stem", &strus::createNormalizer_snowball},
-	{0,0}	
-};
 
-extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+#define CATCH_ERROR_MAP( contextExplainText, errorBuffer)\
+	catch (const std::bad_alloc&)\
+	{\
+		(errorBuffer).report( _TXT("memory allocation error"));\
+	}\
+	catch (const std::runtime_error& err)\
+	{\
+		(errorBuffer).report( contextExplainText, err.what());\
+	}\
+	catch (const std::exception& err)\
+	{\
+		(errorBuffer).report( _TXT("uncaught exception: %s"), err.what());\
+	}
 
-strus::AnalyzerModule entryPoint( 0, normalizers, 0);
+#define CATCH_ERROR_MAP_RETURN( contextExplainText, errorBuffer, errorReturnValue)\
+	catch (const std::bad_alloc&)\
+	{\
+		(errorBuffer).report( _TXT("memory allocation error"));\
+		return errorReturnValue;\
+	}\
+	catch (const std::runtime_error& err)\
+	{\
+		(errorBuffer).report( contextExplainText, err.what());\
+		return errorReturnValue;\
+	}\
+	catch (const std::exception& err)\
+	{\
+		(errorBuffer).report( _TXT("uncaught exception: %s"), err.what());\
+		return errorReturnValue;\
+	}
 
-
-
-
+}//namespace
+#endif

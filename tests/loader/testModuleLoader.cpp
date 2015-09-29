@@ -27,18 +27,22 @@
 --------------------------------------------------------------------
 */
 #include "strus/lib/module.hpp"
+#include "strus/lib/error.hpp"
 #include "strus/moduleLoaderInterface.hpp"
+#include "strus/errorBufferInterface.hpp"
 #include "testModuleDirectory.hpp"
 #include <memory>
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <cstdio>
 
 int main( int argc, const char** argv)
 {
 	try
 	{
-		std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader());
+		std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr));
+		std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
 		std::cerr << "setting load module path to '" << STRUS_TEST_MODULE_DIRECTORY << "'" << std::endl;
 		modloader->addModulePath( STRUS_TEST_MODULE_DIRECTORY);
 	
