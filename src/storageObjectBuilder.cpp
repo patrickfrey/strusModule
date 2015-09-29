@@ -56,8 +56,8 @@ using namespace strus;
 StorageObjectBuilder::StorageObjectBuilder( const char* peermsgprocname_, ErrorBufferInterface* errorhnd_)
 	:m_queryProcessor( strus::createQueryProcessor(errorhnd_)),m_storage(strus::createStorage(errorhnd_)),m_peermsgprocname(peermsgprocname_),m_errorhnd(errorhnd_)
 {
-	if (!m_queryProcessor.get()) throw std::runtime_error("error creating query processor");
-	if (!m_storage.get()) throw std::runtime_error("error creating storage");
+	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
+	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 }
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
@@ -217,7 +217,7 @@ const PeerMessageProcessorInterface* StorageObjectBuilder::getPeerMessageProcess
 				}
 				else
 				{
-					throw std::runtime_error( std::string( "undefined peer message processor '") + m_peermsgprocname + "'");
+					throw strus::runtime_error( _TXT( "undefined peer message processor '%s'"), m_peermsgprocname);
 				}
 			}
 		}
