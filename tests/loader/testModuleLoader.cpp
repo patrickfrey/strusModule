@@ -40,7 +40,17 @@
 int main( int argc, const char** argv)
 {
 	std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr));
+	if (!errorbuf.get())
+	{
+		std::cerr << "error creating error buffer" << std::endl;
+		return -1;
+	}
 	std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
+	if (!modloader.get())
+	{
+		std::cerr << "error creating module loader" << std::endl;
+		return -1;
+	}
 	std::cerr << "setting load module path to '" << STRUS_TEST_MODULE_DIRECTORY << "'" << std::endl;
 	modloader->addModulePath( STRUS_TEST_MODULE_DIRECTORY);
 

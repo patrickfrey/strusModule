@@ -168,6 +168,7 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 					if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
 					{
 						DatabaseReference dbref( (*mi)->databaseReference.create( m_errorhnd));
+						if (!dbref.get()) return 0;
 						m_dbmap[ name] = dbref;
 						return dbref.get();
 					}
@@ -176,6 +177,7 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 			if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
 			{
 				DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
+				if (!dbref.get()) return 0;
 				m_dbmap[ name] = dbref;
 				return dbref.get();
 			}
@@ -256,12 +258,26 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 		//... In storagecfg is now the pure storage configuration without the database settings
 	
 		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
+		if (!database.get())
+		{
+			m_errorhnd->report(_TXT("error creating database client"));
+			return 0;
+		}
 		std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
+		if (!storage.get())
+		{
+			m_errorhnd->report(_TXT("error creating storage client"));
+			return 0;
+		}
 		(void)database.release(); //... ownership passed to storage
-	
 		if (m_peermsgprocname)
 		{
 			const PeerMessageProcessorInterface* peermsgproc = getPeerMessageProcessor();
+			if (!peermsgproc)
+			{
+				m_errorhnd->report(_TXT("error creating peer message processor"));
+				return 0;
+			}
 			storage->definePeerMessageProcessor( peermsgproc);
 		}
 		return storage.release(); //... ownership returned
@@ -289,8 +305,18 @@ StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTab
 		//... In storagecfg is now the pure storage configuration without the database settings
 	
 		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
+		if (!database.get())
+		{
+			m_errorhnd->report(_TXT("error creating database client"));
+			return 0;
+		}
 		std::auto_ptr<StorageAlterMetaDataTableInterface> altermetatable( sti->createAlterMetaDataTable( database.get()));
-		(void)database.release(); //... ownership passed to storage
+		if (!altermetatable.get())
+		{
+			m_errorhnd->report(_TXT("error creating alter metadata table client"));
+			return 0;
+		}
+		(void)database.release(); //... ownership passed to alter metadata table client
 		return altermetatable.release(); //... ownership returned
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating alter meta data table: %s"), *m_errorhnd, 0);
