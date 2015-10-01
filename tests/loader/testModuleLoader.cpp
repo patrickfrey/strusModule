@@ -39,7 +39,7 @@
 
 int main( int argc, const char** argv)
 {
-	std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr));
+	std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr, 1));
 	if (!errorbuf.get())
 	{
 		std::cerr << "error creating error buffer" << std::endl;
