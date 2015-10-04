@@ -151,8 +151,12 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 	{
 		std::string configstr( config);
 		std::string name;
-		(void)strus::extractStringFromConfigString( name, configstr, "database");
-	
+		(void)strus::extractStringFromConfigString( name, configstr, "database", m_errorhnd);
+		if (m_errorhnd->hasError())
+		{
+			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
+			return 0;
+		}
 		std::string::iterator ni = name.begin(), ne = name.end();
 		for (; ni != ne; ++ ni) *ni = ::tolower(*ni);
 		std::map<std::string,DatabaseReference>::const_iterator di = m_dbmap.find( name);
@@ -241,8 +245,7 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 		std::string peermsgproc;
 		std::string configstr( config);
 	
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database");
-	
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 		const DatabaseInterface* dbi = getDatabase( dbname);
 		const StorageInterface* sti = getStorage();
 	
@@ -250,13 +253,17 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 		std::string storagecfg( configstr);
 		strus::removeKeysFromConfigString(
 				databasecfg,
-				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
+				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient), m_errorhnd);
 	
 		strus::removeKeysFromConfigString(
 				storagecfg,
-				dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient));
+				dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient), m_errorhnd);
 		//... In storagecfg is now the pure storage configuration without the database settings
-	
+		if (m_errorhnd->hasError())
+		{
+			m_errorhnd->explain(_TXT("cannot create database client: %s"));
+			return 0;
+		}
 		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
 		if (!database.get())
 		{
@@ -293,17 +300,21 @@ StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTab
 		std::string dbname;
 		std::string configstr( config);
 	
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database");
-	
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
+
 		const DatabaseInterface* dbi = getDatabase( dbname);
 		const StorageInterface* sti = getStorage();
 	
 		std::string databasecfg( configstr);
 		strus::removeKeysFromConfigString(
 				databasecfg,
-				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient));
+				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient), m_errorhnd);
 		//... In storagecfg is now the pure storage configuration without the database settings
-	
+		if (m_errorhnd->hasError())
+		{
+			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
+			return 0;
+		}
 		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
 		if (!database.get())
 		{
