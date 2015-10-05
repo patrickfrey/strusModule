@@ -57,7 +57,7 @@ public:
 
 	/// \brief Load a module with name 'name' seeking in all module paths defined in the order of their definition
 	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
-	virtual void loadModule( const std::string& name)=0;
+	virtual bool loadModule( const std::string& name)=0;
 
 	/// \brief Declare a path for analyzer components to find resource files
 	/// \param[in] path path to add

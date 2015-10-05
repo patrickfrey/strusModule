@@ -66,7 +66,7 @@ public:
 	virtual ~ModuleLoader();
 	virtual void addSystemModulePath();
 	virtual void addModulePath( const std::string& path);
-	virtual void loadModule( const std::string& name);
+	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
 	virtual void enablePeerMessageProcessor( const std::string& name);
 

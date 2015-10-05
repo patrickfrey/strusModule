@@ -157,7 +157,7 @@ void ModuleLoader::enablePeerMessageProcessor( const std::string& name)
 	}
 }
 
-void ModuleLoader::loadModule(const std::string& name)
+bool ModuleLoader::loadModule(const std::string& name)
 {
 	const ModuleEntryPoint* entryPoint;
 	if (m_modulePaths.empty())
@@ -170,6 +170,7 @@ void ModuleLoader::loadModule(const std::string& name)
 		catch (const std::bad_alloc&)
 		{
 			m_errorhnd->report(_TXT("out of memory in module loader"));
+			return false;
 		}
 		entryPoint = loadModuleAlt( name, paths);
 	}
@@ -190,11 +191,17 @@ void ModuleLoader::loadModule(const std::string& name)
 					m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
 					break;
 			}
+			return true;
 		}
 		catch (const std::bad_alloc&)
 		{
 			m_errorhnd->report(_TXT("out of memory in module loader"));
+			return false;
 		}
+	}
+	else
+	{
+		return false;
 	}
 }
 
