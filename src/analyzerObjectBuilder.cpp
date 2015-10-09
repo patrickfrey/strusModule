@@ -160,14 +160,6 @@ DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const 
 		return 0;
 	}
 	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( segmenter.get(), m_errorhnd);
-	if (rt)
-	{
-		(void)segmenter.release(); //... ownership passed to analyzer created
-	}
-	else
-	{
-		m_errorhnd->report(_TXT("error creating document analyzer"));
-	}
 	return rt;
 }
 
