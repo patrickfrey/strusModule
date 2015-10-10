@@ -74,27 +74,27 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a7402236f1d5acb14cba4412d38681fef"><td class="memItemLeft" align="right" valign="top">typedef const DatabaseInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html#a7402236f1d5acb14cba4412d38681fef">Get</a> )()</td></tr>
-<tr class="separator:a7402236f1d5acb14cba4412d38681fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac48c2aa4b54a08babfe44190330d8b"><td class="memItemLeft" align="right" valign="top">typedef DatabaseInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html#a4ac48c2aa4b54a08babfe44190330d8b">Create</a> )(ErrorBufferInterface *errorhnd)</td></tr>
+<tr class="separator:a4ac48c2aa4b54a08babfe44190330d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a061232489fa14ac081778e2ba8d9f070"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html#a061232489fa14ac081778e2ba8d9f070">name</a></td></tr>
 <tr class="memdesc:a061232489fa14ac081778e2ba8d9f070"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of the database implementation  <a href="#a061232489fa14ac081778e2ba8d9f070">More...</a><br/></td></tr>
 <tr class="separator:a061232489fa14ac081778e2ba8d9f070"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23d5254bd7249eb56b63a45e2360eec4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1DatabaseReference.html#a7402236f1d5acb14cba4412d38681fef">Get</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html#a23d5254bd7249eb56b63a45e2360eec4">get</a></td></tr>
-<tr class="memdesc:a23d5254bd7249eb56b63a45e2360eec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">getter function to reference the database object  <a href="#a23d5254bd7249eb56b63a45e2360eec4">More...</a><br/></td></tr>
-<tr class="separator:a23d5254bd7249eb56b63a45e2360eec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d65c69f9ed39ec3a869a65b84e203f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1DatabaseReference.html#a4ac48c2aa4b54a08babfe44190330d8b">Create</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html#a6d65c69f9ed39ec3a869a65b84e203f2">create</a></td></tr>
+<tr class="memdesc:a6d65c69f9ed39ec3a869a65b84e203f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor of the object  <a href="#a6d65c69f9ed39ec3a869a65b84e203f2">More...</a><br/></td></tr>
+<tr class="separator:a6d65c69f9ed39ec3a869a65b84e203f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure to declare the key value store database to use by the storage as module object. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a7402236f1d5acb14cba4412d38681fef"></a>
+<a class="anchor" id="a4ac48c2aa4b54a08babfe44190330d8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef const DatabaseInterface*(* strus::DatabaseReference::Get)()</td>
+          <td class="memname">typedef DatabaseInterface*(* strus::DatabaseReference::Create)(ErrorBufferInterface *errorhnd)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -102,17 +102,17 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a23d5254bd7249eb56b63a45e2360eec4"></a>
+<a class="anchor" id="a6d65c69f9ed39ec3a869a65b84e203f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structstrus_1_1DatabaseReference.html#a7402236f1d5acb14cba4412d38681fef">Get</a> strus::DatabaseReference::get</td>
+          <td class="memname"><a class="el" href="structstrus_1_1DatabaseReference.html#a4ac48c2aa4b54a08babfe44190330d8b">Create</a> strus::DatabaseReference::create</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>getter function to reference the database object </p>
+<p>constructor of the object </p>
 
 </div>
 </div>
@@ -137,7 +137,7 @@ Public Attributes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 16 2015 21:12:11 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 10 2015 19:48:50 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

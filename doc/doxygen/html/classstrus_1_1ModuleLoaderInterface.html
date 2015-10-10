@@ -82,9 +82,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8097665250911d1cd2c940b82795a914"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a8097665250911d1cd2c940b82795a914">addModulePath</a> (const std::string &amp;path)=0</td></tr>
 <tr class="memdesc:a8097665250911d1cd2c940b82795a914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new path where to seek modules to load.  <a href="#a8097665250911d1cd2c940b82795a914">More...</a><br/></td></tr>
 <tr class="separator:a8097665250911d1cd2c940b82795a914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acba34565a7a9c3773688166b53309118"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#acba34565a7a9c3773688166b53309118">loadModule</a> (const std::string &amp;name)=0</td></tr>
-<tr class="memdesc:acba34565a7a9c3773688166b53309118"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a module with name 'name' seeking in all module paths defined in the order of their definition.  <a href="#acba34565a7a9c3773688166b53309118">More...</a><br/></td></tr>
-<tr class="separator:acba34565a7a9c3773688166b53309118"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a984e437dd896680d6acef0730a403950"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a> (const std::string &amp;name)=0</td></tr>
+<tr class="memdesc:a984e437dd896680d6acef0730a403950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a module with name 'name' seeking in all module paths defined in the order of their definition.  <a href="#a984e437dd896680d6acef0730a403950">More...</a><br/></td></tr>
+<tr class="separator:a984e437dd896680d6acef0730a403950"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d787c3639d41343dbf7439b73ee0777"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a> (const std::string &amp;path)=0</td></tr>
 <tr class="memdesc:a2d787c3639d41343dbf7439b73ee0777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare a path for analyzer components to find resource files.  <a href="#a2d787c3639d41343dbf7439b73ee0777">More...</a><br/></td></tr>
 <tr class="separator:a2d787c3639d41343dbf7439b73ee0777"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,7 +303,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 
 </div>
 </div>
-<a class="anchor" id="acba34565a7a9c3773688166b53309118"></a>
+<a class="anchor" id="a984e437dd896680d6acef0730a403950"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -311,7 +311,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void strus::ModuleLoaderInterface::loadModule </td>
+          <td class="memname">virtual bool strus::ModuleLoaderInterface::loadModule </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -342,7 +342,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 16 2015 21:12:11 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 10 2015 19:48:50 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

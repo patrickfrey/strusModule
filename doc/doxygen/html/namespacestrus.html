@@ -110,23 +110,24 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adc4c01150086ce283f38cceb2bf5d3aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#adc4c01150086ce283f38cceb2bf5d3aa">createModuleLoader</a> ()</td></tr>
-<tr class="memdesc:adc4c01150086ce283f38cceb2bf5d3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a module loader interface with the functions needed for creating strus objects.  <a href="#adc4c01150086ce283f38cceb2bf5d3aa">More...</a><br/></td></tr>
-<tr class="separator:adc4c01150086ce283f38cceb2bf5d3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a919630b6a4c7d26806803bf27b967293"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a919630b6a4c7d26806803bf27b967293">loadModuleEntryPoint</a> (const char *modfilename)</td></tr>
-<tr class="separator:a919630b6a4c7d26806803bf27b967293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671164004a4658fc0bbd99217d27dd99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a671164004a4658fc0bbd99217d27dd99">createModuleLoader</a> (ErrorBufferInterface *errorhnd)</td></tr>
+<tr class="memdesc:a671164004a4658fc0bbd99217d27dd99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a module loader interface with the functions needed for creating strus objects.  <a href="#a671164004a4658fc0bbd99217d27dd99">More...</a><br/></td></tr>
+<tr class="separator:a671164004a4658fc0bbd99217d27dd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2078828f56450e7fa5f082f7cc60964b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a2078828f56450e7fa5f082f7cc60964b">loadModuleEntryPoint</a> (const char *modfilename, <a class="el" href="structstrus_1_1ModuleEntryPoint_1_1Status.html">ModuleEntryPoint::Status</a> &amp;status)</td></tr>
+<tr class="separator:a2078828f56450e7fa5f082f7cc60964b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>strus toplevel namespace </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="adc4c01150086ce283f38cceb2bf5d3aa"></a>
+<a class="anchor" id="a671164004a4658fc0bbd99217d27dd99"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a>* strus::createModuleLoader </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">ErrorBufferInterface *&#160;</td>
+          <td class="paramname"><em>errorhnd</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -137,7 +138,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a919630b6a4c7d26806803bf27b967293"></a>
+<a class="anchor" id="a2078828f56450e7fa5f082f7cc60964b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -145,8 +146,18 @@ Functions</h2></td></tr>
           <td class="memname">const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a>* strus::loadModuleEntryPoint </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>modfilename</em></td><td>)</td>
+          <td class="paramname"><em>modfilename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">ModuleEntryPoint::Status &amp;&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -157,7 +168,7 @@ Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 16 2015 21:12:11 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 10 2015 19:48:50 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
