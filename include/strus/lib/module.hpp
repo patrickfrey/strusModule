@@ -36,10 +36,12 @@ namespace strus {
 
 /// \brief Forward declaration
 class ModuleLoaderInterface;
+/// \brief Forward declaration
+class ErrorBufferInterface;
 
 /// \brief Create a module loader interface with the functions needed for creating strus objects.
 /// \return the allocated module loader interface
-ModuleLoaderInterface* createModuleLoader();
+ModuleLoaderInterface* createModuleLoader( ErrorBufferInterface* errorhnd);
 
 }//namespace
 #endif

@@ -29,11 +29,24 @@
 #include "strus/lib/module.hpp"
 #include "moduleLoader.hpp"
 #include "strus/private/dll_tags.hpp"
+#include "strus/errorBufferInterface.hpp"
+#include "internationalization.hpp"
+#include "errorUtils.hpp"
 
 using namespace strus;
 
-DLL_PUBLIC ModuleLoaderInterface* strus::createModuleLoader()
+DLL_PUBLIC ModuleLoaderInterface* strus::createModuleLoader( ErrorBufferInterface* errorhnd)
 {
-	return new ModuleLoader();
+	try
+	{
+		static bool intl_initialized = false;
+		if (!intl_initialized)
+		{
+			strus::initMessageTextDomain();
+			intl_initialized = true;
+		}
+		return new ModuleLoader( errorhnd);
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error creating module loader"), *errorhnd, 0);
 }
 

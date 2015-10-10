@@ -52,18 +52,21 @@ class QueryAnalyzerInterface;
 class StorageObjectBuilderInterface;
 /// \brief Forward declaration
 class AnalyzerObjectBuilderInterface;
+/// \brief Forward declaration
+class ErrorBufferInterface;
+/// \brief Forward declaration
+class AnalyzerErrorBufferInterface;
 
 /// \brief Implementation of ModuleLoaderInterface
 class ModuleLoader
 	:public ModuleLoaderInterface
 {
 public:
-	ModuleLoader()
-		:m_peermsgproc_enabled(false){}
-	virtual ~ModuleLoader(){}
+	explicit ModuleLoader( ErrorBufferInterface* errorhnd_);
+	virtual ~ModuleLoader();
 	virtual void addSystemModulePath();
 	virtual void addModulePath( const std::string& path);
-	virtual void loadModule( const std::string& name);
+	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
 	virtual void enablePeerMessageProcessor( const std::string& name);
 
@@ -82,6 +85,8 @@ private:
 	std::vector<const StorageModule*> m_storageModules;
 	std::string m_peermsgproc;
 	bool m_peermsgproc_enabled;
+	ErrorBufferInterface* m_errorhnd;
+	AnalyzerErrorBufferInterface* m_errorhnd_analyzer;
 };
 
 }//namespace

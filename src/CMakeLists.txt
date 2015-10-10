@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
 set( source_files
 	libstrus_module.cpp
 	moduleEntryPoint.cpp
+	internationalization.cpp
 	analyzerModule.cpp
 	storageModule.cpp
 	storageObjectBuilder.cpp

@@ -48,46 +48,48 @@ class WeightingFunctionInterface;
 class SummarizerFunctionInterface;
 /// \brief Forward declaration
 class PostingJoinOperatorInterface;
+/// \brief Forward declaration
+class ErrorBufferInterface;
 
 
 /// \brief Structure to declare the key value store database to use by the storage as module object
 struct DatabaseReference
 {
-	typedef const DatabaseInterface* (*Get)();
+	typedef DatabaseInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the database implementation
-	Get get;					///< getter function to reference the database object
+	Create create;					///< constructor of the object
 };
 
 /// \brief Structure to declare an alternative packing/unpacking of peer messages
 struct PeerMessageProcessorReference
 {
-	typedef const PeerMessageProcessorInterface* (*Get)();
+	typedef PeerMessageProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
-	Get get;					///< getter function to reference the object
+	Create create;					///< constructor of the object
 };
 
 /// \brief Structure to declare an operator to join sets of postings represented as iterator as module object
 struct PostingIteratorJoinConstructor
 {
-	typedef PostingJoinOperatorInterface* (*Function)();
+	typedef PostingJoinOperatorInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the join operator
-	Function function;				///< join function
+	Create create;					///< constructor of the function
 };
 
 /// \brief Structure to declare a query evaluation weighting function as module object
 struct WeightingFunctionConstructor
 {
-	typedef WeightingFunctionInterface* (*Function)();
+	typedef WeightingFunctionInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the weighting function
-	Function function;				///< weighting function
+	Create create;					///< constructor of the function
 };
 
 /// \brief Structure to declare a query evaluation summarizer function as module object
 struct SummarizerFunctionConstructor
 {
-	typedef SummarizerFunctionInterface* (*Function)();
+	typedef SummarizerFunctionInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the summarizer function
-	Function function;				///< summarizer function
+	Create create;					///< constructor of the function
 };
 
 

@@ -47,14 +47,15 @@ class QueryAnalyzerInterface;
 class TextProcessorInterface;
 /// \brief Forward declaration
 class SegmenterInterface;
-
+/// \brief Forward declaration
+class AnalyzerErrorBufferInterface;
 
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
 class AnalyzerObjectBuilder
 	:public AnalyzerObjectBuilderInterface
 {
 public:
-	AnalyzerObjectBuilder();
+	explicit AnalyzerObjectBuilder( AnalyzerErrorBufferInterface* errorhnd_);
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
@@ -69,6 +70,7 @@ public/*ModuleLoader*/:
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
+	AnalyzerErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 
 }//namespace

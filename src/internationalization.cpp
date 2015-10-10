@@ -27,19 +27,47 @@
 --------------------------------------------------------------------
 */
 #include "strus/private/dll_tags.hpp"
-#include "strus/analyzerModule.hpp"
-#include "strus/lib/normalizer_snowball.hpp"
+#include "internationalization.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <libintl.h>
+#include <locale.h>
+#include <cstdarg>
 
-static const strus::NormalizerConstructor normalizers[] =
+#define STRUS_GETTEXT_PACKAGE		"strus-dom"
+#define STRUS_GETTEXT_LOCALEDIR		""
+
+std::runtime_error strus::runtime_error( const char* format, ...)
 {
-	{"stem", &strus::createNormalizer_snowball},
-	{0,0}	
-};
+	char buffer[ 1024];
+	va_list args;
+	va_start( args, format);
+	const char* formatTranslation = ::dgettext( STRUS_GETTEXT_PACKAGE, format);
+	int buffersize = vsnprintf( buffer, sizeof(buffer), formatTranslation, args);
+	buffer[ sizeof(buffer)-1] = 0;
+	std::runtime_error rt( std::string( buffer, buffersize));
+	va_end (args);
+	return rt;
+}
 
-extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
+std::logic_error strus::logic_error( const char* format, ...)
+{
+	char buffer[ 1024];
+	va_list args;
+	va_start( args, format);
+	const char* formatTranslation = ::dgettext( STRUS_GETTEXT_PACKAGE, format);
+	int buffersize = vsnprintf( buffer, sizeof(buffer), formatTranslation, args);
+	buffer[ sizeof(buffer)-1] = 0;
+	std::logic_error rt( std::string( buffer, buffersize));
+	va_end (args);
+	return rt;
+}
 
-strus::AnalyzerModule entryPoint( 0, normalizers, 0);
-
-
+DLL_PUBLIC void strus::initMessageTextDomain()
+{
+#ifdef ENABLE_NLS
+	::bindtextdomain( STRUS_GETTEXT_PACKAGE, STRUS_GETTEXT_LOCALEDIR);
+#endif
+}
 
 

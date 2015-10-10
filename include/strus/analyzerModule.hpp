@@ -47,45 +47,47 @@ class TokenizerFunctionInterface;
 class NormalizerFunctionInterface;
 /// \brief Forward declaration
 class AggregatorFunctionInterface;
+/// \brief Forward declaration
+class AnalyzerErrorBufferInterface;
 
 /// \brief Structure to define a content detector for an alternative document format
 struct DocumentClassDetectorConstructor
 {
-	typedef const DocumentClassDetectorInterface* (*Get)();
+	typedef const DocumentClassDetectorInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
 	const char* title;			///< title of the detector (informal name)
-	Get get;				///< get the detector interface
+	Create create;				///< constructor
 };
 
 /// \brief Structure to define a segmenter for an alternative document format (like XML) as module
 struct SegmenterConstructor
 {
-	typedef SegmenterInterface* (*Create)();
+	typedef SegmenterInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the segmenter
-	Create create;				///< segmenter constructor
+	Create create;				///< constructor
 };
 
 /// \brief Structure to define a proprietary tokenizer of text segments as module
 struct TokenizerConstructor
 {
-	typedef const TokenizerFunctionInterface* (*Function)();
+	typedef TokenizerFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the tokenizer
-	Function function;			///< tokenizer function
+	Create create;				///< constructor
 };
 
 /// \brief Structure to define a proprietary normalizer of tokens as module
 struct NormalizerConstructor
 {
-	typedef const NormalizerFunctionInterface* (*Function)();
+	typedef NormalizerFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the normalizer
-	Function function;			///< normalizer function
+	Create create;				///< constructor
 };
 
 /// \brief Structure to define a proprietary function to aggregate a value for a document as meta data (counting, classification, etc.)
 struct AggregatorConstructor
 {
-	typedef const AggregatorFunctionInterface* (*Function)();
+	typedef AggregatorFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the aggregator
-	Function function;			///< aggregator function
+	Create create;				///< constructor
 };
 
 

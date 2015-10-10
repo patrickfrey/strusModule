@@ -35,6 +35,7 @@
 #include "strus/constants.hpp"
 #include "strus/arithmeticVariant.hpp"
 #include "strus/reference.hpp"
+#include "strus/errorBufferInterface.hpp"
 
 // Key/value store database used by the storage to store its persistent data:
 #include "strus/lib/database_leveldb.hpp"
@@ -78,6 +79,9 @@
 #include "strus/queryInterface.hpp"
 #include "strus/weightedDocument.hpp"
 #include "strus/resultDocument.hpp"
+
+// Analyzer error handling
+#include "strus/analyzerErrorBufferInterface.hpp"
 
 // Document/query analyzer (create from text a structure suitable to insert into a storage):
 #include "strus/lib/analyzer.hpp"

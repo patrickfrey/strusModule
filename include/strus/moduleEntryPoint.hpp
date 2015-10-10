@@ -54,7 +54,9 @@ struct ModuleEntryPoint
 		ErrorSignature=11,		///< the signature (composition of a string and the major module version number) does not match
 		ErrorModMinorVersion=12,	///< the loaded module minor version is higher than the one of the module loader. This means that the module potentially implementents features that are not known to the module loader. The loading of such a module is thus refused.
 		ErrorCompMajorVersion=21,	///< the components implemented in the module have a major version number than expected
-		ErrorCompMinorVersion=22	///< the components minor version is smaller than required. The module may not implement the objects loaded as required. Thus the loading of the module is refused.
+		ErrorCompMinorVersion=22,	///< the components minor version is smaller than required. The module may not implement the objects loaded as required. Thus the loading of the module is refused.
+		ErrorOpenModule=31,
+		ErrorNoEntryPoint=32
 	};
 
 	char signature[ 8];			///< signature of the module (string + major version)
@@ -90,9 +92,24 @@ struct ModuleEntryPoint
 	}
 
 	static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode);
+
+	struct Status
+	{
+		Status()
+			:errorcode(0)
+		{
+			errormsg[0] = '\0';
+		}
+
+		bool ok() const		{return errorcode==0;}
+	
+		int errorcode;
+		char errormsg[ 256];
+	};
 };
 
-const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename);
+
+const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status);
 
 }//namespace
 #endif

@@ -34,6 +34,7 @@
 #include "strus/textProcessorInterface.hpp"
 #include <string>
 #include <vector>
+#include <map>
 
 namespace strus
 {
@@ -55,14 +56,15 @@ class QueryAnalyzerInterface;
 class DatabaseInterface;
 /// \brief Forward declaration
 class PeerMessageProcessorInterface;
-
+/// \brief Forward declaration
+class ErrorBufferInterface;
 
 /// \brief Implementation of StorageObjectBuilderInterface for the module loader
 class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
 {
 public:
-	explicit StorageObjectBuilder( const char* peermsgproc);
+	StorageObjectBuilder( const char* peermsgprocname_, ErrorBufferInterface* errorhnd_);
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
@@ -77,12 +79,17 @@ public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 
 private:
-	const PeerMessageProcessorInterface* getPeerMessageProcessor( const std::string& name) const;
+	const PeerMessageProcessorInterface* getPeerMessageProcessor() const;
 
 private:
-	std::vector<const StorageModule*> m_storageModules;
-	Reference<QueryProcessorInterface> m_queryProcessor;
-	const char* m_peermsgproc;
+	std::vector<const StorageModule*> m_storageModules;	///< loaded modules
+	Reference<QueryProcessorInterface> m_queryProcessor;	///< query processor handle
+	Reference<StorageInterface> m_storage;			///< storage handle
+	typedef Reference<DatabaseInterface> DatabaseReference;
+	mutable std::map<std::string,DatabaseReference> m_dbmap;///< cached database handles
+	mutable Reference<PeerMessageProcessorInterface> m_peermsgproc;
+	const char* m_peermsgprocname;				///< peer message processor selected
+	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 
 }//namespace
