@@ -42,6 +42,10 @@ CPackConfig.cmake
 CPackConfig.cmake.user
 CPackSourceConfig.cmake
 CPackSourceConfig.cmake.user
+include/strus/versionModule.hpp
+src/internationalization.cpp
+src/moduleDirectory.hpp
+tests/loader/testModuleDirectory.hpp
 
 # Compiled Programs
 tests/loader/testModuleLoader
