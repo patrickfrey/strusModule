@@ -67,7 +67,7 @@ const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
 
 void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
-	if (!m_errorhnd->hasError())
+	if (m_errorhnd->hasError())
 	{
 		m_errorhnd->report(_TXT("cannot add storage module with previous unhandled errors"));
 		return;
@@ -247,8 +247,17 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 	
 		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 		const DatabaseInterface* dbi = getDatabase( dbname);
+		if (!dbi)
+		{
+			m_errorhnd->explain(_TXT("could not get database: %s"));
+			return 0;
+		}
 		const StorageInterface* sti = getStorage();
-	
+		if (!sti)
+		{
+			m_errorhnd->explain(_TXT("could not get storage: %s"));
+			return 0;
+		}
 		std::string databasecfg( configstr);
 		std::string storagecfg( configstr);
 		strus::removeKeysFromConfigString(
