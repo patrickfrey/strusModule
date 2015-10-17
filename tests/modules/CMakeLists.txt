@@ -19,6 +19,6 @@ link_directories(
 # -------------------------------------------
 add_library( modstrus_normalizer_snowball  MODULE  modstrus_normalizer_snowball.cpp)
 set_target_properties( modstrus_normalizer_snowball PROPERTIES PREFIX "")
-target_link_libraries( modstrus_normalizer_snowball strus_module strus_normalizer_snowball stemmer )
+target_link_libraries( modstrus_normalizer_snowball strus_module strus_normalizer_snowball strus_stemmer )
 
 
