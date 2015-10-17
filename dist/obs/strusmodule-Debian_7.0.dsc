@@ -1,6 +1,6 @@
 Format: 3.0 (quilt)
 Source: strusmodule
-Version: 0.1.5-xUbuntu12.04
+Version: 0.1.5-Debian7.0
 Binary: strus
 Maintainer: Patrick Frey <patrickpfrey@yahoo.com>
 Architecture: any

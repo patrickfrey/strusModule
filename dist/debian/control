@@ -4,13 +4,19 @@ Priority: optional
 Maintainer: Patrick Frey <patrickpfrey@yahoo.com>
 Build-Depends: debhelper (>= 4.1.16), cmake,
  libboost-dev, libboost-thread-dev, libboost-system-dev,
- libboost-date-time-dev
+ libboost-date-time-dev, strus-dev, strusanalyzer-dev
 Standards-Version: 3.8.3
 Homepage: http://project-strus.net
 
 Package: strusmodule
-Architecture: all
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Library implementing the loading of modules for the project strus
  Core library for the strus text search engine implementing the loading of dynamically
  loadable modules. 
+
+Package: strusmodule-dev
+Architecture: any
+Depends: strusmodule, ${shlibs:Depends}, ${misc:Depends}
+Description: strusmodule development files
+ Strus module development files.
