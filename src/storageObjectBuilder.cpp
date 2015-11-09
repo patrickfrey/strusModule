@@ -245,13 +245,14 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 		std::string peermsgproc;
 		std::string configstr( config);
 	
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
-		const DatabaseInterface* dbi = getDatabase( dbname);
+		const DatabaseInterface* dbi = getDatabase( configstr);
 		if (!dbi)
 		{
 			m_errorhnd->explain(_TXT("could not get database: %s"));
 			return 0;
 		}
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
+
 		const StorageInterface* sti = getStorage();
 		if (!sti)
 		{
@@ -308,12 +309,11 @@ StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTab
 	{
 		std::string dbname;
 		std::string configstr( config);
-	
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 
-		const DatabaseInterface* dbi = getDatabase( dbname);
+		const DatabaseInterface* dbi = getDatabase( configstr);
 		const StorageInterface* sti = getStorage();
-	
+
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 		std::string databasecfg( configstr);
 		strus::removeKeysFromConfigString(
 				databasecfg,
