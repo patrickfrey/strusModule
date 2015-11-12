@@ -335,21 +335,8 @@
             </UL>
           </UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="strus.hpp"><param name="Local" value="strus_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="versionModule.hpp"><param name="ImageNumber" value="1"></OBJECT>
-          <UL>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_SIGNATURE"><param name="Local" value="versionModule_8hpp.html#ad3745335527cd35f196dc18bc2eaf5e5"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION"><param name="Local" value="versionModule_8hpp.html#a39ce24fbdf387b650eeb4fe018fa2d94"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_MAJOR"><param name="Local" value="versionModule_8hpp.html#a77a6b6dbf059c0911dc9df6722d6e41c"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_MINOR"><param name="Local" value="versionModule_8hpp.html#a94f7a024c1520c5a239c967636a4b5e1"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_STRING"><param name="Local" value="versionModule_8hpp.html#a16ca671cefc50e08a603c920b928163e"><param name="ImageNumber" value="11"></OBJECT>
-          </UL>
         </UL>
       </UL>
-    </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Name" value="File Members"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
-    <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="All"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="Macros"><param name="Local" value="globals_defs.html"><param name="ImageNumber" value="11"></OBJECT>
     </UL>
   </UL>
 </UL>

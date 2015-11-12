@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.1</span>
+   &#160;<span id="projectnumber">0.2</span>
    </div>
   </td>
  </tr>
@@ -47,7 +47,6 @@
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <div id="nav-path" class="navpath">
@@ -90,7 +89,7 @@
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#ifndef _STRUS_MODULE_HEADER_HPP_INCLUDED</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _STRUS_MODULE_HEADER_HPP_INCLUDED</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="versionModule_8hpp.html">strus/versionModule.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;strus/versionModule.hpp&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;strus/versionAnalyzer.hpp&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;strus/versionStorage.hpp&quot;</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div>
@@ -124,9 +123,9 @@
 <div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structstrus_1_1ModuleEntryPoint.html#ada42c83da9d7603e61ca0057641ea7a3">   67</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structstrus_1_1ModuleEntryPoint.html#ada42c83da9d7603e61ca0057641ea7a3">_reserved</a>[6];              </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structstrus_1_1ModuleEntryPoint.html#a810b7186b9b1ffad9a04fe63a7f43298">   70</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="structstrus_1_1ModuleEntryPoint.html#a810b7186b9b1ffad9a04fe63a7f43298">ModuleEntryPoint</a>( <a class="code" href="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3faf">Type</a> type_)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                :<a class="code" href="structstrus_1_1ModuleEntryPoint.html#adffaf79ca3878cd2363be132e174a693">type</a>(type_),<a class="code" href="structstrus_1_1ModuleEntryPoint.html#af082f2349b355e30c8ddcdb744b29157">modversion_minor</a>(<a class="code" href="versionModule_8hpp.html#a94f7a024c1520c5a239c967636a4b5e1">STRUS_MODULE_VERSION_MINOR</a>)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                :<a class="code" href="structstrus_1_1ModuleEntryPoint.html#adffaf79ca3878cd2363be132e174a693">type</a>(type_),<a class="code" href="structstrus_1_1ModuleEntryPoint.html#af082f2349b355e30c8ddcdb744b29157">modversion_minor</a>(STRUS_MODULE_VERSION_MINOR)</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>* declaration_signature = <a class="code" href="versionModule_8hpp.html#ad3745335527cd35f196dc18bc2eaf5e5">STRUS_MODULE_SIGNATURE</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>* declaration_signature = STRUS_MODULE_SIGNATURE;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="comment">//... signature contains major version number in it</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                std::memset( <a class="code" href="structstrus_1_1ModuleEntryPoint.html#a2bdc9c403bed66ef47a729127f8dff80">signature</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="structstrus_1_1ModuleEntryPoint.html#a2bdc9c403bed66ef47a729127f8dff80">signature</a>));</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                std::memcpy( <a class="code" href="structstrus_1_1ModuleEntryPoint.html#a2bdc9c403bed66ef47a729127f8dff80">signature</a>, declaration_signature, std::strlen( declaration_signature));</div>
@@ -174,11 +173,9 @@
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92a17796b8fa42e6b601fbcc6000f9a2679"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a17796b8fa42e6b601fbcc6000f9a2679">strus::ModuleEntryPoint::ErrorSignature</a></div><div class="ttdoc">the signature (composition of a string and the major module version number) does not match ...</div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:54</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_ada42c83da9d7603e61ca0057641ea7a3"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#ada42c83da9d7603e61ca0057641ea7a3">strus::ModuleEntryPoint::_reserved</a></div><div class="ttdeci">unsigned int _reserved[6]</div><div class="ttdoc">reserved for future use </div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:67</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adffaf79ca3878cd2363be132e174a693"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adffaf79ca3878cd2363be132e174a693">strus::ModuleEntryPoint::type</a></div><div class="ttdeci">Type type</div><div class="ttdoc">type of the module </div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:63</div></div>
-<div class="ttc" id="versionModule_8hpp_html_a94f7a024c1520c5a239c967636a4b5e1"><div class="ttname"><a href="versionModule_8hpp.html#a94f7a024c1520c5a239c967636a4b5e1">STRUS_MODULE_VERSION_MINOR</a></div><div class="ttdeci">#define STRUS_MODULE_VERSION_MINOR</div><div class="ttdoc">Minor version number of the module loader. </div><div class="ttdef"><b>Definition:</b> versionModule.hpp:43</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html">strus::ModuleEntryPoint</a></div><div class="ttdoc">Entry point of a module with signature and version info to verify correctness of the dynamic linking...</div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:42</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_a25a8720aa45fe5fd34dbe39150bf3fafae30f80e0c6b3826d7000025d41d635d6"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3fafae30f80e0c6b3826d7000025d41d635d6">strus::ModuleEntryPoint::Analyzer</a></div><div class="ttdoc">module exporting objects for document and query analysis (moduleAnalyzer) </div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:47</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92a8810273ca9cb3ffffe741fd07d6dd24f"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a8810273ca9cb3ffffe741fd07d6dd24f">strus::ModuleEntryPoint::ErrorOpenModule</a></div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:58</div></div>
-<div class="ttc" id="versionModule_8hpp_html_ad3745335527cd35f196dc18bc2eaf5e5"><div class="ttname"><a href="versionModule_8hpp.html#ad3745335527cd35f196dc18bc2eaf5e5">STRUS_MODULE_SIGNATURE</a></div><div class="ttdeci">#define STRUS_MODULE_SIGNATURE</div><div class="ttdoc">The signature of the module loader including the major version number. </div><div class="ttdef"><b>Definition:</b> versionModule.hpp:48</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92a809ed9e4c04ef51f49a4d5e7984c0c1d"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a809ed9e4c04ef51f49a4d5e7984c0c1d">strus::ModuleEntryPoint::ErrorNoEntryPoint</a></div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:59</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92acd8ab8275949594774b8e508663265df"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92acd8ab8275949594774b8e508663265df">strus::ModuleEntryPoint::ErrorUnknownModuleType</a></div><div class="ttdoc">the &#39;type&#39; field has an unknown value </div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:53</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92a9fc8b0a238d418cb776eb0b5bbdf6941"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a9fc8b0a238d418cb776eb0b5bbdf6941">strus::ModuleEntryPoint::ErrorCompMajorVersion</a></div><div class="ttdoc">the components implemented in the module have a major version number than expected ...</div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:56</div></div>
@@ -187,7 +184,6 @@
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_a69e9a4263d7a165433a8b40f41f3e3a0"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#a69e9a4263d7a165433a8b40f41f3e3a0">strus::ModuleEntryPoint::compversion_minor</a></div><div class="ttdeci">unsigned short compversion_minor</div><div class="ttdoc">minor version of components in the module </div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:66</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_1_1Status_html"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint_1_1Status.html">strus::ModuleEntryPoint::Status</a></div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:96</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_1_1Status_html_a16febf1ade168b176f3fd4d6a0a5cc72"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint_1_1Status.html#a16febf1ade168b176f3fd4d6a0a5cc72">strus::ModuleEntryPoint::Status::errormsg</a></div><div class="ttdeci">char errormsg[256]</div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:107</div></div>
-<div class="ttc" id="versionModule_8hpp_html"><div class="ttname"><a href="versionModule_8hpp.html">versionModule.hpp</a></div><div class="ttdoc">Header with the version info of the strus module loader. </div></div>
 <div class="ttc" id="namespacestrus_html_a2078828f56450e7fa5f082f7cc60964b"><div class="ttname"><a href="namespacestrus.html#a2078828f56450e7fa5f082f7cc60964b">strus::loadModuleEntryPoint</a></div><div class="ttdeci">const ModuleEntryPoint * loadModuleEntryPoint(const char *modfilename, ModuleEntryPoint::Status &amp;status)</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_adb2ffbee2e2921298fe8cf0140fced92a6639ee41260326f24d25d3ec020cd128"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a6639ee41260326f24d25d3ec020cd128">strus::ModuleEntryPoint::ErrorModMinorVersion</a></div><div class="ttdoc">the loaded module minor version is higher than the one of the module loader. This means that the modu...</div><div class="ttdef"><b>Definition:</b> moduleEntryPoint.hpp:55</div></div>
 <div class="ttc" id="structstrus_1_1ModuleEntryPoint_html_a830c123acd785a2b8da9c2a6f32854ee"><div class="ttname"><a href="structstrus_1_1ModuleEntryPoint.html#a830c123acd785a2b8da9c2a6f32854ee">strus::ModuleEntryPoint::matchModuleVersion</a></div><div class="ttdeci">static bool matchModuleVersion(const ModuleEntryPoint *entryPoint, int &amp;errorcode)</div></div>
@@ -203,7 +199,7 @@
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 10 2015 19:48:50 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 13 2015 00:39:53 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
