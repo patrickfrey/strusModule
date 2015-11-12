@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
 # --------------------------------------
 include_directories(  
   "${PROJECT_SOURCE_DIR}/include" 
+  "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 link_directories(
@@ -13,8 +14,8 @@ link_directories(
    "${strus_LIBRARY_DIRS}"
 )
 
-set( STRUS_TEST_MODULE_DIRECTORY  "${PROJECT_SOURCE_DIR}/tests/modules" )
-configure_file( "testModuleDirectory.hpp.in"  "testModuleDirectory.hpp"  @ONLY )
+set( STRUS_TEST_MODULE_DIRECTORY  "${PROJECT_BINARY_DIR}/tests/modules" )
+configure_file( "${PROJECT_SOURCE_DIR}/tests/loader/testModuleDirectory.hpp.in"  "${PROJECT_BINARY_DIR}/tests/loader/testModuleDirectory.hpp"  @ONLY )
 
 
 # -------------------------------------------

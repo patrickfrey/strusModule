@@ -64,7 +64,7 @@ void AnalyzerObjectBuilder::addResourcePath( const std::string& path)
 
 void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
-	if (!m_errorhnd->hasError())
+	if (m_errorhnd->hasError())
 	{
 		m_errorhnd->report(_TXT("cannot add analyzer module with previous unhandled errors"));
 		return;

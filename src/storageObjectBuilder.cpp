@@ -67,7 +67,7 @@ const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
 
 void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
-	if (!m_errorhnd->hasError())
+	if (m_errorhnd->hasError())
 	{
 		m_errorhnd->report(_TXT("cannot add storage module with previous unhandled errors"));
 		return;
@@ -245,10 +245,20 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 		std::string peermsgproc;
 		std::string configstr( config);
 	
+		const DatabaseInterface* dbi = getDatabase( configstr);
+		if (!dbi)
+		{
+			m_errorhnd->explain(_TXT("could not get database: %s"));
+			return 0;
+		}
 		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
-		const DatabaseInterface* dbi = getDatabase( dbname);
+
 		const StorageInterface* sti = getStorage();
-	
+		if (!sti)
+		{
+			m_errorhnd->explain(_TXT("could not get storage: %s"));
+			return 0;
+		}
 		std::string databasecfg( configstr);
 		std::string storagecfg( configstr);
 		strus::removeKeysFromConfigString(
@@ -299,12 +309,11 @@ StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTab
 	{
 		std::string dbname;
 		std::string configstr( config);
-	
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 
-		const DatabaseInterface* dbi = getDatabase( dbname);
+		const DatabaseInterface* dbi = getDatabase( configstr);
 		const StorageInterface* sti = getStorage();
-	
+
+		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
 		std::string databasecfg( configstr);
 		strus::removeKeysFromConfigString(
 				databasecfg,
