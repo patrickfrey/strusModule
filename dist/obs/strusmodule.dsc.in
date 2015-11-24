@@ -1,6 +1,6 @@
 Format: 3.0 (quilt)
 Source: strusmodule
-Version: 0.1.5
+Version: @STRUS_VERSION@
 Binary: strusmodule
 Maintainer: Patrick Frey <patrickpfrey@yahoo.com>
 Architecture: any

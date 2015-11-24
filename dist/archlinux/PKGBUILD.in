@@ -2,7 +2,7 @@
 # Maintainer: Patrick Frey <patrickpfrey@yahoo.com> 
 
 pkgname=strusmodule
-_mainpkgver=0.1.5
+_mainpkgver=@STRUS_VERSION@
 pkgver=${_mainpkgver}
 pkgrel=1
 pkgdesc='Library that provides a module loader and an interface to define loadable modules out of libraries to offer some expandability to strus.'
