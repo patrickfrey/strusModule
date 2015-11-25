@@ -1,13 +1,13 @@
-strusModule (0.2.3-1)
+strusModule (0.2.3-1) unstable; urgency=low
   * snychronize version number with strus core: increment version to 0.2.3
  -- Patrick Frey <patrickpfrey@yahoo.com>  Tue, 24 Nov 2015 19:49:41 +0100
 
-strusModule (0.2.2-1)
+strusModule (0.2.2-1) unstable; urgency=low
   * dynamically generated version number in packages
   * temporarily set version number back to 0.1 so that packages build again
  -- Patrick Frey <patrickpfrey@yahoo.com>  Tue, 24 Nov 2015 14:34:40 +0100
 
-strusModule (0.2.0-1)
+strusModule (0.2.0-1) unstable; urgency=low
   * fixed wrong call of getDatabase with database name as parameter instead of configuration string
   * fixed module loader test for out-of-source builds
   * updated OBS package build support
@@ -25,22 +25,22 @@ strusModule (0.2.0-1)
   * reverted some changes
  -- Patrick Frey <patrickpfrey@yahoo.com>  Wed, 11 Nov 2015 02:50:09 +0100
 
-strusModule (0.1.5-1)
+strusModule (0.1.5-1) unstable; urgency=low
   * adapted peer message handling redesign from strus core and added peer message processor interface as storage module part
   * put common CMAKE stuff of all strus relaed projects into includes
   * removed wrong include of programLoader.hpp that is part of strusUtilities
  -- Patrick Frey <patrickpfrey@yahoo.com>  Wed, 12 Aug 2015 23:51:13 +0200
 
-strusModule (0.1.4-1)
+strusModule (0.1.4-1) unstable; urgency=low
   * added document class detector to module interface
   * adapted some namings from strusAnalyzer
  -- Patrick Frey <patrickpfrey@yahoo.com>  Tue, 14 Jul 2015 11:19:41 +0200
 
-strusModule (0.1.2-1)
+strusModule (0.1.2-1) unstable; urgency=low
   * updated documentation
  -- Patrick Frey <patrickpfrey@yahoo.com>  Sun, 5 Jul 2015 15:37:04 +0200
 
-strusModule (0.1.1-1)
+strusModule (0.1.1-1) unstable; urgency=low
   * Initial revision
  -- Patrick Frey <patrickpfrey@yahoo.com>  Fri, 3 Jul 2015 15:17:20 +0200
 
