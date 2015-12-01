@@ -1,4 +1,9 @@
+strusmodule (0.2.5-1) unstable; urgency=low
+  * change interface for defining peer message processing
+ -- patrickfrey <patrickpfrey@yahoo.com>  Mon, 30 Nov 2015 13:18:09 +0100
+
 strusmodule (0.2.4-1) unstable; urgency=low
+  * define dependency from other strus packages by minor version instead of patch version
   * incremented version to 0.2.4 to resolve OBS trouble with dependencies
  -- patrickfrey <patrickpfrey@yahoo.com>  Thu, 26 Nov 2015 09:08:51 +0100
 
