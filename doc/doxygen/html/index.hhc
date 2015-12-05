@@ -102,7 +102,7 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="addSystemModulePath"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="createAnalyzerObjectBuilder"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="createStorageObjectBuilder"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="enablePeerMessageProcessor"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a1fc756572e7f54995afc5405d0b6c8c0"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="definePeerMessageProcessor"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a08282f6255786abdd07e725baef3e9e3"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="loadModule"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="DatabaseReference"><param name="ImageNumber" value="1"></OBJECT>
@@ -288,7 +288,7 @@
             <LI><OBJECT type="text/sitemap"><param name="Name" value="addSystemModulePath"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="createAnalyzerObjectBuilder"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="createStorageObjectBuilder"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070"><param name="ImageNumber" value="11"></OBJECT>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="enablePeerMessageProcessor"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a1fc756572e7f54995afc5405d0b6c8c0"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="definePeerMessageProcessor"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a08282f6255786abdd07e725baef3e9e3"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="loadModule"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
           </UL>
@@ -335,8 +335,21 @@
             </UL>
           </UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="strus.hpp"><param name="Local" value="strus_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="versionModule.hpp"><param name="ImageNumber" value="1"></OBJECT>
+          <UL>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_SIGNATURE"><param name="Local" value="versionModule_8hpp.html#ad3745335527cd35f196dc18bc2eaf5e5"><param name="ImageNumber" value="11"></OBJECT>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION"><param name="Local" value="versionModule_8hpp.html#a39ce24fbdf387b650eeb4fe018fa2d94"><param name="ImageNumber" value="11"></OBJECT>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_MAJOR"><param name="Local" value="versionModule_8hpp.html#a77a6b6dbf059c0911dc9df6722d6e41c"><param name="ImageNumber" value="11"></OBJECT>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_MINOR"><param name="Local" value="versionModule_8hpp.html#a94f7a024c1520c5a239c967636a4b5e1"><param name="ImageNumber" value="11"></OBJECT>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="STRUS_MODULE_VERSION_STRING"><param name="Local" value="versionModule_8hpp.html#a16ca671cefc50e08a603c920b928163e"><param name="ImageNumber" value="11"></OBJECT>
+          </UL>
         </UL>
       </UL>
+    </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="File Members"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
+    <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="All"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="Macros"><param name="Local" value="globals_defs.html"><param name="ImageNumber" value="11"></OBJECT>
     </UL>
   </UL>
 </UL>
