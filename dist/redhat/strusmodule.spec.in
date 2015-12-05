@@ -114,9 +114,10 @@
 
 Summary: Library implementing the loading of modules for a text search engine
 Name: strusmodule
-%define main_version 0.1.5
+%define main_version @STRUS_VERSION@
+%define dep_version @STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
 Version: %{main_version}
-Release: 0.1
+Release: @STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
 License: GPLv3
 Group: Development/Libraries/C++
 
@@ -206,12 +207,12 @@ BuildRequires: boost-devel
 %endif
 %endif
 
-BuildRequires: strus-devel >= %{main_version}
-BuildRequires: strusanalyzer-devel >= %{main_version}
-BuildRequires: strus >= %{main_version}
-BuildRequires: strusanalyzer >= %{main_version}
-Requires: strus >= %{main_version}
-Requires: strusanalyzer >= %{main_version}
+BuildRequires: strus-devel >= %{dep_version}
+BuildRequires: strusanalyzer-devel >= %{dep_version}
+BuildRequires: strus >= %{dep_version}
+BuildRequires: strusanalyzer >= %{dep_version}
+Requires: strus >= %{dep_version}
+Requires: strusanalyzer >= %{dep_version}
 
 # Check if 'Distribution' is really set by OBS (as mentioned in bacula)
 %if ! 0%{?opensuse_bs}
@@ -265,8 +266,8 @@ make test
 %files
 %defattr( -, root, root )
 %dir %{_libdir}/strus
-%{_libdir}/strus/libstrus_module.so.0.1
-%{_libdir}/strus/libstrus_module.so.0.1.5
+%{_libdir}/strus/libstrus_module.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
+%{_libdir}/strus/libstrus_module.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@.@STRUS_PATCH_VERSION@
 
 %files devel
 %defattr( -, root, root )
@@ -279,5 +280,48 @@ make test
 %{_includedir}/strus/private/*.hpp
 
 %changelog
-* Fri Mar 20 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.1.5-0.1
-- preliminary release
+* Tue Dec 1 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.6-0.1
+- adapted interface changes in core: added interfaces for introspection (user names, docids, term types, term values)
+
+* Mon Nov 30 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.5-0.1
+- change interface for defining peer message processing
+
+* Thu Nov 26 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.4-0.1
+- incremented version to 0.2.4 to resolve OBS trouble with dependencies
+
+* Tue Nov 24 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.3-0.1
+- synchronize version number with strus core
+- define package dependency to strus* not to patch version but to minor version
+
+* Tue Nov 24 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.2-0.1
+- dynamically generated version number in packages
+
+* Wed Nov 11 2015 Patrick Frey <patrickpfrey@yahoo.com> 0.2.0-0.1
+- fixed wrong call of getDatabase with database name as parameter instead of configuration string
+- fixed module loader test for out-of-source builds
+- updated OBS package build support
+- fixed type (came in with changing to exception free interface)
+- added dependency of loader test to generated header file
+- do not checkin cmake generated files
+- adapted interface changes in analyzer
+- return boolean (success/failure) in loadModule method
+- adapting to strus utils interface changes
+- build with visibility hidden
+- adapted changes in error buffer interface
+- make module interface exception safe
+- make visibility default (all visible) for temporarily enable exceptions
+
+* Wed Aug 12 2015 Patrick Frey <patrickpfrey@yahoo.com> v0.1.5-0.1
+- adapted peer message handling redesign from strus core and added peer message processor interface as storage module part
+- put common CMAKE stuff of all strus relaed projects into includes
+- removed wrong include of programLoader.hpp that is part of strusUtilities
+
+* Tue Jul 14 2015 Patrick Frey <patrickpfrey@yahoo.com> v0.1.4-0.1
+- added document class detector to module interface
+- adapted some namings from strusAnalyzer
+
+* Sun Jul 5 2015 Patrick Frey <patrickpfrey@yahoo.com> v0.1.2-0.1
+- updated documentation
+
+* Fri Jul 3 2015 Patrick Frey <patrickpfrey@yahoo.com> v0.1.1-0.1
+- Initial revision

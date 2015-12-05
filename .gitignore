@@ -42,10 +42,17 @@ CPackConfig.cmake
 CPackConfig.cmake.user
 CPackSourceConfig.cmake
 CPackSourceConfig.cmake.user
+cmake/build_rules.cmake.user
 include/strus/versionModule.hpp
 src/internationalization.cpp
 src/moduleDirectory.hpp
 tests/loader/testModuleDirectory.hpp
+dist/obs/deploy_to_obs.sh
+dist/archlinux/PKGBUILD
+dist/obs/strusmodule.dsc
+dist/obs/strusmodule-Debian_7.0.dsc
+dist/obs/strusmodule-xUbuntu_12.04.dsc
+dist/redhat/strusmodule.spec
 
 # Compiled Programs
 tests/loader/testModuleLoader

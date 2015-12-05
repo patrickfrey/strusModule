@@ -68,7 +68,7 @@ public:
 	virtual void addModulePath( const std::string& path);
 	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
-	virtual void enablePeerMessageProcessor( const std::string& name);
+	virtual void definePeerMessageProcessor( const std::string& name);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;

@@ -242,7 +242,6 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 	try
 	{
 		std::string dbname;
-		std::string peermsgproc;
 		std::string configstr( config);
 	
 		const DatabaseInterface* dbi = getDatabase( configstr);
@@ -280,23 +279,24 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 			m_errorhnd->report(_TXT("error creating database client"));
 			return 0;
 		}
-		std::auto_ptr<StorageClientInterface> storage( sti->createClient( storagecfg, database.get()));
+		const PeerMessageProcessorInterface* peermsgproc = 0;
+		if (m_peermsgprocname)
+		{
+			peermsgproc = getPeerMessageProcessor();
+			if (!peermsgproc)
+			{
+				m_errorhnd->report(_TXT("error creating peer message processor"));
+				return 0;
+			}
+		}
+		std::auto_ptr<StorageClientInterface>
+			storage( sti->createClient( storagecfg, database.get(), peermsgproc));
 		if (!storage.get())
 		{
 			m_errorhnd->report(_TXT("error creating storage client"));
 			return 0;
 		}
 		(void)database.release(); //... ownership passed to storage
-		if (m_peermsgprocname)
-		{
-			const PeerMessageProcessorInterface* peermsgproc = getPeerMessageProcessor();
-			if (!peermsgproc)
-			{
-				m_errorhnd->report(_TXT("error creating peer message processor"));
-				return 0;
-			}
-			storage->definePeerMessageProcessor( peermsgproc);
-		}
 		return storage.release(); //... ownership returned
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating storage: %s"), *m_errorhnd, 0);

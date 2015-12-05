@@ -144,7 +144,7 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 }
 
-void ModuleLoader::enablePeerMessageProcessor( const std::string& name)
+void ModuleLoader::definePeerMessageProcessor( const std::string& name)
 {
 	try
 	{
