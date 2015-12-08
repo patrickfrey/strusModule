@@ -87,7 +87,7 @@ private:
 };
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_peermsgproc_enabled(false),m_errorhnd(errorhnd_),m_errorhnd_analyzer(0)
+	:m_statsproc_enabled(false),m_errorhnd(errorhnd_),m_errorhnd_analyzer(0)
 {
 	m_errorhnd_analyzer = new AnalyzerErrorBuffer( m_errorhnd);
 }
@@ -144,12 +144,12 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 }
 
-void ModuleLoader::definePeerMessageProcessor( const std::string& name)
+void ModuleLoader::defineStatisticsProcessor( const std::string& name)
 {
 	try
 	{
-		m_peermsgproc = name;
-		m_peermsgproc_enabled = true;
+		m_statsproc = name;
+		m_statsproc_enabled = true;
 	}
 	catch (const std::bad_alloc&)
 	{
@@ -209,7 +209,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_peermsgproc_enabled?m_peermsgproc.c_str():0, m_errorhnd));
+		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_statsproc_enabled?m_statsproc.c_str():0, m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
