@@ -44,7 +44,7 @@ DLL_PUBLIC StorageModule::StorageModule(
 
 void StorageModule::init(
 		const DatabaseReference* databaseReference_,
-		const PeerMessageProcessorReference* peerMessageProcessorReference_,
+		const StatisticsProcessorReference* statisticsProcessorReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
@@ -59,15 +59,15 @@ void StorageModule::init(
 		databaseReference.name = 0;
 		databaseReference.create = 0;
 	}
-	if (peerMessageProcessorReference_)
+	if (statisticsProcessorReference_)
 	{
-		peerMessageProcessorReference.name = peerMessageProcessorReference_->name;
-		peerMessageProcessorReference.create = peerMessageProcessorReference_->create;
+		statisticsProcessorReference.name = statisticsProcessorReference_->name;
+		statisticsProcessorReference.create = statisticsProcessorReference_->create;
 	}
 	else
 	{
-		peerMessageProcessorReference.name = 0;
-		peerMessageProcessorReference.create = 0;
+		statisticsProcessorReference.name = 0;
+		statisticsProcessorReference.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

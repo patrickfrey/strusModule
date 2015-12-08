@@ -32,7 +32,7 @@
 #include "strus/lib/database_leveldb.hpp"
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
-#include "strus/lib/peermsgproc.hpp"
+#include "strus/lib/statsproc.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
@@ -53,8 +53,8 @@
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder( const char* peermsgprocname_, ErrorBufferInterface* errorhnd_)
-	:m_queryProcessor( strus::createQueryProcessor(errorhnd_)),m_storage(strus::createStorage(errorhnd_)),m_peermsgprocname(peermsgprocname_),m_errorhnd(errorhnd_)
+StorageObjectBuilder::StorageObjectBuilder( const char* statsprocname_, ErrorBufferInterface* errorhnd_)
+	:m_queryProcessor( strus::createQueryProcessor(errorhnd_)),m_storage(strus::createStorage(errorhnd_)),m_statsprocname(statsprocname_),m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
@@ -195,39 +195,39 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting database from storage object builder: %s"), *m_errorhnd, 0);
 }
 
-const PeerMessageProcessorInterface* StorageObjectBuilder::getPeerMessageProcessor() const
+const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor() const
 {
 	try
 	{
-		if (!m_peermsgproc.get())
+		if (!m_statsproc.get())
 		{
 			std::vector<const StorageModule*>::const_iterator
 				mi = m_storageModules.begin(), 
 				me = m_storageModules.end();
 			for (; mi != me; ++mi)
 			{
-				if ((*mi)->peerMessageProcessorReference.create)
+				if ((*mi)->statisticsProcessorReference.create)
 				{
-					if (!m_peermsgprocname[0] || utils::caseInsensitiveEquals( m_peermsgprocname, (*mi)->peerMessageProcessorReference.name))
+					if (!m_statsprocname[0] || utils::caseInsensitiveEquals( m_statsprocname, (*mi)->statisticsProcessorReference.name))
 					{
-						m_peermsgproc.reset( (*mi)->peerMessageProcessorReference.create( m_errorhnd));
+						m_statsproc.reset( (*mi)->statisticsProcessorReference.create( m_errorhnd));
 						break;
 					}
 				}
 			}
 			if (mi == me)
 			{
-				if (!m_peermsgprocname[0] || utils::caseInsensitiveEquals( m_peermsgprocname, "standard"))
+				if (!m_statsprocname[0] || utils::caseInsensitiveEquals( m_statsprocname, "standard"))
 				{
-					m_peermsgproc.reset( strus::createPeerMessageProcessor( m_errorhnd));
+					m_statsproc.reset( strus::createStatisticsProcessor( m_errorhnd));
 				}
 				else
 				{
-					throw strus::runtime_error( _TXT( "undefined peer message processor '%s'"), m_peermsgprocname);
+					throw strus::runtime_error( _TXT( "undefined peer message processor '%s'"), m_statsprocname);
 				}
 			}
 		}
-		return m_peermsgproc.get();
+		return m_statsproc.get();
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting peer message processor from storage object builder: %s"), *m_errorhnd, 0);
 }
@@ -279,18 +279,18 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 			m_errorhnd->report(_TXT("error creating database client"));
 			return 0;
 		}
-		const PeerMessageProcessorInterface* peermsgproc = 0;
-		if (m_peermsgprocname)
+		const StatisticsProcessorInterface* statsproc = 0;
+		if (m_statsprocname)
 		{
-			peermsgproc = getPeerMessageProcessor();
-			if (!peermsgproc)
+			statsproc = getStatisticsProcessor();
+			if (!statsproc)
 			{
 				m_errorhnd->report(_TXT("error creating peer message processor"));
 				return 0;
 			}
 		}
 		std::auto_ptr<StorageClientInterface>
-			storage( sti->createClient( storagecfg, database.get(), peermsgproc));
+			storage( sti->createClient( storagecfg, database.get(), statsproc));
 		if (!storage.get())
 		{
 			m_errorhnd->report(_TXT("error creating storage client"));
