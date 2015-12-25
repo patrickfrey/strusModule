@@ -59,9 +59,9 @@
 #include "strus/forwardIteratorInterface.hpp"
 #include "strus/postingIteratorInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
-#include "strus/peerMessageProcessorInterface.hpp"
-#include "strus/peerMessageViewerInterface.hpp"
-#include "strus/peerMessageBuilderInterface.hpp"
+#include "strus/statisticsProcessorInterface.hpp"
+#include "strus/statisticsViewerInterface.hpp"
+#include "strus/statisticsBuilderInterface.hpp"
 
 // Query processor (functions for the query evaluation used for ranking and summarization):
 #include "strus/lib/queryproc.hpp"

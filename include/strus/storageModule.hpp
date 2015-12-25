@@ -41,7 +41,7 @@ namespace strus
 /// \brief Forward declaration
 class DatabaseInterface;
 /// \brief Forward declaration
-class PeerMessageProcessorInterface;
+class StatisticsProcessorInterface;
 /// \brief Forward declaration
 class WeightingFunctionInterface;
 /// \brief Forward declaration
@@ -61,9 +61,9 @@ struct DatabaseReference
 };
 
 /// \brief Structure to declare an alternative packing/unpacking of peer messages
-struct PeerMessageProcessorReference
+struct StatisticsProcessorReference
 {
-	typedef PeerMessageProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	typedef StatisticsProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
 	Create create;					///< constructor of the object
 };
@@ -107,7 +107,7 @@ struct StorageModule
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
 	DatabaseReference databaseReference;					///< alternative key value store database 
-	PeerMessageProcessorReference peerMessageProcessorReference;		///< alternative packing/unpacking of peer messages
+	StatisticsProcessorReference statisticsProcessorReference;		///< alternative packing/unpacking of peer messages
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
@@ -115,7 +115,7 @@ struct StorageModule
 private:
 	void init(
 		const DatabaseReference* databaseReference_,
-		const PeerMessageProcessorReference* peerMessageProcessorReference_,
+		const StatisticsProcessorReference* statisticsProcessorReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);

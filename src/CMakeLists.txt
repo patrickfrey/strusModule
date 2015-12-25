@@ -30,8 +30,8 @@ link_directories(
 # -------------------------------------------
 # LIBRARY
 # -------------------------------------------
-add_library( strus_module SHARED ${source_files})
-target_link_libraries( strus_module dl strus_analyzer strus_segmenter_textwolf  strus_textproc strus_queryeval strus_queryproc strus_peermsgproc strus_storage strus_database_leveldb )
+add_library( strus_module SHARED ${source_files} )
+target_link_libraries( strus_module dl strus_analyzer strus_segmenter_textwolf  strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb )
 set_target_properties(
     strus_module
     PROPERTIES

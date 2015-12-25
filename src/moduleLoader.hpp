@@ -68,7 +68,7 @@ public:
 	virtual void addModulePath( const std::string& path);
 	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
-	virtual void definePeerMessageProcessor( const std::string& name);
+	virtual void defineStatisticsProcessor( const std::string& name);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
@@ -83,8 +83,8 @@ private:
 	std::vector<std::string> m_resourcePaths;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
-	std::string m_peermsgproc;
-	bool m_peermsgproc_enabled;
+	std::string m_statsproc;
+	bool m_statsproc_enabled;
 	ErrorBufferInterface* m_errorhnd;
 	AnalyzerErrorBufferInterface* m_errorhnd_analyzer;
 };

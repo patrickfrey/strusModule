@@ -63,9 +63,9 @@ public:
 	/// \param[in] path path to add
 	virtual void addResourcePath( const std::string& path)=0;
 
-	/// \brief Declare the processor for packing/unpacking messages sent to peers
+	/// \brief Declare the processor for packing/unpacking statistics messages
 	/// \param[in] name of the processor
-	virtual void definePeerMessageProcessor( const std::string& name)=0;
+	virtual void defineStatisticsProcessor( const std::string& name)=0;
 
 	/// \brief Get the builder for storage objects build from components loaded from module or the defaults defined.
 	/// \return the builder object
