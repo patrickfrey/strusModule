@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">0.3</span>
    </div>
   </td>
  </tr>
@@ -110,7 +110,7 @@
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a>( <span class="keyword">const</span> std::string&amp; path)=0;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a08282f6255786abdd07e725baef3e9e3">definePeerMessageProcessor</a>( <span class="keyword">const</span> std::string&amp; name)=0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d">defineStatisticsProcessor</a>( <span class="keyword">const</span> std::string&amp; name)=0;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">virtual</span> StorageObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a>() <span class="keyword">const</span>=0;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
@@ -122,19 +122,19 @@
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a2d787c3639d41343dbf7439b73ee0777"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">strus::ModuleLoaderInterface::addResourcePath</a></div><div class="ttdeci">virtual void addResourcePath(const std::string &amp;path)=0</div><div class="ttdoc">Declare a path for analyzer components to find resource files. </div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a08282f6255786abdd07e725baef3e9e3"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a08282f6255786abdd07e725baef3e9e3">strus::ModuleLoaderInterface::definePeerMessageProcessor</a></div><div class="ttdeci">virtual void definePeerMessageProcessor(const std::string &amp;name)=0</div><div class="ttdoc">Declare the processor for packing/unpacking messages sent to peers. </div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aaa82f295507542bb391822c6bc2f6ad1"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">strus::ModuleLoaderInterface::createAnalyzerObjectBuilder</a></div><div class="ttdeci">virtual AnalyzerObjectBuilderInterface * createAnalyzerObjectBuilder() const =0</div><div class="ttdoc">Get the builder for analyzer objects build from components loaded from module or the defaults defined...</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a984e437dd896680d6acef0730a403950"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">strus::ModuleLoaderInterface::loadModule</a></div><div class="ttdeci">virtual bool loadModule(const std::string &amp;name)=0</div><div class="ttdoc">Load a module with name &#39;name&#39; seeking in all module paths defined in the order of their definition...</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a8097665250911d1cd2c940b82795a914"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a8097665250911d1cd2c940b82795a914">strus::ModuleLoaderInterface::addModulePath</a></div><div class="ttdeci">virtual void addModulePath(const std::string &amp;path)=0</div><div class="ttdoc">Add a new path where to seek modules to load. </div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></div><div class="ttdoc">Interface providing a mechanism to load modules and to create the objects defined in the modules...</div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:44</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aca31e5f08b483516de6b87d0c616c070"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">strus::ModuleLoaderInterface::createStorageObjectBuilder</a></div><div class="ttdeci">virtual StorageObjectBuilderInterface * createStorageObjectBuilder() const =0</div><div class="ttdoc">Get the builder for storage objects build from components loaded from module or the defaults defined...</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a70956486a69ae086bd926295ca37a5b4"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">strus::ModuleLoaderInterface::~ModuleLoaderInterface</a></div><div class="ttdeci">virtual ~ModuleLoaderInterface()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:48</div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a6b11f4b4fa82d0f90f0b47a0b1a4022d"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d">strus::ModuleLoaderInterface::defineStatisticsProcessor</a></div><div class="ttdeci">virtual void defineStatisticsProcessor(const std::string &amp;name)=0</div><div class="ttdoc">Declare the processor for packing/unpacking statistics messages. </div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a851ef092bf467fdf543a19c080ca2421"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421">strus::ModuleLoaderInterface::addSystemModulePath</a></div><div class="ttdeci">virtual void addSystemModulePath()=0</div><div class="ttdoc">Add the path defined by the system depending on the platform where to seek modules to load...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 5 2015 18:32:54 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Dec 25 2015 06:27:43 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

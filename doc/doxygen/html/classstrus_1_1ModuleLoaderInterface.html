@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">0.3</span>
    </div>
   </td>
  </tr>
@@ -88,9 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d787c3639d41343dbf7439b73ee0777"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a> (const std::string &amp;path)=0</td></tr>
 <tr class="memdesc:a2d787c3639d41343dbf7439b73ee0777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare a path for analyzer components to find resource files.  <a href="#a2d787c3639d41343dbf7439b73ee0777">More...</a><br/></td></tr>
 <tr class="separator:a2d787c3639d41343dbf7439b73ee0777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08282f6255786abdd07e725baef3e9e3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a08282f6255786abdd07e725baef3e9e3">definePeerMessageProcessor</a> (const std::string &amp;name)=0</td></tr>
-<tr class="memdesc:a08282f6255786abdd07e725baef3e9e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare the processor for packing/unpacking messages sent to peers.  <a href="#a08282f6255786abdd07e725baef3e9e3">More...</a><br/></td></tr>
-<tr class="separator:a08282f6255786abdd07e725baef3e9e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b11f4b4fa82d0f90f0b47a0b1a4022d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d">defineStatisticsProcessor</a> (const std::string &amp;name)=0</td></tr>
+<tr class="memdesc:a6b11f4b4fa82d0f90f0b47a0b1a4022d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare the processor for packing/unpacking statistics messages.  <a href="#a6b11f4b4fa82d0f90f0b47a0b1a4022d">More...</a><br/></td></tr>
+<tr class="separator:a6b11f4b4fa82d0f90f0b47a0b1a4022d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca31e5f08b483516de6b87d0c616c070"><td class="memItemLeft" align="right" valign="top">virtual <br class="typebreak"/>
 StorageObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a> () const =0</td></tr>
 <tr class="memdesc:aca31e5f08b483516de6b87d0c616c070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the builder for storage objects build from components loaded from module or the defaults defined.  <a href="#aca31e5f08b483516de6b87d0c616c070">More...</a><br/></td></tr>
@@ -271,7 +271,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 
 </div>
 </div>
-<a class="anchor" id="a08282f6255786abdd07e725baef3e9e3"></a>
+<a class="anchor" id="a6b11f4b4fa82d0f90f0b47a0b1a4022d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -279,7 +279,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void strus::ModuleLoaderInterface::definePeerMessageProcessor </td>
+          <td class="memname">virtual void strus::ModuleLoaderInterface::defineStatisticsProcessor </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -293,7 +293,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 </table>
 </div><div class="memdoc">
 
-<p>Declare the processor for packing/unpacking messages sent to peers. </p>
+<p>Declare the processor for packing/unpacking statistics messages. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>of the processor </td></tr>
@@ -342,7 +342,7 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 5 2015 18:32:54 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Dec 25 2015 06:27:43 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
