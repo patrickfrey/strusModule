@@ -1,3 +1,7 @@
+strusModule (0.4.0)
+  * increment minor version number with the strus core
+ -- Patrick Frey <patrickpfrey@yahoo.com>  Sat, 1 Jan 2016 17:00:00 +0100
+
 strusModule (0.3.1)
   * fixing versioning problems on the Open Suse build cluster
  -- Patrick Frey <patrickpfrey@yahoo.com>  Fri, 21 Dec 2015 09:38:00 +0100
