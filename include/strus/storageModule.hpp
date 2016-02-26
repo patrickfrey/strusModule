@@ -60,7 +60,7 @@ struct DatabaseReference
 	Create create;					///< constructor of the object
 };
 
-/// \brief Structure to declare an alternative packing/unpacking of peer messages
+/// \brief Structure to declare an alternative packing/unpacking of statistics messages
 struct StatisticsProcessorReference
 {
 	typedef StatisticsProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
@@ -107,7 +107,7 @@ struct StorageModule
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
 	DatabaseReference databaseReference;					///< alternative key value store database 
-	StatisticsProcessorReference statisticsProcessorReference;		///< alternative packing/unpacking of peer messages
+	StatisticsProcessorReference statisticsProcessorReference;		///< alternative packing/unpacking of statistics messages
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions

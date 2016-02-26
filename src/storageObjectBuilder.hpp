@@ -86,7 +86,7 @@ private:
 	typedef Reference<DatabaseInterface> DatabaseReference;
 	mutable std::map<std::string,DatabaseReference> m_dbmap;///< cached database handles
 	mutable Reference<StatisticsProcessorInterface> m_statsproc;
-	const char* m_statsprocname;				///< peer message processor selected
+	const char* m_statsprocname;				///< statistics message processor selected
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 

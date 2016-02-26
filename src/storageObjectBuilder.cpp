@@ -223,13 +223,13 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 				}
 				else
 				{
-					throw strus::runtime_error( _TXT( "undefined peer message processor '%s'"), m_statsprocname);
+					throw strus::runtime_error( _TXT( "undefined statistics message processor '%s'"), m_statsprocname);
 				}
 			}
 		}
 		return m_statsproc.get();
 	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error getting peer message processor from storage object builder: %s"), *m_errorhnd, 0);
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics message processor from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const
@@ -285,7 +285,7 @@ StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::st
 			statsproc = getStatisticsProcessor();
 			if (!statsproc)
 			{
-				m_errorhnd->report(_TXT("error creating peer message processor"));
+				m_errorhnd->report(_TXT("error creating statistics message processor"));
 				return 0;
 			}
 		}
