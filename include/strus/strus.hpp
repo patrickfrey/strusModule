@@ -12,7 +12,7 @@
 // Basic storage data types:
 #include "strus/index.hpp"
 #include "strus/constants.hpp"
-#include "strus/arithmeticVariant.hpp"
+#include "strus/numericVariant.hpp"
 #include "strus/reference.hpp"
 #include "strus/errorBufferInterface.hpp"
 
