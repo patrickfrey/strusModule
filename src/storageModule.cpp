@@ -17,7 +17,7 @@ DLL_PUBLIC StorageModule::StorageModule(
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage)
 {
-	init( 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_);
+	init( 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
 	//... no need to make database loadable by module yet
 }
 
@@ -26,7 +26,8 @@ void StorageModule::init(
 		const StatisticsProcessorReference* statisticsProcessorReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
-		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
+		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
+		const ScalarFunctionParserConstructor* scalarFunctionParserConstructor_)
 {
 	if (databaseReference_)
 	{
@@ -51,6 +52,7 @@ void StorageModule::init(
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;
 	summarizerFunctionConstructor = summarizerFunctionConstructor_;
+	scalarFunctionParserConstructor = scalarFunctionParserConstructor_;
 }
 
 

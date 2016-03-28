@@ -102,14 +102,34 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			SummarizerFunctionInterface* func = si->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating summarizer function"));
+				m_errorhnd->report(_TXT("error creating summarizer function '%s'"), si->name);
 				return;
 			}
 			m_queryProcessor->defineSummarizerFunction( si->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining summarizer function"));
+				m_errorhnd->report(_TXT("error defining summarizer function '%s'"), si->name);
+				return;
+			}
+		}
+	}
+	if (mod->scalarFunctionParserConstructor)
+	{
+		ScalarFunctionParserConstructor const* si = mod->scalarFunctionParserConstructor;
+		for (; si->create != 0; ++si)
+		{
+			ScalarFunctionParserInterface* func = si->create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating scalar function parser '%s'"), si->name);
+				return;
+			}
+			m_queryProcessor->defineScalarFunctionParser( si->name, func);
+			if (m_errorhnd->hasError())
+			{
+				delete func;
+				m_errorhnd->report(_TXT("error defining scalar function parser '%s'"), si->name);
 				return;
 			}
 		}
