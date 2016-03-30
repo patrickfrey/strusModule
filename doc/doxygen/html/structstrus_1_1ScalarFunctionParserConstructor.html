@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>strusModule: strus::PostingIteratorJoinConstructor Struct Reference</title>
+<title>strusModule: strus::ScalarFunctionParserConstructor Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -54,48 +54,48 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacestrus.html">strus</a></li><li class="navelem"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html">PostingIteratorJoinConstructor</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacestrus.html">strus</a></li><li class="navelem"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html">ScalarFunctionParserConstructor</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structstrus_1_1PostingIteratorJoinConstructor-members.html">List of all members</a>  </div>
+<a href="structstrus_1_1ScalarFunctionParserConstructor-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">strus::PostingIteratorJoinConstructor Struct Reference</div>  </div>
+<div class="title">strus::ScalarFunctionParserConstructor Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure to declare an operator to join sets of postings represented as iterator as module object.  
- <a href="structstrus_1_1PostingIteratorJoinConstructor.html#details">More...</a></p>
+<p>Structure to declare a parser, resp. compiler for scalar function definition source.  
+ <a href="structstrus_1_1ScalarFunctionParserConstructor.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="storageModule_8hpp_source.html">storageModule.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a077f9fe4abdbec3fcea3e4a3831325d1"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
-PostingJoinOperatorInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html#a077f9fe4abdbec3fcea3e4a3831325d1">Create</a> )(ErrorBufferInterface *errorhnd)</td></tr>
-<tr class="separator:a077f9fe4abdbec3fcea3e4a3831325d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea6cfcebdb90c321ba118f0711380f51"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
+ScalarFunctionParserInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html#aea6cfcebdb90c321ba118f0711380f51">Create</a> )(ErrorBufferInterface *errorhnd)</td></tr>
+<tr class="separator:aea6cfcebdb90c321ba118f0711380f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a83d5ccd1411034588cb48602612d1af7"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html#a83d5ccd1411034588cb48602612d1af7">name</a></td></tr>
-<tr class="memdesc:a83d5ccd1411034588cb48602612d1af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of the join operator  <a href="#a83d5ccd1411034588cb48602612d1af7">More...</a><br/></td></tr>
-<tr class="separator:a83d5ccd1411034588cb48602612d1af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a476ced1d352a2b5e18e0561ceb17fdce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html#a077f9fe4abdbec3fcea3e4a3831325d1">Create</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html#a476ced1d352a2b5e18e0561ceb17fdce">create</a></td></tr>
-<tr class="memdesc:a476ced1d352a2b5e18e0561ceb17fdce"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor of the function  <a href="#a476ced1d352a2b5e18e0561ceb17fdce">More...</a><br/></td></tr>
-<tr class="separator:a476ced1d352a2b5e18e0561ceb17fdce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad993ee938b2e110fdcf7505ec8e6ab2d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html#ad993ee938b2e110fdcf7505ec8e6ab2d">name</a></td></tr>
+<tr class="memdesc:ad993ee938b2e110fdcf7505ec8e6ab2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of the parser implementation  <a href="#ad993ee938b2e110fdcf7505ec8e6ab2d">More...</a><br/></td></tr>
+<tr class="separator:ad993ee938b2e110fdcf7505ec8e6ab2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adce88701bc954e6d023b14172d28d843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html#aea6cfcebdb90c321ba118f0711380f51">Create</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html#adce88701bc954e6d023b14172d28d843">create</a></td></tr>
+<tr class="memdesc:adce88701bc954e6d023b14172d28d843"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor of the object  <a href="#adce88701bc954e6d023b14172d28d843">More...</a><br/></td></tr>
+<tr class="separator:adce88701bc954e6d023b14172d28d843"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure to declare an operator to join sets of postings represented as iterator as module object. </p>
+<div class="textblock"><p>Structure to declare a parser, resp. compiler for scalar function definition source. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a077f9fe4abdbec3fcea3e4a3831325d1"></a>
+<a class="anchor" id="aea6cfcebdb90c321ba118f0711380f51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef PostingJoinOperatorInterface*(* strus::PostingIteratorJoinConstructor::Create)(ErrorBufferInterface *errorhnd)</td>
+          <td class="memname">typedef ScalarFunctionParserInterface*(* strus::ScalarFunctionParserConstructor::Create)(ErrorBufferInterface *errorhnd)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -103,31 +103,31 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a476ced1d352a2b5e18e0561ceb17fdce"></a>
+<a class="anchor" id="adce88701bc954e6d023b14172d28d843"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html#a077f9fe4abdbec3fcea3e4a3831325d1">Create</a> strus::PostingIteratorJoinConstructor::create</td>
+          <td class="memname"><a class="el" href="structstrus_1_1ScalarFunctionParserConstructor.html#aea6cfcebdb90c321ba118f0711380f51">Create</a> strus::ScalarFunctionParserConstructor::create</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>constructor of the function </p>
+<p>constructor of the object </p>
 
 </div>
 </div>
-<a class="anchor" id="a83d5ccd1411034588cb48602612d1af7"></a>
+<a class="anchor" id="ad993ee938b2e110fdcf7505ec8e6ab2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* strus::PostingIteratorJoinConstructor::name</td>
+          <td class="memname">const char* strus::ScalarFunctionParserConstructor::name</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>name of the join operator </p>
+<p>name of the parser implementation </p>
 
 </div>
 </div>

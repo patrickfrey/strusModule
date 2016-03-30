@@ -135,11 +135,18 @@
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a55e94dd16a71412a6427ed62c733216e"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a5928b0637066c355eb61cfb465046977"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="ScalarFunctionParserConstructor"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#aea6cfcebdb90c321ba118f0711380f51"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#adce88701bc954e6d023b14172d28d843"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#ad993ee938b2e110fdcf7505ec8e6ab2d"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="StorageModule"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="StorageModule"><param name="Local" value="structstrus_1_1StorageModule.html#acd1379622506ac10e3dc91cdd02b6da6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="databaseReference"><param name="Local" value="structstrus_1_1StorageModule.html#a88e5f98f60a6ce887ffcbd431a32dc72"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="postingIteratorJoinConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#af2a532c8c692e07b806d31d6fd1d4cc4"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="scalarFunctionParserConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#a1dcc594f6809273a768c72282902a670"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="statisticsProcessorReference"><param name="Local" value="structstrus_1_1StorageModule.html#a62c7a90442d90aa42a8932665eb44f60"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="summarizerFunctionConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#aa6cfb09a2ae333675442a9d9556eef94"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="weightingFunctionConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#a76039a5b433d304565e61de4c6f8cea4"><param name="ImageNumber" value="11"></OBJECT>
@@ -160,6 +167,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::ModuleLoaderInterface"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::NormalizerConstructor"><param name="Local" value="structstrus_1_1NormalizerConstructor.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::PostingIteratorJoinConstructor"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html"><param name="ImageNumber" value="11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::ScalarFunctionParserConstructor"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::SegmenterConstructor"><param name="Local" value="structstrus_1_1SegmenterConstructor.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::StatisticsProcessorReference"><param name="Local" value="structstrus_1_1StatisticsProcessorReference.html"><param name="ImageNumber" value="11"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="strus::ModuleEntryPoint::Status"><param name="Local" value="structstrus_1_1ModuleEntryPoint_1_1Status.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -324,11 +332,18 @@
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a55e94dd16a71412a6427ed62c733216e"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a5928b0637066c355eb61cfb465046977"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="ScalarFunctionParserConstructor"><param name="ImageNumber" value="1"></OBJECT>
+            <UL>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#aea6cfcebdb90c321ba118f0711380f51"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#adce88701bc954e6d023b14172d28d843"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html#ad993ee938b2e110fdcf7505ec8e6ab2d"><param name="ImageNumber" value="11"></OBJECT>
+            </UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="StorageModule"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="StorageModule"><param name="Local" value="structstrus_1_1StorageModule.html#acd1379622506ac10e3dc91cdd02b6da6"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="databaseReference"><param name="Local" value="structstrus_1_1StorageModule.html#a88e5f98f60a6ce887ffcbd431a32dc72"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="postingIteratorJoinConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#af2a532c8c692e07b806d31d6fd1d4cc4"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="scalarFunctionParserConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#a1dcc594f6809273a768c72282902a670"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="statisticsProcessorReference"><param name="Local" value="structstrus_1_1StorageModule.html#a62c7a90442d90aa42a8932665eb44f60"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="summarizerFunctionConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#aa6cfb09a2ae333675442a9d9556eef94"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="weightingFunctionConstructor"><param name="Local" value="structstrus_1_1StorageModule.html#a76039a5b433d304565e61de4c6f8cea4"><param name="ImageNumber" value="11"></OBJECT>
