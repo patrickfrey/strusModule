@@ -7,7 +7,7 @@ _mainpkgver=@STRUS_VERSION@
 pkgver=${_mainpkgver}
 pkgrel=1
 pkgdesc='Library that provides a module loader and an interface to define loadable modules out of libraries to offer some expandability to strus.'
-license=('GPL3')
+license=('MPL2')
 arch=('i686' 'x86_64')
 url="http://project-strus.net"
 depends=('boost>=1.53' 'boost-libs>=1.53' "strus>=${_deppkgver}" "strusanalyzer>=${_deppkgver}")
