@@ -17,7 +17,7 @@
 namespace strus
 {
 /// \brief Forward declaration
-class AnalyzerModule;
+struct AnalyzerModule;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration

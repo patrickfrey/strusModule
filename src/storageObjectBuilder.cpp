@@ -21,6 +21,7 @@
 #include "strus/postingJoinOperatorInterface.hpp"
 #include "strus/weightingFunctionInterface.hpp"
 #include "strus/summarizerFunctionInterface.hpp"
+#include "strus/statisticsProcessorInterface.hpp"
 #include "strus/private/fileio.hpp"
 #include "strus/private/configParser.hpp"
 #include "utils.hpp"
