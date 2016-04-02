@@ -12,6 +12,8 @@
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/analyzerErrorBufferInterface.hpp"
+#include "strus/storageInterface.hpp"
+#include "strus/databaseInterface.hpp"
 #include "storageObjectBuilder.hpp"
 #include "analyzerObjectBuilder.hpp"
 #include "strus/private/fileio.hpp"

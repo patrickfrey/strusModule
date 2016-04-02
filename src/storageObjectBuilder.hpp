@@ -11,6 +11,7 @@
 #include "strus/reference.hpp"
 #include "strus/queryProcessorInterface.hpp"
 #include "strus/textProcessorInterface.hpp"
+#include "strus/statisticsProcessorInterface.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -18,7 +19,7 @@
 namespace strus
 {
 /// \brief Forward declaration
-class StorageModule;
+struct StorageModule;
 /// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration

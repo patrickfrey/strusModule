@@ -14,11 +14,11 @@
 namespace strus
 {
 /// \brief Forward declaration
-class ModuleEntryPoint;
+struct ModuleEntryPoint;
 /// \brief Forward declaration
-class AnalyzerModule;
+struct AnalyzerModule;
 /// \brief Forward declaration
-class StorageModule;
+struct StorageModule;
 /// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration
