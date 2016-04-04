@@ -15,7 +15,11 @@ link_directories(
    "${strus_LIBRARY_DIRS}"
 )
 
-set( STRUS_TEST_MODULE_DIRECTORY  "${PROJECT_BINARY_DIR}/tests/modules" )
+if(APPLE)
+   set( STRUS_TEST_MODULE_DIRECTORY "${PROJECT_BINARY_DIR}/tests/modules/${CMAKE_BUILD_TYPE}" )
+else(APPLE)
+   set( STRUS_TEST_MODULE_DIRECTORY  "${PROJECT_BINARY_DIR}/tests/modules" )
+endif(APPLE)
 configure_file( "${PROJECT_SOURCE_DIR}/tests/loader/testModuleDirectory.hpp.in"  "${PROJECT_BINARY_DIR}/tests/loader/testModuleDirectory.hpp"  @ONLY )
 
 
