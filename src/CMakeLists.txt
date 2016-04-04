@@ -18,7 +18,8 @@ set( source_files
 include_directories(
 	"${PROJECT_SOURCE_DIR}/include"
 	"${strus_INCLUDE_DIRS}"
-	"${strusanalyzer_INCLUDE_DIRS}" )
+	"${strusanalyzer_INCLUDE_DIRS}"
+)
 
 link_directories(
 	"${PROJECT_SOURCE_DIR}/src"
@@ -31,7 +32,7 @@ link_directories(
 # LIBRARY
 # -------------------------------------------
 add_library( strus_module SHARED ${source_files} )
-target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_analyzer strus_segmenter_textwolf  strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb )
+target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_analyzer strus_segmenter_textwolf  strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb strus_utils ${Intl_LIBRARIES} )
 set_target_properties(
     strus_module
     PROPERTIES
