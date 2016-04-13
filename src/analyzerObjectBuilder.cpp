@@ -10,9 +10,9 @@
 #include "strus/lib/segmenter_textwolf.hpp"
 #include "strus/lib/analyzer.hpp"
 #include "strus/analyzerModule.hpp"
-#include "strus/analyzerErrorBufferInterface.hpp"
-#include "strus/private/fileio.hpp"
-#include "strus/private/configParser.hpp"
+#include "strus/errorBufferInterface.hpp"
+#include "strus/base/fileio.hpp"
+#include "strus/base/configParser.hpp"
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInterface.hpp"
@@ -25,7 +25,7 @@
 
 using namespace strus;
 
-AnalyzerObjectBuilder::AnalyzerObjectBuilder( AnalyzerErrorBufferInterface* errorhnd_)
+AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
 	if (!m_textProcessor.get()) throw strus::runtime_error(_TXT("error creating text processor"));

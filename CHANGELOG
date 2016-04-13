@@ -1,3 +1,7 @@
+strusModule (0.8.0)
+  * moved libstrus_utils (no named libstrus_base) and libstrus_error to new project strusbase (strus depends now on strusbase)
+ -- Patrick Frey <patrickpfrey@yahoo.com>  Wed, 13 Apr 2016 20:30:00 +0100
+
 strusModule (0.7.0)
   * adapt interface changes from strus core: introducing scalar function objects used for combining ranking functions or to pass functions to weighting functions or summarizers
   * make scalar functions loadable from modules

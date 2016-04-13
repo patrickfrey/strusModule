@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
 include_directories(  
   "${PROJECT_SOURCE_DIR}/include" 
   "${strus_INCLUDE_DIRS}"
+  "${strusanalyzer_INCLUDE_DIRS}"
 )
 
 link_directories(

@@ -27,12 +27,12 @@ class NormalizerFunctionInterface;
 /// \brief Forward declaration
 class AggregatorFunctionInterface;
 /// \brief Forward declaration
-class AnalyzerErrorBufferInterface;
+class ErrorBufferInterface;
 
 /// \brief Structure to define a content detector for an alternative document format
 struct DocumentClassDetectorConstructor
 {
-	typedef const DocumentClassDetectorInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
+	typedef const DocumentClassDetectorInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* title;			///< title of the detector (informal name)
 	Create create;				///< constructor
 };
@@ -40,7 +40,7 @@ struct DocumentClassDetectorConstructor
 /// \brief Structure to define a segmenter for an alternative document format (like XML) as module
 struct SegmenterConstructor
 {
-	typedef SegmenterInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
+	typedef SegmenterInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the segmenter
 	Create create;				///< constructor
 };
@@ -48,7 +48,7 @@ struct SegmenterConstructor
 /// \brief Structure to define a proprietary tokenizer of text segments as module
 struct TokenizerConstructor
 {
-	typedef TokenizerFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
+	typedef TokenizerFunctionInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the tokenizer
 	Create create;				///< constructor
 };
@@ -56,7 +56,7 @@ struct TokenizerConstructor
 /// \brief Structure to define a proprietary normalizer of tokens as module
 struct NormalizerConstructor
 {
-	typedef NormalizerFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
+	typedef NormalizerFunctionInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the normalizer
 	Create create;				///< constructor
 };
@@ -64,7 +64,7 @@ struct NormalizerConstructor
 /// \brief Structure to define a proprietary function to aggregate a value for a document as meta data (counting, classification, etc.)
 struct AggregatorConstructor
 {
-	typedef AggregatorFunctionInterface* (*Create)( AnalyzerErrorBufferInterface* errorhnd);
+	typedef AggregatorFunctionInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;			///< name of the aggregator
 	Create create;				///< constructor
 };

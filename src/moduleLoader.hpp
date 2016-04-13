@@ -33,8 +33,6 @@ class StorageObjectBuilderInterface;
 class AnalyzerObjectBuilderInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
-/// \brief Forward declaration
-class AnalyzerErrorBufferInterface;
 
 /// \brief Implementation of ModuleLoaderInterface
 class ModuleLoader
@@ -65,7 +63,6 @@ private:
 	std::string m_statsproc;
 	bool m_statsproc_enabled;
 	ErrorBufferInterface* m_errorhnd;
-	AnalyzerErrorBufferInterface* m_errorhnd_analyzer;
 };
 
 }//namespace

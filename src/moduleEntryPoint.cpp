@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/moduleEntryPoint.hpp"
-#include "strus/private/dll_tags.hpp"
+#include "private/dll_tags.hpp"
 #include <cstring>
 #include <vector>
 #include <stdexcept>
