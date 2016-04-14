@@ -7,7 +7,7 @@
  */
 #include "strus/lib/module.hpp"
 #include "moduleLoader.hpp"
-#include "private/dll_tags.hpp"
+#include "strus/base/dll_tags.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
