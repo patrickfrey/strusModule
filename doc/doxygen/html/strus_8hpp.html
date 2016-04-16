@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.7</span>
+   &#160;<span id="projectnumber">0.8</span>
    </div>
   </td>
  </tr>
@@ -68,6 +68,10 @@
 <code>#include &quot;strus/numericVariant.hpp&quot;</code><br/>
 <code>#include &quot;strus/reference.hpp&quot;</code><br/>
 <code>#include &quot;strus/errorBufferInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/versionBase.hpp&quot;</code><br/>
+<code>#include &quot;strus/versionStorage.hpp&quot;</code><br/>
+<code>#include &quot;strus/versionAnalyzer.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="versionModule_8hpp_source.html">strus/versionModule.hpp</a>&quot;</code><br/>
 <code>#include &quot;strus/lib/database_leveldb.hpp&quot;</code><br/>
 <code>#include &quot;strus/databaseOptions.hpp&quot;</code><br/>
 <code>#include &quot;strus/databaseInterface.hpp&quot;</code><br/>
@@ -75,21 +79,30 @@
 <code>#include &quot;strus/databaseCursorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/databaseBackupCursorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/databaseTransactionInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/storageObjectBuilderInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/storage.hpp&quot;</code><br/>
 <code>#include &quot;strus/storageInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/storageClientInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/storageTransactionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/storageDocumentInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/documentTermIteratorInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/valueIteratorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/invAclIteratorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/metaDataReaderInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/metaDataRestrictionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/metaDataRestrictionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/storageAlterMetaDataTableInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/attributeReaderInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/forwardIteratorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/postingIteratorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/postingJoinOperatorInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/statsproc.hpp&quot;</code><br/>
 <code>#include &quot;strus/statisticsProcessorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/statisticsViewerInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/statisticsIteratorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/statisticsBuilderInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/storageDocumentUpdateInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/storageDumpInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/queryproc.hpp&quot;</code><br/>
 <code>#include &quot;strus/queryProcessorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/summarizerFunctionContextInterface.hpp&quot;</code><br/>
@@ -98,12 +111,16 @@
 <code>#include &quot;strus/weightingFunctionContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/weightingFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/weightingFunctionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/scalarfunc.hpp&quot;</code><br/>
+<code>#include &quot;strus/scalarFunctionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/scalarFunctionInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/scalarFunctionParserInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/queryeval.hpp&quot;</code><br/>
 <code>#include &quot;strus/queryEvalInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/queryInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/weightedDocument.hpp&quot;</code><br/>
 <code>#include &quot;strus/resultDocument.hpp&quot;</code><br/>
-<code>#include &quot;strus/analyzerErrorBufferInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/analyzerObjectBuilderInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/analyzer.hpp&quot;</code><br/>
 <code>#include &quot;strus/queryAnalyzerInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/documentAnalyzerInterface.hpp&quot;</code><br/>
@@ -114,10 +131,12 @@
 <code>#include &quot;strus/analyzer/term.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/textproc.hpp&quot;</code><br/>
 <code>#include &quot;strus/textProcessorInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/detector_std.hpp&quot;</code><br/>
 <code>#include &quot;strus/documentClass.hpp&quot;</code><br/>
 <code>#include &quot;strus/documentClassDetectorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/segmenter_textwolf.hpp&quot;</code><br/>
 <code>#include &quot;strus/segmenterContextInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/segmenterInstanceInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/segmenterInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/tokenizer_word.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/tokenizer_punctuation.hpp&quot;</code><br/>
@@ -125,19 +144,20 @@
 <code>#include &quot;strus/tokenizerFunctionContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/tokenizerFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/tokenizerFunctionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/normalizer_charconv.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/normalizer_dateconv.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/normalizer_dictmap.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/normalizer_snowball.hpp&quot;</code><br/>
 <code>#include &quot;strus/normalizerFunctionContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/normalizerFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/normalizerFunctionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/lib/aggregator_vsm.hpp&quot;</code><br/>
 <code>#include &quot;strus/aggregatorFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/aggregatorFunctionInstanceInterface.hpp&quot;</code><br/>
 <code>#include &quot;<a class="el" href="analyzerModule_8hpp_source.html">strus/analyzerModule.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="storageModule_8hpp_source.html">strus/storageModule.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="moduleEntryPoint_8hpp_source.html">strus/moduleEntryPoint.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="moduleLoaderInterface_8hpp_source.html">strus/moduleLoaderInterface.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="versionModule_8hpp_source.html">strus/versionModule.hpp</a>&quot;</code><br/>
-<code>#include &quot;strus/versionAnalyzer.hpp&quot;</code><br/>
-<code>#include &quot;strus/versionStorage.hpp&quot;</code><br/>
 </div>
 <p><a href="strus_8hpp_source.html">Go to the source code of this file.</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -146,7 +166,7 @@
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 31 2016 00:58:48 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 16 2016 16:46:43 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

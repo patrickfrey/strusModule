@@ -24,31 +24,31 @@
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="DocumentClassDetectorConstructor"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#aa28347ab8b7417fa6ecb8e4fc5e5333c"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#afafe1ec20d9700dc964df494da448116"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a068f0dc400d6315c5ca46b0ddc976794"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="title"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a8221400194bfba22a341bf09c3d05f35"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="SegmenterConstructor"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a8ce764fcd1f85e29240e415d65279dba"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a9d2ace05b30a55a4c8cddf421352e955"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#aa2d698c86cd99309856b96fcdebc8e3b"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a705919f8286c3e0c27f3018ffc5b6a17"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="TokenizerConstructor"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a0fa3087b8a61b9dd462cbde96398b90f"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a6e3e2ccd370539e2b935935a81a2b16d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#ae6db2c75d2eedc47b4ed3b462796673d"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a1b6f63051722262c6f2a729ffad6918e"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="NormalizerConstructor"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a36c3a88beb0f14c7cd9d0cfcf9702925"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a4be26160bca4ea6854bcbae1f2d64063"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#acfb6af40adebdc8533775263749023c6"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a46cc4574c683e4f7dc8b24ea49c1307a"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="AggregatorConstructor"><param name="ImageNumber" value="1"></OBJECT>
         <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#a02bc66f246171817daad4ab60153d82b"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#abe18113709b72f68d9c710edb7b49f9f"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#af1001f9e084c331a6ea856e14549e4ae"><param name="ImageNumber" value="11"></OBJECT>
         <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#a238e935e7ff25e32b75d6f03afa2b512"><param name="ImageNumber" value="11"></OBJECT>
         </UL>
@@ -204,31 +204,31 @@
           <UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="DocumentClassDetectorConstructor"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#aa28347ab8b7417fa6ecb8e4fc5e5333c"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#afafe1ec20d9700dc964df494da448116"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a068f0dc400d6315c5ca46b0ddc976794"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="title"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a8221400194bfba22a341bf09c3d05f35"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="SegmenterConstructor"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a8ce764fcd1f85e29240e415d65279dba"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a9d2ace05b30a55a4c8cddf421352e955"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#aa2d698c86cd99309856b96fcdebc8e3b"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a705919f8286c3e0c27f3018ffc5b6a17"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="TokenizerConstructor"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a0fa3087b8a61b9dd462cbde96398b90f"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a6e3e2ccd370539e2b935935a81a2b16d"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#ae6db2c75d2eedc47b4ed3b462796673d"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a1b6f63051722262c6f2a729ffad6918e"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="NormalizerConstructor"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a36c3a88beb0f14c7cd9d0cfcf9702925"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a4be26160bca4ea6854bcbae1f2d64063"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#acfb6af40adebdc8533775263749023c6"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1NormalizerConstructor.html#a46cc4574c683e4f7dc8b24ea49c1307a"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
           <LI><OBJECT type="text/sitemap"><param name="Name" value="AggregatorConstructor"><param name="ImageNumber" value="1"></OBJECT>
             <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#a02bc66f246171817daad4ab60153d82b"><param name="ImageNumber" value="11"></OBJECT>
+            <LI><OBJECT type="text/sitemap"><param name="Name" value="Create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#abe18113709b72f68d9c710edb7b49f9f"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="create"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#af1001f9e084c331a6ea856e14549e4ae"><param name="ImageNumber" value="11"></OBJECT>
             <LI><OBJECT type="text/sitemap"><param name="Name" value="name"><param name="Local" value="structstrus_1_1AggregatorConstructor.html#a238e935e7ff25e32b75d6f03afa2b512"><param name="ImageNumber" value="11"></OBJECT>
             </UL>
