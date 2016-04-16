@@ -11,11 +11,12 @@
 #include "strus/storageModule.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
-#include "strus/analyzerErrorBufferInterface.hpp"
+#include "strus/storageInterface.hpp"
+#include "strus/databaseInterface.hpp"
 #include "storageObjectBuilder.hpp"
 #include "analyzerObjectBuilder.hpp"
-#include "strus/private/fileio.hpp"
-#include "strus/private/snprintf.h"
+#include "strus/base/fileio.hpp"
+#include "strus/base/snprintf.h"
 #include "utils.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
@@ -29,52 +30,12 @@ using namespace strus;
 
 #undef STRUS_LOWLEVEL_DEBUG
 
-class AnalyzerErrorBuffer
-	:public AnalyzerErrorBufferInterface
-{
-public:
-	explicit AnalyzerErrorBuffer( ErrorBufferInterface* errorhnd_)
-		:m_errorhnd(errorhnd_){}
-
-	virtual void report( const char* format, ...) const
-	{
-		va_list ap;
-		va_start(ap, format);
-		char msgbuf[ 1024];
-		strus_vsnprintf( msgbuf, sizeof(msgbuf), format, ap);
-		va_end(ap);
-		m_errorhnd->report( "%s", msgbuf);
-	}
-
-	virtual void explain( const char* format) const
-	{
-		m_errorhnd->explain( format);
-	}
-
-	virtual const char* fetchError()
-	{
-		return m_errorhnd->fetchError();
-	}
-
-	virtual bool hasError() const
-	{
-		return m_errorhnd->hasError();
-	}
-	
-private:
-	ErrorBufferInterface* m_errorhnd;
-};
-
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_statsproc_enabled(false),m_errorhnd(errorhnd_),m_errorhnd_analyzer(0)
-{
-	m_errorhnd_analyzer = new AnalyzerErrorBuffer( m_errorhnd);
-}
+	:m_statsproc_enabled(false),m_errorhnd(errorhnd_)
+{}
 
 ModuleLoader::~ModuleLoader()
-{
-	if (m_errorhnd_analyzer) delete m_errorhnd_analyzer;
-}
+{}
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
 {
@@ -204,7 +165,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		std::auto_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd_analyzer));
+		std::auto_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
 		std::vector<std::string>::const_iterator
 			pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
 		for (; pi != pe; ++pi)

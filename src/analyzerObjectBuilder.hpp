@@ -17,7 +17,7 @@
 namespace strus
 {
 /// \brief Forward declaration
-class AnalyzerModule;
+struct AnalyzerModule;
 /// \brief Forward declaration
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
@@ -27,14 +27,14 @@ class TextProcessorInterface;
 /// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
-class AnalyzerErrorBufferInterface;
+class ErrorBufferInterface;
 
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
 class AnalyzerObjectBuilder
 	:public AnalyzerObjectBuilderInterface
 {
 public:
-	explicit AnalyzerObjectBuilder( AnalyzerErrorBufferInterface* errorhnd_);
+	explicit AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_);
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
@@ -49,7 +49,7 @@ public/*ModuleLoader*/:
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
-	AnalyzerErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
+	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 
 }//namespace

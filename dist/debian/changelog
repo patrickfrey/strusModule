@@ -1,3 +1,8 @@
+strusmodule (0.8.0-1) unstable; urgency=low
+  * moved libstrus_utils (no named libstrus_base) and libstrus_error to new project strusbase (strus depends now on strusbase)
+  * introduced dependency to strustrace
+ -- Patrick Frey <patrickpfrey@yahoo.com>  Wed, 13 Apr 2016 20:30:00 +0100
+
 strusmodule (0.7.0-1) unstable; urgency=low
   * adapt interface changes from strus core: introducing scalar function objects used for combining ranking functions or to pass functions to weighting functions or summarizers
   * make scalar functions loadable from modules

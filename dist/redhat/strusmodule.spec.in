@@ -207,12 +207,18 @@ BuildRequires: boost-devel
 %endif
 %endif
 
+BuildRequires: strusbase-devel >= %{dep_version}
+BuildRequires: strusbase >= %{dep_version}
 BuildRequires: strus-devel >= %{dep_version}
-BuildRequires: strusanalyzer-devel >= %{dep_version}
 BuildRequires: strus >= %{dep_version}
+BuildRequires: strusanalyzer-devel >= %{dep_version}
 BuildRequires: strusanalyzer >= %{dep_version}
+BuildRequires: strustrace-devel >= %{dep_version}
+BuildRequires: strustrace >= %{dep_version}
+Requires: strusbase >= %{dep_version}
 Requires: strus >= %{dep_version}
 Requires: strusanalyzer >= %{dep_version}
+Requires: strustrace >= %{dep_version}
 
 # Check if 'Distribution' is really set by OBS (as mentioned in bacula)
 %if ! 0%{?opensuse_bs}
@@ -276,10 +282,12 @@ make test
 %{_includedir}/strus/*.hpp
 %dir %{_includedir}/strus/lib
 %{_includedir}/strus/lib/*.hpp
-%dir %{_includedir}/strus/private
-%{_includedir}/strus/private/*.hpp
 
 %changelog
+* Wed Apr 13 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.8.0-0.1
+- moved libstrus_utils (no named libstrus_base) and libstrus_error to new project strusbase (strus depends now on strusbase)
+- introduced dependency to strustrace
+
 * Wed Mar 30 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.7.0-0.1
 - adapted interface changes from strus core: introducing scalar function objects used for combining ranking functions or to pass functions to weighting functions or summarizers
 - make scalar functions loadable from modules
