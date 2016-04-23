@@ -9,6 +9,7 @@ set( source_files
 	internationalization.cpp
 	analyzerModule.cpp
 	storageModule.cpp
+	traceModule.cpp
 	storageObjectBuilder.cpp
 	analyzerObjectBuilder.cpp
 	moduleLoader.cpp

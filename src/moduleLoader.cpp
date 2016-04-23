@@ -10,6 +10,7 @@
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/analyzerModule.hpp"
+#include "strus/traceModule.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
@@ -129,6 +130,9 @@ bool ModuleLoader::loadModule(const std::string& name)
 					break;
 				case ModuleEntryPoint::Storage:
 					m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
+					break;
+				case ModuleEntryPoint::Trace:
+					m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
 					break;
 			}
 			return true;

@@ -20,6 +20,8 @@ struct AnalyzerModule;
 /// \brief Forward declaration
 struct StorageModule;
 /// \brief Forward declaration
+struct TraceModule;
+/// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration
 class QueryEvalInterface;
@@ -60,6 +62,7 @@ private:
 	std::vector<std::string> m_resourcePaths;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
+	std::vector<const TraceModule*> m_traceModules;
 	std::string m_statsproc;
 	bool m_statsproc_enabled;
 	ErrorBufferInterface* m_errorhnd;
