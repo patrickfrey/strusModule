@@ -14,10 +14,14 @@
 #include "strus/errorBufferInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
+#include "strus/lib/traceobj.hpp"
+#include "strus/lib/traceproc_std.hpp"
 #include "storageObjectBuilder.hpp"
 #include "analyzerObjectBuilder.hpp"
 #include "strus/base/fileio.hpp"
 #include "strus/base/snprintf.h"
+#include "strus/base/configParser.hpp"
+#include "strus/traceProcessorInterface.hpp"
 #include "utils.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
@@ -183,6 +187,62 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 			builder->addAnalyzerModule( *mi);
 		}
 		return builder.release();
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
+}
+
+
+TraceProcessorInterface* ModuleLoader::createTraceProcessor( const std::string& name) const
+{
+	std::vector<const TraceModule*>::const_iterator mi = m_traceModules.begin(), me = m_traceModules.end();
+	for (; mi != me; ++mi)
+	{
+		const TraceProcessorConstructor* car = (*mi)->traceProcessorConstructors;
+		std::size_t ci = 0;
+		for (; car[ci].title; ++ci)
+		{
+			if (utils::caseInsensitiveEquals( name, car[ci].title))
+			{
+				return car->create( m_errorhnd);
+			}
+		}
+	}
+	if (utils::caseInsensitiveEquals( name, "textfile"))
+	{
+		return createTraceProcessor_textfile( m_errorhnd);
+	}
+	else if (utils::caseInsensitiveEquals( name, "memory"))
+	{
+		return createTraceProcessor_memory( m_errorhnd);
+	}
+	else if (utils::caseInsensitiveEquals( name, "breakpoint"))
+	{
+		return createTraceProcessor_breakpoint( m_errorhnd);
+	}
+	else
+	{
+		throw strus::runtime_error(_TXT("unknonw trace processor '%s' (did you load its module)"));
+	}
+}
+
+TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::string& config_) const
+{
+	try
+	{
+		std::string config( config_);
+		std::string modulename;
+		if (!extractStringFromConfigString( modulename, config, "log", m_errorhnd))
+		{
+			throw strus::runtime_error(_TXT("undefined '%s' in config"), "log");
+		}
+		TraceProcessorInterface* traceproc = createTraceProcessor( modulename);
+		if (!traceproc)
+		{
+			throw strus::runtime_error( _TXT( "could not load trace processor '%s'"), modulename.c_str());
+		}
+		TraceObjectBuilderInterface* rt = traceCreateObjectBuilder( traceproc, config, m_errorhnd);
+		if (!rt) delete traceproc;
+		return rt;
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
 }

@@ -18,6 +18,8 @@ namespace strus
 class StorageObjectBuilderInterface;
 /// \brief Forward declaration
 class AnalyzerObjectBuilderInterface;
+/// \brief Forward declaration
+class TraceObjectBuilderInterface;
 
 /// \brief Interface providing a mechanism to load modules and to create the objects defined in the modules
 class ModuleLoaderInterface
@@ -46,13 +48,19 @@ public:
 	/// \param[in] name of the processor
 	virtual void defineStatisticsProcessor( const std::string& name)=0;
 
-	/// \brief Get the builder for storage objects build from components loaded from module or the defaults defined.
-	/// \return the builder object
+	/// \brief Create a builder for storage objects build from components loaded from module or the defaults defined.
+	/// \return the builder object (with ownership)
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const=0;
 
-	/// \brief Get the builder for analyzer objects build from components loaded from module or the defaults defined.
-	/// \return the builder object
+	/// \brief Create a builder for analyzer objects build from components loaded from module or the defaults defined.
+	/// \return the builder object (with ownership)
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const=0;
+
+	/// \brief Get the builder for call trace proxy objects for analyzer or storage.
+	///		The returned builder is built from components loaded from module or the standard builders defined by name.
+	/// \param[in] config trace object builder config
+	/// \return the builder object (with ownership)
+	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const=0;
 };
 
 }//namespace
