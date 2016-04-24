@@ -284,6 +284,9 @@ make test
 %{_includedir}/strus/lib/*.hpp
 
 %changelog
+* Sun Apr 24 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.8.2-0.1
+- version for solving version mismatch on OBS
+
 * Sun Apr 24 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.8.1-0.1
 - added method call trace processor modules
 
