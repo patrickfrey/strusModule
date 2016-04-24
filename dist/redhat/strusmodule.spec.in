@@ -284,6 +284,9 @@ make test
 %{_includedir}/strus/lib/*.hpp
 
 %changelog
+* Sun Apr 24 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.8.1-0.1
+- added method call trace processor modules
+
 * Wed Apr 13 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.8.0-0.1
 - moved libstrus_utils (no named libstrus_base) and libstrus_error to new project strusbase (strus depends now on strusbase)
 - introduced dependency to strustrace
