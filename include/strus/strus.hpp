@@ -134,13 +134,8 @@
 
 // Method Call Trace
 #include "strus/traceElement.hpp"
-#include "strus/traceQuery.hpp"
-#include "strus/traceRecord.hpp"
-#include "strus/traceIdMapInterface.hpp"
 #include "strus/traceLoggerInterface.hpp"
 #include "strus/traceObjectBuilderInterface.hpp"
-#include "strus/traceProcessorInterface.hpp"
-#include "strus/traceViewerInterface.hpp"
 
 // Version info
 #include "strus/versionBase.hpp"
