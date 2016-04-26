@@ -36,7 +36,7 @@ class AnalyzerObjectBuilderInterface;
 /// \brief Forward declaration
 class TraceObjectBuilderInterface;
 /// \brief Forward declaration
-class TraceProcessorInterface;
+class TraceLoggerInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 
@@ -63,7 +63,7 @@ private:
 			const std::string& name,
 			const std::vector<std::string>& paths);
 
-	TraceProcessorInterface* createTraceProcessor( const std::string& name) const;
+	TraceLoggerInterface* createTraceLogger( const std::string& loggerName, const std::string& config) const;
 
 private:
 	std::vector<std::string> m_modulePaths;

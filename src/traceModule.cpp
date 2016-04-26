@@ -12,15 +12,15 @@
 using namespace strus;
 
 DLL_PUBLIC TraceModule::TraceModule(
-		const TraceProcessorConstructor* traceProcessorConstructors_)
+		const TraceLoggerConstructor* traceLoggerConstructors_)
 	:ModuleEntryPoint(ModuleEntryPoint::Trace)
 {
-	init( traceProcessorConstructors_);
+	init( traceLoggerConstructors_);
 }
 
 void TraceModule::init(
-		const TraceProcessorConstructor* traceProcessorConstructors_)
+		const TraceLoggerConstructor* traceLoggerConstructors_)
 {
-	traceProcessorConstructors = traceProcessorConstructors_;
+	traceLoggerConstructors = traceLoggerConstructors_;
 }
 

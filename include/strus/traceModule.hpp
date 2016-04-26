@@ -17,17 +17,19 @@ namespace strus
 {
 
 /// \brief Forward declaration
-class TraceProcessorInterface;
+class TraceLoggerInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 
-/// \brief Structure to a processor for method call traces
-struct TraceProcessorConstructor
+/// \brief Structure describing a logger for method call traces
+struct TraceLoggerConstructor
 {
-	typedef TraceProcessorInterface* (*CreateTraceProcessor)( ErrorBufferInterface* errorhnd);
+	/// \param[in] config configuration string of the logger (semicolon (Unix) or colon (Windows) separated list of attribute=value assignments)
+	/// \param[in] errorhnd error buffer interface
+	typedef TraceLoggerInterface* (*CreateTraceLogger)( const std::string& config, ErrorBufferInterface* errorhnd);
 
-	const char* title;			///< title of the trace processor
-	CreateTraceProcessor create;		///< constructor
+	const char* title;			///< title of the trace logger
+	CreateTraceLogger create;		///< constructor
 };
 
 
@@ -36,13 +38,13 @@ struct TraceModule
 	:public ModuleEntryPoint
 {
 	/// \brief Trace module constructor
-	/// \param[in] traceProcessorConstructors_ (0,0) terminated list of method call trace processors or 0
-	explicit TraceModule( const TraceProcessorConstructor* traceProcessorConstructors_);
+	/// \param[in] traceLoggerConstructors_ (0,0) terminated list of method call trace Loggers or 0
+	explicit TraceModule( const TraceLoggerConstructor* traceLoggerConstructors_);
 
-	const TraceProcessorConstructor* traceProcessorConstructors;	///< 0 terminated list of trace processors
+	const TraceLoggerConstructor* traceLoggerConstructors;	///< 0 terminated list of trace Loggers
 
 private:
-	void init( const TraceProcessorConstructor* traceProcessorConstructors_);
+	void init( const TraceLoggerConstructor* traceLoggerConstructors_);
 };
 }//namespace
 #endif

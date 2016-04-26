@@ -21,7 +21,7 @@
 #include "strus/base/fileio.hpp"
 #include "strus/base/snprintf.h"
 #include "strus/base/configParser.hpp"
-#include "strus/traceProcessorInterface.hpp"
+#include "strus/traceLoggerInterface.hpp"
 #include "utils.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
@@ -192,36 +192,36 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 }
 
 
-TraceProcessorInterface* ModuleLoader::createTraceProcessor( const std::string& name) const
+TraceLoggerInterface* ModuleLoader::createTraceLogger( const std::string& loggerName, const std::string& config) const
 {
 	std::vector<const TraceModule*>::const_iterator mi = m_traceModules.begin(), me = m_traceModules.end();
 	for (; mi != me; ++mi)
 	{
-		const TraceProcessorConstructor* car = (*mi)->traceProcessorConstructors;
+		const TraceLoggerConstructor* car = (*mi)->traceLoggerConstructors;
 		std::size_t ci = 0;
 		for (; car[ci].title; ++ci)
 		{
-			if (utils::caseInsensitiveEquals( name, car[ci].title))
+			if (utils::caseInsensitiveEquals( loggerName, car[ci].title))
 			{
-				return car->create( m_errorhnd);
+				return car->create( config, m_errorhnd);
 			}
 		}
 	}
-	if (utils::caseInsensitiveEquals( name, "textfile"))
+	if (utils::caseInsensitiveEquals( loggerName, "dump"))
 	{
-		return createTraceProcessor_textfile( m_errorhnd);
+		return createTraceLogger_dump( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( name, "memory"))
+	else if (utils::caseInsensitiveEquals( loggerName, "json"))
 	{
-		return createTraceProcessor_memory( m_errorhnd);
+		return createTraceLogger_json( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( name, "breakpoint"))
+	else if (utils::caseInsensitiveEquals( loggerName, "breakpoint"))
 	{
-		return createTraceProcessor_breakpoint( m_errorhnd);
+		return createTraceLogger_breakpoint( config, m_errorhnd);
 	}
 	else
 	{
-		throw strus::runtime_error(_TXT("unknonw trace processor '%s' (did you load its module)"));
+		throw strus::runtime_error(_TXT("unknown trace logger '%s' (did you load its module)"), loggerName.c_str());
 	}
 }
 
@@ -235,13 +235,13 @@ TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::
 		{
 			throw strus::runtime_error(_TXT("undefined '%s' in config"), "log");
 		}
-		TraceProcessorInterface* traceproc = createTraceProcessor( modulename);
-		if (!traceproc)
+		TraceLoggerInterface* tracelog = createTraceLogger( modulename, config);
+		if (!tracelog)
 		{
 			throw strus::runtime_error( _TXT( "could not load trace processor '%s'"), modulename.c_str());
 		}
-		TraceObjectBuilderInterface* rt = traceCreateObjectBuilder( traceproc, config, m_errorhnd);
-		if (!rt) delete traceproc;
+		TraceObjectBuilderInterface* rt = traceCreateObjectBuilder( tracelog, m_errorhnd);
+		if (!rt) delete tracelog;
 		return rt;
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
