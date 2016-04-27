@@ -219,6 +219,10 @@ TraceLoggerInterface* ModuleLoader::createTraceLogger( const std::string& logger
 	{
 		return createTraceLogger_breakpoint( config, m_errorhnd);
 	}
+	else if (utils::caseInsensitiveEquals( loggerName, "count"))
+	{
+		return createTraceLogger_count( config, m_errorhnd);
+	}
 	else
 	{
 		throw strus::runtime_error(_TXT("unknown trace logger '%s' (did you load its module)"), loggerName.c_str());
