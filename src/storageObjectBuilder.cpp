@@ -50,6 +50,7 @@ StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
 	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
+	m_statsprocmap[ ""] = spref;
 }
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
