@@ -45,6 +45,7 @@ StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ "leveldb"] = dbref;
+	m_dbmap[ ""] = dbref;
 
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
 	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
