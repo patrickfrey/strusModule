@@ -13,6 +13,7 @@
 #include "strus/textProcessorInterface.hpp"
 #include <string>
 #include <vector>
+#include <map>
 
 namespace strus
 {
@@ -38,9 +39,9 @@ public:
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const std::string& segmenterName) const;
+	virtual const SegmenterInterface* getSegmenter( const std::string& segmenterName) const;
+	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const SegmenterInterface* segmenter) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
-	virtual SegmenterInterface* createSegmenter( const std::string& segmenterName) const;
 
 public/*ModuleLoader*/:
 	void addAnalyzerModule( const AnalyzerModule* mod);
@@ -49,6 +50,8 @@ public/*ModuleLoader*/:
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
+	typedef std::map<std::string,Reference<SegmenterInterface> > SegmenterMap;
+	SegmenterMap m_segmenterMap;				///< map of defined document segmenters
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 

@@ -52,7 +52,6 @@ public:
 	virtual void addModulePath( const std::string& path);
 	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
-	virtual void defineStatisticsProcessor( const std::string& name);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
@@ -71,9 +70,6 @@ private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
 	std::vector<const TraceModule*> m_traceModules;
-
-	std::string m_statsproc;
-	bool m_statsproc_enabled;
 	ErrorBufferInterface* m_errorhnd;
 };
 

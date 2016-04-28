@@ -36,7 +36,7 @@ using namespace strus;
 #undef STRUS_LOWLEVEL_DEBUG
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_statsproc_enabled(false),m_errorhnd(errorhnd_)
+	:m_errorhnd(errorhnd_)
 {}
 
 ModuleLoader::~ModuleLoader()
@@ -89,75 +89,66 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 }
 
-void ModuleLoader::defineStatisticsProcessor( const std::string& name)
+bool ModuleLoader::loadModule(const std::string& name)
 {
 	try
 	{
-		m_statsproc = name;
-		m_statsproc_enabled = true;
-	}
-	catch (const std::bad_alloc&)
-	{
-		m_errorhnd->report(_TXT("out of memory in module loader"));
-	}
-}
-
-bool ModuleLoader::loadModule(const std::string& name)
-{
-	const ModuleEntryPoint* entryPoint;
-	if (m_modulePaths.empty())
-	{
-		std::vector<std::string> paths;
-		try
+		const ModuleEntryPoint* entryPoint;
+		if (m_modulePaths.empty())
 		{
-			addPath_( paths, STRUS_MODULE_DIRECTORIES);
-		}
-		catch (const std::bad_alloc&)
-		{
-			m_errorhnd->report(_TXT("out of memory in module loader"));
-			return false;
-		}
-		entryPoint = loadModuleAlt( name, paths);
-	}
-	else
-	{
-		entryPoint = loadModuleAlt( name, m_modulePaths);
-	}
-	if (entryPoint)
-	{
-		try
-		{
-			switch (entryPoint->type)
+			std::vector<std::string> paths;
+			try
 			{
-				case ModuleEntryPoint::Analyzer:
-					m_analyzerModules.push_back( reinterpret_cast<const AnalyzerModule*>( entryPoint));
-					break;
-				case ModuleEntryPoint::Storage:
-					m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
-					break;
-				case ModuleEntryPoint::Trace:
-					m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
-					break;
+				addPath_( paths, STRUS_MODULE_DIRECTORIES);
 			}
-			return true;
+			catch (const std::bad_alloc&)
+			{
+				m_errorhnd->report(_TXT("out of memory in module loader"));
+				return false;
+			}
+			entryPoint = loadModuleAlt( name, paths);
 		}
-		catch (const std::bad_alloc&)
+		else
 		{
-			m_errorhnd->report(_TXT("out of memory in module loader"));
+			entryPoint = loadModuleAlt( name, m_modulePaths);
+		}
+		if (entryPoint)
+		{
+			try
+			{
+				switch (entryPoint->type)
+				{
+					case ModuleEntryPoint::Analyzer:
+						m_analyzerModules.push_back( reinterpret_cast<const AnalyzerModule*>( entryPoint));
+						break;
+					case ModuleEntryPoint::Storage:
+						m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
+						break;
+					case ModuleEntryPoint::Trace:
+						m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
+						break;
+				}
+				return true;
+			}
+			catch (const std::bad_alloc&)
+			{
+				m_errorhnd->report(_TXT("out of memory in module loader"));
+				return false;
+			}
+		}
+		else
+		{
 			return false;
 		}
 	}
-	else
-	{
-		return false;
-	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error loading module: %s"), *m_errorhnd, 0);
 }
 
 StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_statsproc_enabled?m_statsproc.c_str():0, m_errorhnd));
+		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)

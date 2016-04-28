@@ -44,17 +44,14 @@ class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
 {
 public:
-	StorageObjectBuilder( const char* statsprocname_, ErrorBufferInterface* errorhnd_);
+	explicit StorageObjectBuilder( ErrorBufferInterface* errorhnd_);
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
 	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
 	virtual const QueryProcessorInterface* getQueryProcessor() const;
-	virtual const StatisticsProcessorInterface* getStatisticsProcessor() const;
-
-	virtual StorageClientInterface* createStorageClient( const std::string& config) const;
+	virtual const StatisticsProcessorInterface* getStatisticsProcessor( const std::string& name) const;
 	virtual QueryEvalInterface* createQueryEval() const;
-	virtual StorageAlterMetaDataTableInterface* createAlterMetaDataTable( const std::string& config) const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
@@ -64,9 +61,9 @@ private:
 	Reference<QueryProcessorInterface> m_queryProcessor;	///< query processor handle
 	Reference<StorageInterface> m_storage;			///< storage handle
 	typedef Reference<DatabaseInterface> DatabaseReference;
-	mutable std::map<std::string,DatabaseReference> m_dbmap;///< cached database handles
-	mutable Reference<StatisticsProcessorInterface> m_statsproc;
-	const char* m_statsprocname;				///< statistics message processor selected
+	std::map<std::string,DatabaseReference> m_dbmap;	///< cached database handles
+	typedef Reference<StatisticsProcessorInterface> StatisticsProcessorReference;
+	std::map<std::string,StatisticsProcessorReference> m_statsprocmap; ///< statistics processor interface map
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 

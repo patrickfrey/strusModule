@@ -33,11 +33,22 @@
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder( const char* statsprocname_, ErrorBufferInterface* errorhnd_)
-	:m_queryProcessor( strus::createQueryProcessor(errorhnd_)),m_storage(strus::createStorage(errorhnd_)),m_statsprocname(statsprocname_),m_errorhnd(errorhnd_)
+StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
+	:m_queryProcessor( strus::createQueryProcessor(errorhnd_))
+	,m_storage(strus::createStorage(errorhnd_))
+	,m_statsprocmap()
+	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
+
+	DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
+	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
+	m_dbmap[ "leveldb"] = dbref;
+
+	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
+	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
+	m_statsprocmap[ "default"] = spref;
 }
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
@@ -138,10 +149,27 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 	try
 	{
 		m_storageModules.push_back( mod);
+
+		if (mod->databaseReference.create && mod->databaseReference.name)
+		{
+			DatabaseReference dbref( mod->databaseReference.create( m_errorhnd));
+			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base reference loaded from module: '%s': %s"), mod->databaseReference.name, m_errorhnd->fetchError());
+			m_dbmap[ utils::tolower( mod->databaseReference.name)] = dbref;
+		}
+		if (mod->statisticsProcessorReference.create && mod->statisticsProcessorReference.name)
+		{
+			StatisticsProcessorReference spref( mod->statisticsProcessorReference.create( m_errorhnd));
+			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor reference loaded from module: '%s': %s"), mod->statisticsProcessorReference.name, m_errorhnd->fetchError());
+			m_statsprocmap[ utils::tolower( mod->statisticsProcessorReference.name)] = spref;
+		}
+	}
+	catch (const std::runtime_error& err)
+	{
+		m_errorhnd->report(_TXT("failed to add storage module: %s"), err.what());
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report(_TXT("out of memory constructing storage object builder"));
+		m_errorhnd->report(_TXT("out of memory adding storage module"));
 	}
 }
 
@@ -157,34 +185,10 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
 			return 0;
 		}
-		std::string::iterator ni = name.begin(), ne = name.end();
-		for (; ni != ne; ++ ni) *ni = ::tolower(*ni);
-		std::map<std::string,DatabaseReference>::const_iterator di = m_dbmap.find( name);
+		std::map<std::string,DatabaseReference>::const_iterator
+			di = m_dbmap.find( utils::tolower( name));
 		if (di == m_dbmap.end())
 		{
-			std::vector<const StorageModule*>::const_iterator
-				mi = m_storageModules.begin(), 
-				me = m_storageModules.end();
-			for (; mi != me; ++mi)
-			{
-				if ((*mi)->databaseReference.create)
-				{
-					if (name.empty() || utils::caseInsensitiveEquals( name, (*mi)->databaseReference.name))
-					{
-						DatabaseReference dbref( (*mi)->databaseReference.create( m_errorhnd));
-						if (!dbref.get()) return 0;
-						m_dbmap[ name] = dbref;
-						return dbref.get();
-					}
-				}
-			}
-			if (name.empty() || utils::caseInsensitiveEquals( name, "leveldb"))
-			{
-				DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
-				if (!dbref.get()) return 0;
-				m_dbmap[ name] = dbref;
-				return dbref.get();
-			}
 			throw strus::runtime_error( _TXT( "undefined key value store database '%s'"), name.c_str());
 		}
 		else
@@ -195,153 +199,28 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& c
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting database from storage object builder: %s"), *m_errorhnd, 0);
 }
 
-const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor() const
+const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor( const std::string& name) const
 {
 	try
 	{
-		if (!m_statsproc.get())
+		std::map<std::string,StatisticsProcessorReference>::const_iterator
+			si = m_statsprocmap.find( utils::tolower( name));
+		if (si == m_statsprocmap.end())
 		{
-			std::vector<const StorageModule*>::const_iterator
-				mi = m_storageModules.begin(), 
-				me = m_storageModules.end();
-			for (; mi != me; ++mi)
-			{
-				if ((*mi)->statisticsProcessorReference.create)
-				{
-					if (!m_statsprocname[0] || utils::caseInsensitiveEquals( m_statsprocname, (*mi)->statisticsProcessorReference.name))
-					{
-						m_statsproc.reset( (*mi)->statisticsProcessorReference.create( m_errorhnd));
-						break;
-					}
-				}
-			}
-			if (mi == me)
-			{
-				if (!m_statsprocname[0] || utils::caseInsensitiveEquals( m_statsprocname, "standard"))
-				{
-					m_statsproc.reset( strus::createStatisticsProcessor( m_errorhnd));
-				}
-				else
-				{
-					throw strus::runtime_error( _TXT( "undefined statistics message processor '%s'"), m_statsprocname);
-				}
-			}
+			throw strus::runtime_error( _TXT( "undefined statistics processor '%s'"), name.c_str());
 		}
-		return m_statsproc.get();
+		else
+		{
+			return si->second.get();
+		}
 	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics message processor from storage object builder: %s"), *m_errorhnd, 0);
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics processor from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const
 {
 	return m_storage.get();
 }
-
-StorageClientInterface* StorageObjectBuilder::createStorageClient( const std::string& config) const
-{
-	try
-	{
-		std::string dbname;
-		std::string configstr( config);
-	
-		const DatabaseInterface* dbi = getDatabase( configstr);
-		if (!dbi)
-		{
-			m_errorhnd->explain(_TXT("could not get database: %s"));
-			return 0;
-		}
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
-
-		const StorageInterface* sti = getStorage();
-		if (!sti)
-		{
-			m_errorhnd->explain(_TXT("could not get storage: %s"));
-			return 0;
-		}
-		std::string databasecfg( configstr);
-		std::string storagecfg( configstr);
-		strus::removeKeysFromConfigString(
-				databasecfg,
-				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient), m_errorhnd);
-	
-		strus::removeKeysFromConfigString(
-				storagecfg,
-				dbi->getConfigParameters( strus::DatabaseInterface::CmdCreateClient), m_errorhnd);
-		//... In storagecfg is now the pure storage configuration without the database settings
-		if (m_errorhnd->hasError())
-		{
-			m_errorhnd->explain(_TXT("cannot create database client: %s"));
-			return 0;
-		}
-		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
-		if (!database.get())
-		{
-			m_errorhnd->report(_TXT("error creating database client"));
-			return 0;
-		}
-		const StatisticsProcessorInterface* statsproc = 0;
-		if (m_statsprocname)
-		{
-			statsproc = getStatisticsProcessor();
-			if (!statsproc)
-			{
-				m_errorhnd->report(_TXT("error creating statistics message processor"));
-				return 0;
-			}
-		}
-		std::auto_ptr<StorageClientInterface>
-			storage( sti->createClient( storagecfg, database.get(), statsproc));
-		if (!storage.get())
-		{
-			m_errorhnd->report(_TXT("error creating storage client"));
-			return 0;
-		}
-		(void)database.release(); //... ownership passed to storage
-		return storage.release(); //... ownership returned
-	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating storage: %s"), *m_errorhnd, 0);
-}
-
-
-StorageAlterMetaDataTableInterface* StorageObjectBuilder::createAlterMetaDataTable( const std::string& config) const
-{
-	try
-	{
-		std::string dbname;
-		std::string configstr( config);
-
-		const DatabaseInterface* dbi = getDatabase( configstr);
-		const StorageInterface* sti = getStorage();
-
-		(void)strus::extractStringFromConfigString( dbname, configstr, "database", m_errorhnd);
-		std::string databasecfg( configstr);
-		strus::removeKeysFromConfigString(
-				databasecfg,
-				sti->getConfigParameters( strus::StorageInterface::CmdCreateClient), m_errorhnd);
-		//... In storagecfg is now the pure storage configuration without the database settings
-		if (m_errorhnd->hasError())
-		{
-			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
-			return 0;
-		}
-		std::auto_ptr<DatabaseClientInterface> database( dbi->createClient( databasecfg));
-		if (!database.get())
-		{
-			m_errorhnd->report(_TXT("error creating database client"));
-			return 0;
-		}
-		std::auto_ptr<StorageAlterMetaDataTableInterface> altermetatable( sti->createAlterMetaDataTable( database.get()));
-		if (!altermetatable.get())
-		{
-			m_errorhnd->report(_TXT("error creating alter metadata table client"));
-			return 0;
-		}
-		(void)database.release(); //... ownership passed to alter metadata table client
-		return altermetatable.release(); //... ownership returned
-	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error storage object builder creating alter meta data table: %s"), *m_errorhnd, 0);
-}
-
 
 QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 {
