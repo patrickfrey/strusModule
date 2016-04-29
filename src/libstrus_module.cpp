@@ -26,6 +26,6 @@ DLL_PUBLIC ModuleLoaderInterface* strus::createModuleLoader( ErrorBufferInterfac
 		}
 		return new ModuleLoader( errorhnd);
 	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error creating module loader"), *errorhnd, 0);
+	CATCH_ERROR_MAP_RETURN( _TXT("error creating module loader: %s"), *errorhnd, 0);
 }
 

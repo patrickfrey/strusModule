@@ -20,6 +20,8 @@ struct AnalyzerModule;
 /// \brief Forward declaration
 struct StorageModule;
 /// \brief Forward declaration
+struct TraceModule;
+/// \brief Forward declaration
 class StorageClientInterface;
 /// \brief Forward declaration
 class QueryEvalInterface;
@@ -32,7 +34,12 @@ class StorageObjectBuilderInterface;
 /// \brief Forward declaration
 class AnalyzerObjectBuilderInterface;
 /// \brief Forward declaration
+class TraceObjectBuilderInterface;
+/// \brief Forward declaration
+class TraceLoggerInterface;
+/// \brief Forward declaration
 class ErrorBufferInterface;
+
 
 /// \brief Implementation of ModuleLoaderInterface
 class ModuleLoader
@@ -45,23 +52,24 @@ public:
 	virtual void addModulePath( const std::string& path);
 	virtual bool loadModule( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
-	virtual void defineStatisticsProcessor( const std::string& name);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
+	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const;
 
 private:
 	const ModuleEntryPoint* loadModuleAlt(
 			const std::string& name,
 			const std::vector<std::string>& paths);
 
+	TraceLoggerInterface* createTraceLogger( const std::string& loggerName, const std::string& config) const;
+
 private:
 	std::vector<std::string> m_modulePaths;
 	std::vector<std::string> m_resourcePaths;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
-	std::string m_statsproc;
-	bool m_statsproc_enabled;
+	std::vector<const TraceModule*> m_traceModules;
 	ErrorBufferInterface* m_errorhnd;
 };
 

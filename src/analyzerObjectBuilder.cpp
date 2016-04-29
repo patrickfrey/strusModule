@@ -29,6 +29,9 @@ AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
 	if (!m_textProcessor.get()) throw strus::runtime_error(_TXT("error creating text processor"));
+	Reference<SegmenterInterface> segref( strus::createSegmenter_textwolf( m_errorhnd));
+	m_segmenterMap[ "textwolf"] = segref;
+	m_segmenterMap[ ""] = segref;
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
@@ -105,43 +108,34 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			}
 		}
 	}
+	if (mod->segmenterConstructor.name && mod->segmenterConstructor.create)
+	{
+		Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
+		m_segmenterMap[ utils::tolower(mod->segmenterConstructor.name)] = segref;
+	}
 	m_analyzerModules.push_back( mod);
 }
 
-SegmenterInterface* AnalyzerObjectBuilder::createSegmenter( const std::string& segmenterName) const
+const SegmenterInterface* AnalyzerObjectBuilder::getSegmenter( const std::string& segmenterName) const
 {
-	std::vector<const AnalyzerModule*>::const_iterator
-		ai = m_analyzerModules.begin(), 
-		ae = m_analyzerModules.end();
-	for (; ai != ae; ++ai)
+	try
 	{
-		if ((*ai)->segmenterConstructor.name
-		&&  (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, (*ai)->segmenterConstructor.name)))
+		SegmenterMap::const_iterator si = m_segmenterMap.find( utils::tolower( segmenterName));
+		if (si == m_segmenterMap.end())
 		{
-			return (*ai)->segmenterConstructor.create( m_errorhnd);
+			throw strus::runtime_error(_TXT("unknown document segmenter '%s'"), segmenterName.c_str());
+			return 0;
 		}
+		return si->second.get();
 	}
-	if (segmenterName.empty() || utils::caseInsensitiveEquals( segmenterName, "textwolf"))
-	{
-		return createSegmenter_textwolf( m_errorhnd);
-	}
-	m_errorhnd->report(_TXT( "undefined segmenter '%s'"), segmenterName.c_str());
-	return 0;
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by name: %s"), *m_errorhnd, 0);
 }
 
 
-DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const std::string& segmenterName) const
+DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const SegmenterInterface* segmenter) const
 {
-	std::auto_ptr<SegmenterInterface> segmenter( createSegmenter( segmenterName));
-	if (!segmenter.get())
-	{
-		m_errorhnd->report(_TXT("error creating segmenter"));
-		return 0;
-	}
-	DocumentAnalyzerInterface* rt = strus::createDocumentAnalyzer( segmenter.get(), m_errorhnd);
-	return rt;
+	return strus::createDocumentAnalyzer( segmenter, m_errorhnd);
 }
-
 
 QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
 {

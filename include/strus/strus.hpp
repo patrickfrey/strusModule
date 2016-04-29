@@ -132,10 +132,17 @@
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/moduleLoaderInterface.hpp"
 
+// Method Call Trace
+#include "strus/traceElement.hpp"
+#include "strus/traceLoggerInterface.hpp"
+#include "strus/traceObjectBuilderInterface.hpp"
+
 // Version info
-#include "strus/versionModule.hpp"
+#include "strus/versionBase.hpp"
 #include "strus/versionAnalyzer.hpp"
 #include "strus/versionStorage.hpp"
+#include "strus/versionTrace.hpp"
+#include "strus/versionModule.hpp"
 
 #endif
 
