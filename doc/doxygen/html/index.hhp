@@ -19,6 +19,7 @@ moduleEntryPoint_8hpp_source.html
 moduleLoaderInterface_8hpp_source.html
 storageModule_8hpp_source.html
 strus_8hpp_source.html
+traceModule_8hpp_source.html
 versionModule_8hpp_source.html
 strus_8md.html
 analyzerModule_8hpp.html
@@ -27,6 +28,7 @@ moduleEntryPoint_8hpp.html
 moduleLoaderInterface_8hpp.html
 storageModule_8hpp.html
 strus_8hpp.html
+traceModule_8hpp.html
 versionModule_8hpp.html
 namespacestrus.html
 structstrus_1_1DocumentClassDetectorConstructor.html
@@ -61,6 +63,10 @@ structstrus_1_1ScalarFunctionParserConstructor.html
 structstrus_1_1ScalarFunctionParserConstructor-members.html
 structstrus_1_1StorageModule.html
 structstrus_1_1StorageModule-members.html
+structstrus_1_1TraceLoggerConstructor.html
+structstrus_1_1TraceLoggerConstructor-members.html
+structstrus_1_1TraceModule.html
+structstrus_1_1TraceModule-members.html
 dir_d44c64559bbebec7f509842c48db8b23.html
 dir_a73361def35442ed7e38ef668dbae29f.html
 dir_4c7fe52541d540b59710786f705b50e0.html
@@ -112,3 +118,4 @@ ftv2splitbar.png
 structstrus_1_1AnalyzerModule.png
 structstrus_1_1ModuleEntryPoint.png
 structstrus_1_1StorageModule.png
+structstrus_1_1TraceModule.png

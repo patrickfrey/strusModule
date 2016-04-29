@@ -39,6 +39,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a55e94dd16a71412a6427ed62c733216e"><param name="Name" value="create"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a6e3e2ccd370539e2b935935a81a2b16d"><param name="Name" value="Create"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#ae6db2c75d2eedc47b4ed3b462796673d"><param name="Name" value="create"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#ae6db2c75d2eedc47b4ed3b462796673d"><param name="Name" value="strus::TokenizerConstructor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#aac2cb7fd665c6696709e01a5424c7076"><param name="Name" value="strus::TraceLoggerConstructor"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#a50f68b63e130463c2d96b29bd0df587d"><param name="Name" value="Create"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#ae8efa54e907c0407d7a2118f5f4d20a2"><param name="Name" value="create"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1"><param name="Name" value="createAnalyzerObjectBuilder"></OBJECT>
@@ -48,8 +52,9 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacestrus.html#a671164004a4658fc0bbd99217d27dd99"><param name="Name" value="strus"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070"><param name="Name" value="createStorageObjectBuilder"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#a603159cde34ac45ea947ba8f3b344cf7"><param name="Name" value="CreateTraceLogger"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f"><param name="Name" value="createTraceObjectBuilder"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1StorageModule.html#a88e5f98f60a6ce887ffcbd431a32dc72"><param name="Name" value="databaseReference"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d"><param name="Name" value="defineStatisticsProcessor"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1AnalyzerModule.html#a0636cba9c115585f174f94d900e9f8a7"><param name="Name" value="documentClassDetectorConstructor"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint_1_1Status.html#aee365990081b1e3f34273d7d89012295"><param name="Name" value="errorcode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#adb2ffbee2e2921298fe8cf0140fced92a9fc8b0a238d418cb776eb0b5bbdf6941"><param name="Name" value="ErrorCompMajorVersion"></OBJECT>
@@ -150,6 +155,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#af082f2349b355e30c8ddcdb744b29157"><param name="Name" value="modversion_minor"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#a2bdc9c403bed66ef47a729127f8dff80"><param name="Name" value="signature"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3fafa4766579df3dfa1f1e3efe0d7321a0d03"><param name="Name" value="Storage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3fafa83ecd156761494dee232c10eed21146a"><param name="Name" value="Trace"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#adffaf79ca3878cd2363be132e174a693"><param name="Name" value="type"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html"><param name="Name" value="strus::ModuleLoaderInterface"></OBJECT>
@@ -159,7 +165,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421"><param name="Name" value="addSystemModulePath"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1"><param name="Name" value="createAnalyzerObjectBuilder"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070"><param name="Name" value="createStorageObjectBuilder"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d"><param name="Name" value="defineStatisticsProcessor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f"><param name="Name" value="createTraceObjectBuilder"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950"><param name="Name" value="loadModule"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4"><param name="Name" value="~ModuleLoaderInterface"></OBJECT>
   </UL>
@@ -171,8 +177,8 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html"><param name="Name" value="strus::PostingIteratorJoinConstructor"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html#a476ced1d352a2b5e18e0561ceb17fdce"><param name="Name" value="create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html#a077f9fe4abdbec3fcea3e4a3831325d1"><param name="Name" value="Create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html#a476ced1d352a2b5e18e0561ceb17fdce"><param name="Name" value="create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1PostingIteratorJoinConstructor.html#a83d5ccd1411034588cb48602612d1af7"><param name="Name" value="name"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ScalarFunctionParserConstructor.html"><param name="Name" value="strus::ScalarFunctionParserConstructor"></OBJECT>
@@ -183,8 +189,8 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SegmenterConstructor.html"><param name="Name" value="strus::SegmenterConstructor"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a9d2ace05b30a55a4c8cddf421352e955"><param name="Name" value="Create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#aa2d698c86cd99309856b96fcdebc8e3b"><param name="Name" value="create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a9d2ace05b30a55a4c8cddf421352e955"><param name="Name" value="Create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SegmenterConstructor.html#a705919f8286c3e0c27f3018ffc5b6a17"><param name="Name" value="name"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1StatisticsProcessorReference.html"><param name="Name" value="strus::StatisticsProcessorReference"></OBJECT>
@@ -205,8 +211,8 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html"><param name="Name" value="strus::SummarizerFunctionConstructor"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a55e94dd16a71412a6427ed62c733216e"><param name="Name" value="create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a35ad435ffae70e4611922141a5fc75d6"><param name="Name" value="Create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a55e94dd16a71412a6427ed62c733216e"><param name="Name" value="create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1SummarizerFunctionConstructor.html#a5928b0637066c355eb61cfb465046977"><param name="Name" value="name"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html"><param name="Name" value="strus::TokenizerConstructor"></OBJECT>
@@ -215,10 +221,21 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#ae6db2c75d2eedc47b4ed3b462796673d"><param name="Name" value="create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TokenizerConstructor.html#a1b6f63051722262c6f2a729ffad6918e"><param name="Name" value="name"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html"><param name="Name" value="strus::TraceLoggerConstructor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#aac2cb7fd665c6696709e01a5424c7076"><param name="Name" value="create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#a603159cde34ac45ea947ba8f3b344cf7"><param name="Name" value="CreateTraceLogger"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#a60c4d99020008c2d6cd666ecc678ec2a"><param name="Name" value="title"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceModule.html"><param name="Name" value="strus::TraceModule"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceModule.html#aab1c17082a0046480a60287828e5cd4d"><param name="Name" value="traceLoggerConstructors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceModule.html#a740ee419153f4a5aa7e42f983902ef85"><param name="Name" value="TraceModule"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html"><param name="Name" value="strus::WeightingFunctionConstructor"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#a50f68b63e130463c2d96b29bd0df587d"><param name="Name" value="Create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#ae8efa54e907c0407d7a2118f5f4d20a2"><param name="Name" value="create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#a50f68b63e130463c2d96b29bd0df587d"><param name="Name" value="Create"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1WeightingFunctionConstructor.html#ae9dc2c21aa9e677b6ebe6b458a662ff8"><param name="Name" value="name"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacestrus.html"><param name="Name" value="strus"></OBJECT>
@@ -233,7 +250,14 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="versionModule_8hpp.html#a16ca671cefc50e08a603c920b928163e"><param name="Name" value="STRUS_MODULE_VERSION_STRING"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1StorageModule.html#aa6cfb09a2ae333675442a9d9556eef94"><param name="Name" value="summarizerFunctionConstructor"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a8221400194bfba22a341bf09c3d05f35"><param name="Name" value="title"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1DocumentClassDetectorConstructor.html#a8221400194bfba22a341bf09c3d05f35"><param name="Name" value="strus::DocumentClassDetectorConstructor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceLoggerConstructor.html#a60c4d99020008c2d6cd666ecc678ec2a"><param name="Name" value="strus::TraceLoggerConstructor"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1AnalyzerModule.html#ad7017db419879ccfe34866d968b35b1b"><param name="Name" value="tokenizerConstructors"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3fafa83ecd156761494dee232c10eed21146a"><param name="Name" value="Trace"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceModule.html#aab1c17082a0046480a60287828e5cd4d"><param name="Name" value="traceLoggerConstructors"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1TraceModule.html#a740ee419153f4a5aa7e42f983902ef85"><param name="Name" value="TraceModule"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structstrus_1_1ModuleEntryPoint.html#adffaf79ca3878cd2363be132e174a693"><param name="Name" value="type"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="versionModule_8hpp.html"><param name="Name" value="versionModule.hpp"></OBJECT>
   <UL>

@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.8</span>
+   &#160;<span id="projectnumber">0.9</span>
    </div>
   </td>
  </tr>
@@ -75,45 +75,46 @@
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">class </span>StorageObjectBuilderInterface;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span>AnalyzerObjectBuilderInterface;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classstrus_1_1ModuleLoaderInterface.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">   27</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">~ModuleLoaderInterface</a>(){}</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421">addSystemModulePath</a>()=0;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a8097665250911d1cd2c940b82795a914">addModulePath</a>( <span class="keyword">const</span> std::string&amp; path)=0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a>( <span class="keyword">const</span> std::string&amp; name)=0;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a>( <span class="keyword">const</span> std::string&amp; path)=0;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d">defineStatisticsProcessor</a>( <span class="keyword">const</span> std::string&amp; name)=0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">virtual</span> StorageObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a>() <span class="keyword">const</span>=0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">virtual</span> AnalyzerObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">createAnalyzerObjectBuilder</a>() <span class="keyword">const</span>=0;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}<span class="comment">//namespace</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span>TraceObjectBuilderInterface;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classstrus_1_1ModuleLoaderInterface.html">   25</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">   29</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">~ModuleLoaderInterface</a>(){}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421">addSystemModulePath</a>()=0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a8097665250911d1cd2c940b82795a914">addModulePath</a>( <span class="keyword">const</span> std::string&amp; path)=0;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a>( <span class="keyword">const</span> std::string&amp; name)=0;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a>( <span class="keyword">const</span> std::string&amp; path)=0;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">virtual</span> StorageObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a>() <span class="keyword">const</span>=0;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">virtual</span> AnalyzerObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">createAnalyzerObjectBuilder</a>() <span class="keyword">const</span>=0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">virtual</span> TraceObjectBuilderInterface* <a class="code" href="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f">createTraceObjectBuilder</a>( <span class="keyword">const</span> std::string&amp; config) <span class="keyword">const</span>=0;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}<span class="comment">//namespace</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a2d787c3639d41343dbf7439b73ee0777"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">strus::ModuleLoaderInterface::addResourcePath</a></div><div class="ttdeci">virtual void addResourcePath(const std::string &amp;path)=0</div><div class="ttdoc">Declare a path for analyzer components to find resource files. </div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aaa82f295507542bb391822c6bc2f6ad1"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">strus::ModuleLoaderInterface::createAnalyzerObjectBuilder</a></div><div class="ttdeci">virtual AnalyzerObjectBuilderInterface * createAnalyzerObjectBuilder() const =0</div><div class="ttdoc">Get the builder for analyzer objects build from components loaded from module or the defaults defined...</div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aaa82f295507542bb391822c6bc2f6ad1"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">strus::ModuleLoaderInterface::createAnalyzerObjectBuilder</a></div><div class="ttdeci">virtual AnalyzerObjectBuilderInterface * createAnalyzerObjectBuilder() const =0</div><div class="ttdoc">Create a builder for analyzer objects build from components loaded from module or the defaults define...</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a984e437dd896680d6acef0730a403950"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">strus::ModuleLoaderInterface::loadModule</a></div><div class="ttdeci">virtual bool loadModule(const std::string &amp;name)=0</div><div class="ttdoc">Load a module with name &#39;name&#39; seeking in all module paths defined in the order of their definition...</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a8097665250911d1cd2c940b82795a914"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a8097665250911d1cd2c940b82795a914">strus::ModuleLoaderInterface::addModulePath</a></div><div class="ttdeci">virtual void addModulePath(const std::string &amp;path)=0</div><div class="ttdoc">Add a new path where to seek modules to load. </div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></div><div class="ttdoc">Interface providing a mechanism to load modules and to create the objects defined in the modules...</div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:23</div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aca31e5f08b483516de6b87d0c616c070"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">strus::ModuleLoaderInterface::createStorageObjectBuilder</a></div><div class="ttdeci">virtual StorageObjectBuilderInterface * createStorageObjectBuilder() const =0</div><div class="ttdoc">Get the builder for storage objects build from components loaded from module or the defaults defined...</div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a70956486a69ae086bd926295ca37a5b4"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">strus::ModuleLoaderInterface::~ModuleLoaderInterface</a></div><div class="ttdeci">virtual ~ModuleLoaderInterface()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:27</div></div>
-<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a6b11f4b4fa82d0f90f0b47a0b1a4022d"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a6b11f4b4fa82d0f90f0b47a0b1a4022d">strus::ModuleLoaderInterface::defineStatisticsProcessor</a></div><div class="ttdeci">virtual void defineStatisticsProcessor(const std::string &amp;name)=0</div><div class="ttdoc">Declare the processor for packing/unpacking statistics messages. </div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></div><div class="ttdoc">Interface providing a mechanism to load modules and to create the objects defined in the modules...</div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:25</div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a6938606adb84539631685f522957f45f"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f">strus::ModuleLoaderInterface::createTraceObjectBuilder</a></div><div class="ttdeci">virtual TraceObjectBuilderInterface * createTraceObjectBuilder(const std::string &amp;config) const =0</div><div class="ttdoc">Get the builder for call trace proxy objects for analyzer or storage. The returned builder is built f...</div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_aca31e5f08b483516de6b87d0c616c070"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">strus::ModuleLoaderInterface::createStorageObjectBuilder</a></div><div class="ttdeci">virtual StorageObjectBuilderInterface * createStorageObjectBuilder() const =0</div><div class="ttdoc">Create a builder for storage objects build from components loaded from module or the defaults defined...</div></div>
+<div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a70956486a69ae086bd926295ca37a5b4"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">strus::ModuleLoaderInterface::~ModuleLoaderInterface</a></div><div class="ttdeci">virtual ~ModuleLoaderInterface()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> moduleLoaderInterface.hpp:29</div></div>
 <div class="ttc" id="classstrus_1_1ModuleLoaderInterface_html_a851ef092bf467fdf543a19c080ca2421"><div class="ttname"><a href="classstrus_1_1ModuleLoaderInterface.html#a851ef092bf467fdf543a19c080ca2421">strus::ModuleLoaderInterface::addSystemModulePath</a></div><div class="ttdeci">virtual void addSystemModulePath()=0</div><div class="ttdoc">Add the path defined by the system depending on the platform where to seek modules to load...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 16 2016 16:46:43 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Apr 29 2016 05:58:55 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
