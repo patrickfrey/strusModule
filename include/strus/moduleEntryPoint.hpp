@@ -12,6 +12,7 @@
 #include "strus/versionModule.hpp"
 #include "strus/versionAnalyzer.hpp"
 #include "strus/versionStorage.hpp"
+#include "strus/versionTrace.hpp"
 #include <cstring>
 
 /// \brief strus toplevel namespace
@@ -24,7 +25,8 @@ struct ModuleEntryPoint
 	enum Type
 	{
 		Analyzer,			///< module exporting objects for document and query analysis (moduleAnalyzer)
-		Storage				///< module exporting objects for storage and query evaluation (moduleStorage)
+		Storage,			///< module exporting objects for storage and query evaluation (moduleStorage)
+		Trace				///< module exporting objects for method call trace generation (moduleTrace)
 	};
 	enum
 	{
@@ -59,14 +61,22 @@ struct ModuleEntryPoint
 			case Analyzer:
 				compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
 				compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
-	
+				break;
+
 			case Storage:
 				compversion_major = STRUS_STORAGE_VERSION_MAJOR;
 				compversion_minor = STRUS_STORAGE_VERSION_MINOR;
-	
+				break;
+
+			case Trace:
+				compversion_major = STRUS_TRACE_VERSION_MAJOR;
+				compversion_minor = STRUS_TRACE_VERSION_MINOR;
+				break;
+
 			default:
 				compversion_major = 0xFFFF;
 				compversion_minor = 0xFFFF;
+				break;
 		}
 	}
 
