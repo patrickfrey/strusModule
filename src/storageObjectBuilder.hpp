@@ -12,6 +12,7 @@
 #include "strus/queryProcessorInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
+#include "strus/segmenterInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
 #include <string>
 #include <vector>
