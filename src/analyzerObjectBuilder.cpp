@@ -16,12 +16,12 @@
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInterface.hpp"
+#include "strus/segmenterInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
 #include "utils.hpp"
 #include <string>
 #include <cstring>
-#include <memory>
 
 using namespace strus;
 

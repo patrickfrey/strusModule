@@ -9,7 +9,6 @@
 #define _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
 #include "strus/analyzerObjectBuilderInterface.hpp"
 #include "strus/reference.hpp"
-#include "strus/queryProcessorInterface.hpp"
 #include "strus/textProcessorInterface.hpp"
 #include <string>
 #include <vector>
