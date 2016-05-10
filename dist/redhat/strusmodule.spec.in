@@ -284,6 +284,9 @@ make test
 %{_includedir}/strus/lib/*.hpp
 
 %changelog
+* Tue May 10 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.9.1-0.1
+- added support for JSON loaded by default
+
 * Thu Apr 28 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.9.0-0.1
 - changes in the object builder interfaces
 
