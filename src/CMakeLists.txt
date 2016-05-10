@@ -37,7 +37,7 @@ link_directories(
 # LIBRARY
 # -------------------------------------------
 add_library( strus_module SHARED ${source_files} )
-target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb strus_base ${Intl_LIBRARIES} )
+target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb strus_base ${Intl_LIBRARIES} )
 set_target_properties(
     strus_module
     PROPERTIES

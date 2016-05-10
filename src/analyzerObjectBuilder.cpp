@@ -8,6 +8,7 @@
 #include "analyzerObjectBuilder.hpp"
 #include "strus/lib/textproc.hpp"
 #include "strus/lib/segmenter_textwolf.hpp"
+#include "strus/lib/segmenter_cjson.hpp"
 #include "strus/lib/analyzer.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
@@ -32,6 +33,8 @@ AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	Reference<SegmenterInterface> segref( strus::createSegmenter_textwolf( m_errorhnd));
 	m_segmenterMap[ "textwolf"] = segref;
 	m_segmenterMap[ ""] = segref;
+	Reference<SegmenterInterface> segref_cjson( strus::createSegmenter_cjson( m_errorhnd));
+	m_segmenterMap[ "cjson"] = segref_cjson;
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
