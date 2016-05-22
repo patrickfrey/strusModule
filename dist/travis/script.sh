@@ -93,7 +93,6 @@ case $OS in
 			-DLIB_INSTALL_DIR=lib -DCMAKE_CXX_FLAGS=-g \
 			..
 		make VERBOSE=1
-		ctest --verbose
 		make VERBOSE=1 test
 		sudo make VERBOSE=1 install
 		cd ..
@@ -108,6 +107,7 @@ case $OS in
 				-DCMAKE_CXX_FLAGS=-g -G 'Unix Makefiles' \
 				..
 			make VERBOSE=1
+			ctest --verbose
 			make VERBOSE=1 test
 			sudo make VERBOSE=1 install
 			cd ..
