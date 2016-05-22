@@ -16,7 +16,11 @@ link_directories(
 )
 
 if(APPLE)
-   set( STRUS_TEST_MODULE_DIRECTORY "${PROJECT_BINARY_DIR}/tests/modules/${CMAKE_BUILD_TYPE}" )
+   if( ${CMAKE_GENERATOR} STREQUAL "Xcode" )
+      set( STRUS_TEST_MODULE_DIRECTORY "${PROJECT_BINARY_DIR}/tests/modules/${CMAKE_BUILD_TYPE}" )
+   else()
+      set( STRUS_TEST_MODULE_DIRECTORY "${PROJECT_BINARY_DIR}/tests/modules" )
+   endif()
 else(APPLE)
    set( STRUS_TEST_MODULE_DIRECTORY  "${PROJECT_BINARY_DIR}/tests/modules" )
 endif(APPLE)

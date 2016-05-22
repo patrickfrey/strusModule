@@ -56,3 +56,5 @@ dist/redhat/strusmodule.spec
 
 # Compiled Programs
 tests/loader/testModuleLoader
+
+.travis.yml
