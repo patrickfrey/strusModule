@@ -31,13 +31,18 @@ AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
 	if (!m_textProcessor.get()) throw strus::runtime_error(_TXT("error creating text processor"));
-	Reference<SegmenterInterface> segref( strus::createSegmenter_textwolf( m_errorhnd));
-	m_segmenterMap[ "textwolf"] = segref;
-	m_segmenterMap[ ""] = segref;
+	Reference<SegmenterInterface> segref_xml( strus::createSegmenter_textwolf( m_errorhnd));
+	m_segmenterMap[ "textwolf"] = segref_xml;
+	m_segmenterMap[ ""] = segref_xml;
+	m_mimeSegmenterMap[ utils::tolower( segref_xml->mimeType())] = segref_xml;
+
 	Reference<SegmenterInterface> segref_cjson( strus::createSegmenter_cjson( m_errorhnd));
 	m_segmenterMap[ "cjson"] = segref_cjson;
+	m_mimeSegmenterMap[ utils::tolower( segref_cjson->mimeType())] = segref_cjson;
+
 	Reference<SegmenterInterface> segref_tsv( strus::createSegmenter_tsv( m_errorhnd));
 	m_segmenterMap[ "tsv"] = segref_tsv;
+	m_mimeSegmenterMap[ utils::tolower( segref_tsv->mimeType())] = segref_tsv;
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
@@ -142,7 +147,7 @@ const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const st
 {
 	try
 	{
-		SegmenterMap::const_iterator si = m_segmenterMap.find( utils::tolower( mimetype));
+		SegmenterMap::const_iterator si = m_mimeSegmenterMap.find( utils::tolower( mimetype));
 		if (si == m_mimeSegmenterMap.end())
 		{
 			throw strus::runtime_error(_TXT("no segmenter available for this MIME type: '%s'"), mimetype.c_str());
