@@ -27,6 +27,8 @@ class TextProcessorInterface;
 /// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
+class DocumentClass;
+/// \brief Forward declaration
 class ErrorBufferInterface;
 
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
@@ -39,6 +41,7 @@ public:
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
 	virtual const SegmenterInterface* getSegmenter( const std::string& segmenterName) const;
+	virtual const SegmenterInterface* findMimeTypeSegmenter( const std::string& mimetype) const;
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const SegmenterInterface* segmenter) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 
@@ -50,7 +53,8 @@ private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
 	typedef std::map<std::string,Reference<SegmenterInterface> > SegmenterMap;
-	SegmenterMap m_segmenterMap;				///< map of defined document segmenters
+	SegmenterMap m_segmenterMap;				///< map of defined document segmenters (key is segmenter name)
+	SegmenterMap m_mimeSegmenterMap;			///< map of defined document segmenters (key is MIME type)
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 

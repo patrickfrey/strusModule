@@ -118,6 +118,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 	{
 		Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
 		m_segmenterMap[ utils::tolower(mod->segmenterConstructor.name)] = segref;
+		m_mimeSegmenterMap[ utils::tolower(segref->mimeType())] = segref;
 	}
 	m_analyzerModules.push_back( mod);
 }
@@ -137,6 +138,20 @@ const SegmenterInterface* AnalyzerObjectBuilder::getSegmenter( const std::string
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by name: %s"), *m_errorhnd, 0);
 }
 
+const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const std::string& mimetype) const
+{
+	try
+	{
+		SegmenterMap::const_iterator si = m_segmenterMap.find( utils::tolower( mimetype));
+		if (si == m_mimeSegmenterMap.end())
+		{
+			throw strus::runtime_error(_TXT("no segmenter available for this MIME type: '%s'"), mimetype.c_str());
+			return 0;
+		}
+		return si->second.get();
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by MIME type: %s"), *m_errorhnd, 0);
+}
 
 DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const SegmenterInterface* segmenter) const
 {
