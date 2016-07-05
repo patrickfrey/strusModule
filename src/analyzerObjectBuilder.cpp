@@ -158,9 +158,11 @@ const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const st
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by MIME type: %s"), *m_errorhnd, 0);
 }
 
-DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer( const SegmenterInterface* segmenter) const
+DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
+		const SegmenterInterface* segmenter,
+		const SegmenterOptions& opts) const
 {
-	return strus::createDocumentAnalyzer( segmenter, m_errorhnd);
+	return strus::createDocumentAnalyzer( segmenter, opts, m_errorhnd);
 }
 
 QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const

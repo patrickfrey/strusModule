@@ -25,6 +25,8 @@ class QueryAnalyzerInterface;
 /// \brief Forward declaration
 class TextProcessorInterface;
 /// \brief Forward declaration
+class SegmenterOptions;
+/// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
 class DocumentClass;
@@ -42,7 +44,9 @@ public:
 	virtual const TextProcessorInterface* getTextProcessor() const;
 	virtual const SegmenterInterface* getSegmenter( const std::string& segmenterName) const;
 	virtual const SegmenterInterface* findMimeTypeSegmenter( const std::string& mimetype) const;
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const SegmenterInterface* segmenter) const;
+	virtual DocumentAnalyzerInterface* createDocumentAnalyzer(
+			const SegmenterInterface* segmenter,
+			const SegmenterOptions& opts) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 
 public/*ModuleLoader*/:
