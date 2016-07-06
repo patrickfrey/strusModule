@@ -10,7 +10,9 @@
 #include "strus/storageObjectBuilderInterface.hpp"
 #include "strus/reference.hpp"
 #include "strus/queryProcessorInterface.hpp"
-#include "strus/textProcessorInterface.hpp"
+#include "strus/storageInterface.hpp"
+#include "strus/databaseInterface.hpp"
+#include "strus/segmenterInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
 #include <string>
 #include <vector>
@@ -21,21 +23,7 @@ namespace strus
 /// \brief Forward declaration
 struct StorageModule;
 /// \brief Forward declaration
-class StorageClientInterface;
-/// \brief Forward declaration
-class StorageAlterMetaDataTableInterface;
-/// \brief Forward declaration
-class StorageInterface;
-/// \brief Forward declaration
 class QueryEvalInterface;
-/// \brief Forward declaration
-class QueryProcessorInterface;
-/// \brief Forward declaration
-class QueryAnalyzerInterface;
-/// \brief Forward declaration
-class DatabaseInterface;
-/// \brief Forward declaration
-class StatisticsProcessorInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 

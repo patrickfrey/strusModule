@@ -9,7 +9,6 @@
 #define _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
 #include "strus/analyzerObjectBuilderInterface.hpp"
 #include "strus/reference.hpp"
-#include "strus/queryProcessorInterface.hpp"
 #include "strus/textProcessorInterface.hpp"
 #include <string>
 #include <vector>
@@ -26,7 +25,11 @@ class QueryAnalyzerInterface;
 /// \brief Forward declaration
 class TextProcessorInterface;
 /// \brief Forward declaration
+class SegmenterOptions;
+/// \brief Forward declaration
 class SegmenterInterface;
+/// \brief Forward declaration
+class DocumentClass;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 
@@ -40,7 +43,10 @@ public:
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
 	virtual const SegmenterInterface* getSegmenter( const std::string& segmenterName) const;
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer( const SegmenterInterface* segmenter) const;
+	virtual const SegmenterInterface* findMimeTypeSegmenter( const std::string& mimetype) const;
+	virtual DocumentAnalyzerInterface* createDocumentAnalyzer(
+			const SegmenterInterface* segmenter,
+			const SegmenterOptions& opts) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 
 public/*ModuleLoader*/:
@@ -51,7 +57,8 @@ private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
 	typedef std::map<std::string,Reference<SegmenterInterface> > SegmenterMap;
-	SegmenterMap m_segmenterMap;				///< map of defined document segmenters
+	SegmenterMap m_segmenterMap;				///< map of defined document segmenters (key is segmenter name)
+	SegmenterMap m_mimeSegmenterMap;			///< map of defined document segmenters (key is MIME type)
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 
