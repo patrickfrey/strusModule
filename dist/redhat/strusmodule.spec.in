@@ -284,6 +284,9 @@ make test
 %{_includedir}/strus/lib/*.hpp
 
 %changelog
+* Wed Sep 28 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.11.0-0.1
+- added vector space model to object builder and make definable by module
+
 * Tue Jul 5 2016 Patrick Frey <patrickpfrey@yahoo.com> 0.10.0-0.1
 - version increment along other strus modules
 

@@ -1,3 +1,7 @@
+strusModule (0.11.0)
+  * added vector space model to object builder and make definable by module
+ -- Patrick Frey <patrickpfrey@yahoo.com>  Wed, 28 Sep 2016 15:00:00 +0100
+
 strusModule (0.10.0)
   * version increment along other strus modules
  -- Patrick Frey <patrickpfrey@yahoo.com>  Tue, 5 Jul 2016 13:00:00 +0100
