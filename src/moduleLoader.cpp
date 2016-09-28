@@ -19,7 +19,6 @@
 #include "storageObjectBuilder.hpp"
 #include "analyzerObjectBuilder.hpp"
 #include "strus/base/fileio.hpp"
-#include "strus/base/snprintf.h"
 #include "strus/base/configParser.hpp"
 #include "strus/traceLoggerInterface.hpp"
 #include "utils.hpp"
@@ -267,7 +266,7 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status);
 			if (!entrypoint)
 			{
-				m_errorhnd->report(_TXT("error loading module '%s': "), modfilename.c_str(), status.errormsg);
+				m_errorhnd->report(_TXT("error loading module '%s': %s"), modfilename.c_str(), status.errormsg);
 			}
 			return entrypoint;
 		}
@@ -280,7 +279,7 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status);
 			if (!entrypoint)
 			{
-				m_errorhnd->report(_TXT("error loading module '%s': "), altmodfilename.c_str(), status.errormsg);
+				m_errorhnd->report(_TXT("error loading module '%s': %s"), altmodfilename.c_str(), status.errormsg);
 			}
 			return entrypoint;
 		}

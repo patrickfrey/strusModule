@@ -12,6 +12,7 @@
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
 #include "strus/lib/statsproc.hpp"
+#include "strus/lib/vectorspace_std.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
@@ -51,6 +52,11 @@ StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
 	m_statsprocmap[ ""] = spref;
+
+	VectorSpaceModelReference vmref( strus::createVectorSpaceModel_std( m_errorhnd));
+	if (!vmref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default vector space model"));
+	m_vsmodelmap[ "default"] = vmref;
+	m_vsmodelmap[ ""] = vmref;
 }
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
@@ -217,6 +223,24 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 		}
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics processor from storage object builder: %s"), *m_errorhnd, 0);
+}
+
+const VectorSpaceModelInterface* StorageObjectBuilder::getVectorSpaceModel( const std::string& name) const
+{
+	try
+	{
+		std::map<std::string,VectorSpaceModelReference>::const_iterator
+			si = m_vsmodelmap.find( utils::tolower( name));
+		if (si == m_vsmodelmap.end())
+		{
+			throw strus::runtime_error( _TXT( "undefined vector space model '%s'"), name.c_str());
+		}
+		else
+		{
+			return si->second.get();
+		}
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting vector space model from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const
