@@ -12,18 +12,33 @@
 using namespace strus;
 
 DLL_PUBLIC StorageModule::StorageModule(
+		const DatabaseReference* databaseReference_)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+{
+	init( databaseReference_, 0, 0, 0, 0, 0, 0);
+}
+
+DLL_PUBLIC StorageModule::StorageModule(
+		const VectorSpaceModelReference* vectorSpaceModelReference_)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+{
+	init( 0, 0, vectorSpaceModelReference_, 0, 0, 0, 0);
+}
+
+DLL_PUBLIC StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage)
 {
-	init( 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
+	init( 0, 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
 	//... no need to make database loadable by module yet
 }
 
 void StorageModule::init(
 		const DatabaseReference* databaseReference_,
 		const StatisticsProcessorReference* statisticsProcessorReference_,
+		const VectorSpaceModelReference* vectorSpaceModelReference_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
@@ -48,6 +63,16 @@ void StorageModule::init(
 	{
 		statisticsProcessorReference.name = 0;
 		statisticsProcessorReference.create = 0;
+	}
+	if (vectorSpaceModelReference_)
+	{
+		vectorSpaceModelReference.name = vectorSpaceModelReference_->name;
+		vectorSpaceModelReference.create = vectorSpaceModelReference_->create;
+	}
+	else
+	{
+		vectorSpaceModelReference.name = 0;
+		vectorSpaceModelReference.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

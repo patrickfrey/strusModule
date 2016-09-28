@@ -170,6 +170,12 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor reference loaded from module: '%s': %s"), mod->statisticsProcessorReference.name, m_errorhnd->fetchError());
 			m_statsprocmap[ utils::tolower( mod->statisticsProcessorReference.name)] = spref;
 		}
+		if (mod->vectorSpaceModelReference.create && mod->vectorSpaceModelReference.name)
+		{
+			VectorSpaceModelReference ref( mod->vectorSpaceModelReference.create( m_errorhnd));
+			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorSpaceModelReference.name, m_errorhnd->fetchError());
+			m_vsmodelmap[ utils::tolower( mod->vectorSpaceModelReference.name)] = ref;
+		}
 	}
 	catch (const std::runtime_error& err)
 	{
