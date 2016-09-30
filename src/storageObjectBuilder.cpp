@@ -12,7 +12,6 @@
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
 #include "strus/lib/statsproc.hpp"
-#include "strus/lib/vectorspace_std.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
@@ -52,11 +51,6 @@ StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
 	m_statsprocmap[ ""] = spref;
-
-	VectorSpaceModelReference vmref( strus::createVectorSpaceModel_std( m_errorhnd));
-	if (!vmref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default vector space model"));
-	m_vsmodelmap[ "default"] = vmref;
-	m_vsmodelmap[ ""] = vmref;
 }
 
 const QueryProcessorInterface* StorageObjectBuilder::getQueryProcessor() const
