@@ -29,8 +29,6 @@ class SegmenterOptions;
 /// \brief Forward declaration
 class SegmenterInterface;
 /// \brief Forward declaration
-class DocumentClass;
-/// \brief Forward declaration
 class ErrorBufferInterface;
 
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
@@ -46,7 +44,7 @@ public:
 	virtual const SegmenterInterface* findMimeTypeSegmenter( const std::string& mimetype) const;
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer(
 			const SegmenterInterface* segmenter,
-			const SegmenterOptions& opts) const;
+			const analyzer::SegmenterOptions& opts) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
 
 public/*ModuleLoader*/:

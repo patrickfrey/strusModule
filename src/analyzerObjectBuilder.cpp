@@ -160,7 +160,7 @@ const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const st
 
 DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
 		const SegmenterInterface* segmenter,
-		const SegmenterOptions& opts) const
+		const analyzer::SegmenterOptions& opts) const
 {
 	return strus::createDocumentAnalyzer( segmenter, opts, m_errorhnd);
 }

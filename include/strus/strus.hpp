@@ -95,7 +95,7 @@
 
 // Document detection
 #include "strus/lib/detector_std.hpp"
-#include "strus/documentClass.hpp"
+#include "strus/analyzer/documentClass.hpp"
 #include "strus/documentClassDetectorInterface.hpp"
 
 // Document segmenter (segmenting a document into typed text segments that can be processed by the analyzer):
