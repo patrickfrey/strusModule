@@ -36,6 +36,23 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 	init( 0, 0, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_, 0, 0);
 }
 
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
+{
+	init( 0, 0, 0, 0, 0, &patternLexerConstructor_, &patternMatcherConstructor_);
+}
+
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_,
+		const char* license_short, const char* license_long)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR, license_short, license_long)
+{
+	init( 0, 0, 0, 0, 0, &patternLexerConstructor_, &patternMatcherConstructor_);
+}
+
 void AnalyzerModule::init(
 		const DocumentClassDetectorConstructor* documentClassDetectorConstructor_,
 		const SegmenterConstructor* segmenterConstructor_,

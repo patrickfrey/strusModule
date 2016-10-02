@@ -114,9 +114,16 @@ struct AnalyzerModule
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_);
 
+	/// \brief Analyzer module constructor for pattern matcher
 	AnalyzerModule(
 		const PatternLexerConstructor& patternLexerConstructor_,
 		const PatternMatcherConstructor& patternMatcherConstructor_);
+
+	/// \brief Analyzer module constructor for pattern matcher with 3rd party license info
+	AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_,
+		const char* license_short, const char* license_long);
 
 	DocumentClassDetectorConstructor documentClassDetectorConstructor;	///< a content detector definition
 	SegmenterConstructor segmenterConstructor;				///< a segmenter definition

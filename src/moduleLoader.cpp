@@ -130,6 +130,18 @@ bool ModuleLoader::loadModule(const std::string& name)
 						m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
 						break;
 				}
+				if (entryPoint->license_short)
+				{
+					m_licensear_short.push_back( entryPoint->license_short);
+				}
+				if (entryPoint->license_long)
+				{
+					m_licensear_long.push_back( entryPoint->license_long);
+				}
+				else if (entryPoint->license_short)
+				{
+					m_licensear_long.push_back( entryPoint->license_short);
+				}
 				return true;
 			}
 			catch (const std::bad_alloc&)
@@ -242,6 +254,11 @@ TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::
 		return rt;
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
+}
+
+std::vector<std::string> ModuleLoader::get3rdPartyLicenseTexts( bool full) const
+{
+	return full?m_licensear_long:m_licensear_short;
 }
 
 static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
