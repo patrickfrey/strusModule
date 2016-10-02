@@ -27,6 +27,10 @@ class NormalizerFunctionInterface;
 /// \brief Forward declaration
 class AggregatorFunctionInterface;
 /// \brief Forward declaration
+class PatternLexerInterface;
+/// \brief Forward declaration
+class PatternMatcherInterface;
+/// \brief Forward declaration
 class ErrorBufferInterface;
 
 /// \brief Structure to define a content detector for an alternative document format
@@ -69,6 +73,21 @@ struct AggregatorConstructor
 	Create create;				///< constructor
 };
 
+/// \brief Structure to define the lexer for pattern matching the analyzer may refer to
+struct PatternLexerConstructor
+{
+	typedef PatternLexerInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	const char* name;			///< name of the pattern lexer
+	Create create;				///< constructor
+};
+
+/// \brief Structure to define the lexer for pattern matching the analyzer may refer to
+struct PatternMatcherConstructor
+{
+	typedef PatternMatcherInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	const char* name;			///< name of the pattern matcher
+	Create create;				///< constructor
+};
 
 /// \brief Structure that contains all analyzer module objects
 struct AnalyzerModule
@@ -77,27 +96,14 @@ struct AnalyzerModule
 	/// \brief Analyzer module constructor
 	/// \param[in] DocumentClassDetectorConstructor_ content detector definition
 	/// \param[in] segmenterConstructor_ segmenter definition
-	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
-	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
-	/// \param[in] aggregatorConstructors_ (0,0) terminated list of aggregators or 0
 	AnalyzerModule(
-		const DocumentClassDetectorConstructor& DocumentClassDetectorConstructor_,
-		const SegmenterConstructor& segmenterConstructor_,
-		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_);
+		const DocumentClassDetectorConstructor& documentClassDetectorConstructor_,
+		const SegmenterConstructor& segmenterConstructor_);
 
 	/// \brief Analyzer module constructor
-	/// \param[in] DocumentClassDetectorConstructor_ content detector definition
 	/// \param[in] segmenterConstructor_ segmenter definition
-	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
-	/// \param[in] normalizerConstructors_ (0,0) terminated list of normalizers or 0
-	/// \param[in] aggregatorConstructors_ (0,0) terminated list of aggregators or 0
 	AnalyzerModule(
-		const SegmenterConstructor& segmenterConstructor_,
-		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_);
+		const SegmenterConstructor& segmenterConstructor_);
 
 	/// \brief Analyzer module constructor without segmenter definition
 	/// \param[in] tokenizerConstructors_ (0,0) terminated list of tokenizers or 0
@@ -108,11 +114,17 @@ struct AnalyzerModule
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_);
 
+	AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_);
+
 	DocumentClassDetectorConstructor documentClassDetectorConstructor;	///< a content detector definition
 	SegmenterConstructor segmenterConstructor;				///< a segmenter definition
 	const TokenizerConstructor* tokenizerConstructors;			///< 0 terminated list of tokenizers
 	const NormalizerConstructor* normalizerConstructors;			///< 0 terminated list of normalizers
 	const AggregatorConstructor* aggregatorConstructors;			///< 0 terminated list of aggregators
+	PatternLexerConstructor patternLexerConstructor;			///< a pattern lexer definition
+	PatternMatcherConstructor patternMatcherConstructor;			///< a pattern matcher definition
 
 private:
 	void init(
@@ -120,7 +132,9 @@ private:
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_);
+		const AggregatorConstructor* aggregatorConstructors_,
+		const PatternLexerConstructor* patternLexerConstructor_,
+		const PatternMatcherConstructor* patternMatcherConstructor_);
 };
 }//namespace
 #endif

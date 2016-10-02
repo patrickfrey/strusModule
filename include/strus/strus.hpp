@@ -126,6 +126,14 @@
 #include "strus/aggregatorFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInstanceInterface.hpp"
 
+// Pattern matching (functions for pattern matching)
+#include "strus/patternLexerInterface.hpp"
+#include "strus/patternLexerInstanceInterface.hpp"
+#include "strus/patternLexerContextInterface.hpp"
+#include "strus/patternMatcherInterface.hpp"
+#include "strus/patternMatcherInstanceInterface.hpp"
+#include "strus/patternMatcherContextInterface.hpp"
+
 // Loading strus objects from modules
 #include "strus/analyzerModule.hpp"
 #include "strus/storageModule.hpp"
