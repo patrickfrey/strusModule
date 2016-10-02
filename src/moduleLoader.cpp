@@ -130,17 +130,13 @@ bool ModuleLoader::loadModule(const std::string& name)
 						m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
 						break;
 				}
-				if (entryPoint->license_short)
+				if (entryPoint->license_3rdparty)
 				{
-					m_licensear_short.push_back( entryPoint->license_short);
+					m_license_3rdparty_ar.push_back( entryPoint->license_3rdparty);
 				}
-				if (entryPoint->license_long)
+				if (entryPoint->version_3rdparty)
 				{
-					m_licensear_long.push_back( entryPoint->license_long);
-				}
-				else if (entryPoint->license_short)
-				{
-					m_licensear_long.push_back( entryPoint->license_short);
+					m_version_3rdparty_ar.push_back( entryPoint->version_3rdparty);
 				}
 				return true;
 			}
@@ -256,9 +252,14 @@ TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::
 	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
 }
 
-std::vector<std::string> ModuleLoader::get3rdPartyLicenseTexts( bool full) const
+std::vector<std::string> ModuleLoader::get3rdPartyLicenseTexts() const
 {
-	return full?m_licensear_long:m_licensear_short;
+	return m_license_3rdparty_ar;
+	
+}
+std::vector<std::string> ModuleLoader::get3rdPartyVersionTexts() const
+{
+	return m_version_3rdparty_ar;
 }
 
 static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)

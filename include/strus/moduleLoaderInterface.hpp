@@ -60,9 +60,12 @@ public:
 	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const=0;
 
 	/// \brief Get the license texts of loaded 3rdParty components, that need to be visible
-	/// \param[in] full true, if we need the long version, false, if the short version is enough
 	/// \return the list of license tests
-	virtual std::vector<std::string> get3rdPartyLicenseTexts( bool full=false) const=0;
+	virtual std::vector<std::string> get3rdPartyLicenseTexts() const=0;
+
+	/// \brief Get the version info of loaded 3rdParty components, if of any interest
+	/// \return the list of version strings
+	virtual std::vector<std::string> get3rdPartyVersionTexts() const=0;
 };
 
 }//namespace

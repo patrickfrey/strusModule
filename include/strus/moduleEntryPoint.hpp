@@ -43,12 +43,12 @@ struct ModuleEntryPoint
 	unsigned short compversion_major;	///< major version of components in the module
 	unsigned short compversion_minor;	///< minor version of components in the module
 	unsigned int _reserved[6];		///< reserved for future use
-	const char* license_short;		///< 3rd party license text short
-	const char* license_long;		///< 3rd party license text long
+	const char* version_3rdparty;		///< 3rd party version info
+	const char* license_3rdparty;		///< 3rd party license text
 
 	/// \brief Constructor for derived classes
-	explicit ModuleEntryPoint( Type type_, unsigned short version_major, unsigned short version_minor, const char* license_short_=0, const char* license_long_=0)
-		:type(type_),modversion_minor(STRUS_MODULE_VERSION_MINOR),license_short(license_short_),license_long(license_long_)
+	explicit ModuleEntryPoint( Type type_, unsigned short version_major, unsigned short version_minor, const char* version_3rdparty_=0, const char* license_3rdparty_=0)
+		:type(type_),modversion_minor(STRUS_MODULE_VERSION_MINOR),version_3rdparty(version_3rdparty_),license_3rdparty(license_3rdparty_)
 	{
 		const char* declaration_signature = STRUS_MODULE_SIGNATURE;
 		//... signature contains major version number in it
