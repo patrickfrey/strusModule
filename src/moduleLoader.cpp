@@ -9,8 +9,11 @@
 #include "moduleDirectory.hpp"
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/storageModule.hpp"
+#include "strus/versionStorage.hpp"
 #include "strus/analyzerModule.hpp"
+#include "strus/versionAnalyzer.hpp"
 #include "strus/traceModule.hpp"
+#include "strus/versionTrace.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
@@ -241,6 +244,57 @@ TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::
 	CATCH_ERROR_MAP_RETURN( _TXT("error creating storage object builder: %s"), *m_errorhnd, 0);
 }
 
+static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
+{
+	const char* loader_signature = STRUS_MODULE_SIGNATURE;
+	//... signature contains major version number in it
+	if (std::strcmp( entryPoint->signature, loader_signature) != 0)
+	{
+		errorcode = ModuleEntryPoint::ErrorSignature;
+		return false;
+	}
+	unsigned short expected_modversion_minor = STRUS_MODULE_VERSION_MINOR;
+	if (entryPoint->modversion_minor > expected_modversion_minor)
+	{
+		errorcode = ModuleEntryPoint::ErrorModMinorVersion;
+		return false;
+	}
+	unsigned short expected_compversion_major = 0;
+	unsigned short expected_compversion_minor = 0;
+	switch (entryPoint->type)
+	{
+		case ModuleEntryPoint::Analyzer:
+			expected_compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
+			expected_compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
+			break;
+
+		case ModuleEntryPoint::Storage:
+			expected_compversion_major = STRUS_STORAGE_VERSION_MAJOR;
+			expected_compversion_minor = STRUS_STORAGE_VERSION_MINOR;
+			break;
+
+		case ModuleEntryPoint::Trace:
+			expected_compversion_major = STRUS_TRACE_VERSION_MAJOR;
+			expected_compversion_minor = STRUS_TRACE_VERSION_MINOR;
+			break;
+
+		default:
+			errorcode = ModuleEntryPoint::ErrorUnknownModuleType;
+			return false;
+	}
+	if (entryPoint->compversion_major != expected_compversion_major)
+	{
+		errorcode = ModuleEntryPoint::ErrorCompMajorVersion;
+		return false;
+	}
+	if (entryPoint->compversion_minor < expected_compversion_minor)
+	{
+		errorcode = ModuleEntryPoint::ErrorCompMinorVersion;
+		return false;
+	}
+	return true;
+}
+
 const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		const std::string& name,
 		const std::vector<std::string>& paths)
@@ -263,7 +317,7 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		if (isFile( modfilename))
 		{
 			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status);
+			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status, &matchModuleVersion);
 			if (!entrypoint)
 			{
 				m_errorhnd->report(_TXT("error loading module '%s': %s"), modfilename.c_str(), status.errormsg);
@@ -276,7 +330,7 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		if (isFile( altmodfilename))
 		{
 			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status);
+			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status, &matchModuleVersion);
 			if (!entrypoint)
 			{
 				m_errorhnd->report(_TXT("error loading module '%s': %s"), altmodfilename.c_str(), status.errormsg);

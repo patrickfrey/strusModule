@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/analyzerModule.hpp"
+#include "strus/versionAnalyzer.hpp"
 #include "strus/base/dll_tags.hpp"
 #include <string>
 
@@ -17,7 +18,7 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
 	init( &documentClassDetectorConstructor_, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
@@ -28,7 +29,7 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
 	init( 0, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet
@@ -38,7 +39,7 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
 	init( 0, 0, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
 	//... no need to make query/document analyzer and textprocessor loadable by module yet

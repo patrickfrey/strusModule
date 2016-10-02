@@ -10,9 +10,6 @@
 #ifndef _STRUS_MODULE_HEADER_HPP_INCLUDED
 #define _STRUS_MODULE_HEADER_HPP_INCLUDED
 #include "strus/versionModule.hpp"
-#include "strus/versionAnalyzer.hpp"
-#include "strus/versionStorage.hpp"
-#include "strus/versionTrace.hpp"
 #include <cstring>
 
 /// \brief strus toplevel namespace
@@ -48,7 +45,7 @@ struct ModuleEntryPoint
 	unsigned int _reserved[6];		///< reserved for future use
 
 	/// \brief Constructor for derived classes
-	explicit ModuleEntryPoint( Type type_)
+	explicit ModuleEntryPoint( Type type_, unsigned short version_major, unsigned short version_minor)
 		:type(type_),modversion_minor(STRUS_MODULE_VERSION_MINOR)
 	{
 		const char* declaration_signature = STRUS_MODULE_SIGNATURE;
@@ -56,31 +53,9 @@ struct ModuleEntryPoint
 		std::memset( signature, 0, sizeof(signature));
 		std::memcpy( signature, declaration_signature, std::strlen( declaration_signature));
 		std::memset( _reserved, 0, sizeof(_reserved));
-		switch (type)
-		{
-			case Analyzer:
-				compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
-				compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
-				break;
-
-			case Storage:
-				compversion_major = STRUS_STORAGE_VERSION_MAJOR;
-				compversion_minor = STRUS_STORAGE_VERSION_MINOR;
-				break;
-
-			case Trace:
-				compversion_major = STRUS_TRACE_VERSION_MAJOR;
-				compversion_minor = STRUS_TRACE_VERSION_MINOR;
-				break;
-
-			default:
-				compversion_major = 0xFFFF;
-				compversion_minor = 0xFFFF;
-				break;
-		}
+		compversion_major = version_major;
+		compversion_minor = version_minor;
 	}
-
-	static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode);
 
 	struct Status
 	{
@@ -97,8 +72,8 @@ struct ModuleEntryPoint
 	};
 };
 
-
-const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status);
+typedef bool (*MatchModuleVersionFunc)( const ModuleEntryPoint* entryPoint, int& errorcode);
+const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc);
 
 }//namespace
 #endif

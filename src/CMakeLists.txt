@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
 # --------------------------------------
 # SOURCES AND INCLUDES
 # --------------------------------------
-set( source_files
+set( source_files_loader
 	libstrus_module.cpp
 	moduleEntryPoint.cpp
 	internationalization.cpp
@@ -14,6 +14,11 @@ set( source_files
 	analyzerObjectBuilder.cpp
 	moduleLoader.cpp
 	utils.cpp
+)
+
+set( source_files_module
+	moduleEntryPoint.cpp
+	internationalization.cpp
 )
 
 include_directories(
@@ -36,8 +41,18 @@ link_directories(
 # -------------------------------------------
 # LIBRARY
 # -------------------------------------------
-add_library( strus_module SHARED ${source_files} )
-target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_segmenter_tsv strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb strus_base ${Intl_LIBRARIES} )
+add_library( strus_module SHARED ${source_files_loader} )
+target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_base strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_segmenter_tsv strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb ${Intl_LIBRARIES} )
+
+add_library( strus_module_analyzer SHARED ${source_files_module} analyzerModule.cpp )
+target_link_libraries( strus_module_analyzer ${CMAKE_DL_LIBS} strus_base ${Intl_LIBRARIES} )
+
+add_library( strus_module_storage SHARED ${source_files_module} storageModule.cpp )
+target_link_libraries( strus_module_storage ${CMAKE_DL_LIBS} strus_base ${Intl_LIBRARIES} )
+
+add_library( strus_module_trace SHARED ${source_files_module} traceModule.cpp )
+target_link_libraries( strus_module_trace ${CMAKE_DL_LIBS} strus_base ${Intl_LIBRARIES} )
+
 set_target_properties(
     strus_module
     PROPERTIES
@@ -46,10 +61,39 @@ set_target_properties(
     VERSION ${STRUS_VERSION}
 )
 
+set_target_properties(
+    strus_module_analyzer
+    PROPERTIES
+    DEBUG_POSTFIX "_d"
+    SOVERSION "${STRUS_MAJOR_VERSION}.${STRUS_MINOR_VERSION}"
+    VERSION ${STRUS_VERSION}
+)
+
+set_target_properties(
+    strus_module_storage
+    PROPERTIES
+    DEBUG_POSTFIX "_d"
+    SOVERSION "${STRUS_MAJOR_VERSION}.${STRUS_MINOR_VERSION}"
+    VERSION ${STRUS_VERSION}
+)
+
+set_target_properties(
+    strus_module_trace
+    PROPERTIES
+    DEBUG_POSTFIX "_d"
+    SOVERSION "${STRUS_MAJOR_VERSION}.${STRUS_MINOR_VERSION}"
+    VERSION ${STRUS_VERSION}
+)
 
 # ------------------------------
 # INSTALLATION
 # ------------------------------
 install( TARGETS strus_module
+           LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
+install( TARGETS strus_module_analyzer
+           LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
+install( TARGETS strus_module_storage
+           LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
+install( TARGETS strus_module_trace
            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
 

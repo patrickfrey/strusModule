@@ -19,51 +19,6 @@
 
 using namespace strus;
 
-DLL_PUBLIC bool ModuleEntryPoint::matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
-{
-	const char* loader_signature = STRUS_MODULE_SIGNATURE;
-	//... signature contains major version number in it
-	if (std::strcmp( entryPoint->signature, loader_signature) != 0)
-	{
-		errorcode = ErrorSignature;
-		return false;
-	}
-	unsigned short expected_modversion_minor = STRUS_MODULE_VERSION_MINOR;
-	if (entryPoint->modversion_minor > expected_modversion_minor)
-	{
-		errorcode = ErrorModMinorVersion;
-		return false;
-	}
-	unsigned short expected_compversion_major = 0;
-	unsigned short expected_compversion_minor = 0;
-	switch (entryPoint->type)
-	{
-		case Analyzer:
-			expected_compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
-			expected_compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
-
-		case Storage:
-			expected_compversion_major = STRUS_STORAGE_VERSION_MAJOR;
-			expected_compversion_minor = STRUS_STORAGE_VERSION_MINOR;
-
-		default:
-			errorcode = ErrorUnknownModuleType;
-			return false;
-	}
-	if (entryPoint->compversion_major != expected_compversion_major)
-	{
-		errorcode = ErrorCompMajorVersion;
-		return false;
-	}
-	if (entryPoint->compversion_minor < expected_compversion_minor)
-	{
-		errorcode = ErrorCompMinorVersion;
-		return false;
-	}
-	return true;
-}
-
-
 namespace {
 class ModuleHandleList
 {
@@ -123,7 +78,7 @@ static void initStatusMessage( ModuleEntryPoint::Status& status, const char* msg
 	status.errormsg[ msglen] = '\0';
 }
 
-DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status)
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc matchVersion)
 {
 	status.errorcode = 0;
 	status.errormsg[0] = '\0';
@@ -145,7 +100,7 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 		return 0;
 	}
 	int errorcode = 0;
-	if (ModuleEntryPoint::matchModuleVersion( entryPoint, errorcode))
+	if (!(*matchVersion)( entryPoint, errorcode))
 	{
 		status.errorcode = errorcode;
 		initStatusMessage( status, errorMessage( status.errorcode));

@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/storageModule.hpp"
+#include "strus/versionStorage.hpp"
 #include "strus/base/dll_tags.hpp"
 #include <cstring>
 
@@ -13,14 +14,14 @@ using namespace strus;
 
 DLL_PUBLIC StorageModule::StorageModule(
 		const DatabaseReference* databaseReference_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
 {
 	init( databaseReference_, 0, 0, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
 		const VectorSpaceModelReference* vectorSpaceModelReference_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
 {
 	init( 0, 0, vectorSpaceModelReference_, 0, 0, 0, 0);
 }
@@ -29,7 +30,7 @@ DLL_PUBLIC StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
 {
 	init( 0, 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
 	//... no need to make database loadable by module yet
