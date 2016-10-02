@@ -47,8 +47,8 @@ DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const PatternLexerConstructor& patternLexerConstructor_,
 		const PatternMatcherConstructor& patternMatcherConstructor_,
-		const char* license_short, const char* license_long)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR, license_short, license_long)
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
 	init( 0, 0, 0, 0, 0, &patternLexerConstructor_, &patternMatcherConstructor_);
 }

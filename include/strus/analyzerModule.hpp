@@ -123,7 +123,7 @@ struct AnalyzerModule
 	AnalyzerModule(
 		const PatternLexerConstructor& patternLexerConstructor_,
 		const PatternMatcherConstructor& patternMatcherConstructor_,
-		const char* license_short, const char* license_long);
+		const char* version_3rdparty, const char* license_3rdparty);
 
 	DocumentClassDetectorConstructor documentClassDetectorConstructor;	///< a content detector definition
 	SegmenterConstructor segmenterConstructor;				///< a segmenter definition
