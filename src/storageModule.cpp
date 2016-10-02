@@ -13,17 +13,17 @@
 using namespace strus;
 
 DLL_PUBLIC StorageModule::StorageModule(
-		const DatabaseReference* databaseReference_)
+		const DatabaseConstructor* databaseConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
 {
-	init( databaseReference_, 0, 0, 0, 0, 0, 0);
+	init( databaseConstructor_, 0, 0, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
-		const VectorSpaceModelReference* vectorSpaceModelReference_)
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
 {
-	init( 0, 0, vectorSpaceModelReference_, 0, 0, 0, 0);
+	init( 0, 0, vectorSpaceModelConstructor_, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
@@ -37,43 +37,43 @@ DLL_PUBLIC StorageModule::StorageModule(
 }
 
 void StorageModule::init(
-		const DatabaseReference* databaseReference_,
-		const StatisticsProcessorReference* statisticsProcessorReference_,
-		const VectorSpaceModelReference* vectorSpaceModelReference_,
+		const DatabaseConstructor* databaseConstructor_,
+		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
 		const ScalarFunctionParserConstructor* scalarFunctionParserConstructor_)
 {
-	if (databaseReference_)
+	if (databaseConstructor_)
 	{
-		databaseReference.name = databaseReference_->name;
-		databaseReference.create = databaseReference_->create;
+		databaseConstructor.name = databaseConstructor_->name;
+		databaseConstructor.create = databaseConstructor_->create;
 	}
 	else
 	{
-		databaseReference.name = 0;
-		databaseReference.create = 0;
+		databaseConstructor.name = 0;
+		databaseConstructor.create = 0;
 	}
-	if (statisticsProcessorReference_)
+	if (statisticsProcessorConstructor_)
 	{
-		statisticsProcessorReference.name = statisticsProcessorReference_->name;
-		statisticsProcessorReference.create = statisticsProcessorReference_->create;
-	}
-	else
-	{
-		statisticsProcessorReference.name = 0;
-		statisticsProcessorReference.create = 0;
-	}
-	if (vectorSpaceModelReference_)
-	{
-		vectorSpaceModelReference.name = vectorSpaceModelReference_->name;
-		vectorSpaceModelReference.create = vectorSpaceModelReference_->create;
+		statisticsProcessorConstructor.name = statisticsProcessorConstructor_->name;
+		statisticsProcessorConstructor.create = statisticsProcessorConstructor_->create;
 	}
 	else
 	{
-		vectorSpaceModelReference.name = 0;
-		vectorSpaceModelReference.create = 0;
+		statisticsProcessorConstructor.name = 0;
+		statisticsProcessorConstructor.create = 0;
+	}
+	if (vectorSpaceModelConstructor_)
+	{
+		vectorSpaceModelConstructor.name = vectorSpaceModelConstructor_->name;
+		vectorSpaceModelConstructor.create = vectorSpaceModelConstructor_->create;
+	}
+	else
+	{
+		vectorSpaceModelConstructor.name = 0;
+		vectorSpaceModelConstructor.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

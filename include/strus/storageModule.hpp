@@ -36,7 +36,7 @@ class ErrorBufferInterface;
 
 
 /// \brief Structure to declare the key value store database to use by the storage as module object
-struct DatabaseReference
+struct DatabaseConstructor
 {
 	typedef DatabaseInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the database implementation
@@ -44,7 +44,7 @@ struct DatabaseReference
 };
 
 /// \brief Structure to declare an alternative packing/unpacking of statistics messages
-struct StatisticsProcessorReference
+struct StatisticsProcessorConstructor
 {
 	typedef StatisticsProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
@@ -52,7 +52,7 @@ struct StatisticsProcessorReference
 };
 
 /// \brief Structure to declare an alternative vector space model to map vectors to sets of features
-struct VectorSpaceModelReference
+struct VectorSpaceModelConstructor
 {
 	typedef VectorSpaceModelInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
@@ -106,18 +106,18 @@ struct StorageModule
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
 
 	/// \brief Storage module constructor for alternative database implementation
-	/// \param[in] databaseReference_ alternative database implementation
+	/// \param[in] databaseConstructor_ alternative database implementation
 	explicit StorageModule(
-		const DatabaseReference* databaseReference_);
+		const DatabaseConstructor* databaseConstructor_);
 
 	/// \brief Storage module constructor for alternative vector space model
-	/// \param[in] vectorSpaceModelReference_ alternative vector space model
+	/// \param[in] vectorSpaceModelConstructor_ alternative vector space model
 	explicit StorageModule(
-		const VectorSpaceModelReference* vectorSpaceModelReference_);
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_);
 
-	DatabaseReference databaseReference;					///< alternative key value store database 
-	StatisticsProcessorReference statisticsProcessorReference;		///< alternative packing/unpacking of statistics messages
-	VectorSpaceModelReference vectorSpaceModelReference;			///< alternative vectorspace model for mapping vectors to features
+	DatabaseConstructor databaseConstructor;				///< alternative key value store database 
+	StatisticsProcessorConstructor statisticsProcessorConstructor;		///< alternative packing/unpacking of statistics messages
+	VectorSpaceModelConstructor vectorSpaceModelConstructor;		///< alternative vectorspace model for mapping vectors to features
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
@@ -125,9 +125,9 @@ struct StorageModule
 
 private:
 	void init(
-		const DatabaseReference* databaseReference_,
-		const StatisticsProcessorReference* statisticsProcessorReference_,
-		const VectorSpaceModelReference* vectorSpaceModelReference_,
+		const DatabaseConstructor* databaseConstructor_,
+		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,

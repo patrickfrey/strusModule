@@ -152,23 +152,23 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 	{
 		m_storageModules.push_back( mod);
 
-		if (mod->databaseReference.create && mod->databaseReference.name)
+		if (mod->databaseConstructor.create && mod->databaseConstructor.name)
 		{
-			DatabaseReference dbref( mod->databaseReference.create( m_errorhnd));
-			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base reference loaded from module: '%s': %s"), mod->databaseReference.name, m_errorhnd->fetchError());
-			m_dbmap[ utils::tolower( mod->databaseReference.name)] = dbref;
+			DatabaseReference dbref( mod->databaseConstructor.create( m_errorhnd));
+			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base Constructor loaded from module: '%s': %s"), mod->databaseConstructor.name, m_errorhnd->fetchError());
+			m_dbmap[ utils::tolower( mod->databaseConstructor.name)] = dbref;
 		}
-		if (mod->statisticsProcessorReference.create && mod->statisticsProcessorReference.name)
+		if (mod->statisticsProcessorConstructor.create && mod->statisticsProcessorConstructor.name)
 		{
-			StatisticsProcessorReference spref( mod->statisticsProcessorReference.create( m_errorhnd));
-			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor reference loaded from module: '%s': %s"), mod->statisticsProcessorReference.name, m_errorhnd->fetchError());
-			m_statsprocmap[ utils::tolower( mod->statisticsProcessorReference.name)] = spref;
+			StatisticsProcessorReference spref( mod->statisticsProcessorConstructor.create( m_errorhnd));
+			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor Constructor loaded from module: '%s': %s"), mod->statisticsProcessorConstructor.name, m_errorhnd->fetchError());
+			m_statsprocmap[ utils::tolower( mod->statisticsProcessorConstructor.name)] = spref;
 		}
-		if (mod->vectorSpaceModelReference.create && mod->vectorSpaceModelReference.name)
+		if (mod->vectorSpaceModelConstructor.create && mod->vectorSpaceModelConstructor.name)
 		{
-			VectorSpaceModelReference ref( mod->vectorSpaceModelReference.create( m_errorhnd));
-			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorSpaceModelReference.name, m_errorhnd->fetchError());
-			m_vsmodelmap[ utils::tolower( mod->vectorSpaceModelReference.name)] = ref;
+			VectorSpaceModelReference ref( mod->vectorSpaceModelConstructor.create( m_errorhnd));
+			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorSpaceModelConstructor.name, m_errorhnd->fetchError());
+			m_vsmodelmap[ utils::tolower( mod->vectorSpaceModelConstructor.name)] = ref;
 		}
 	}
 	catch (const std::runtime_error& err)
