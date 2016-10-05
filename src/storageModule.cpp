@@ -13,15 +13,17 @@
 using namespace strus;
 
 DLL_PUBLIC StorageModule::StorageModule(
-		const DatabaseConstructor* databaseConstructor_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
+		const DatabaseConstructor* databaseConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
 	init( databaseConstructor_, 0, 0, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
 	init( 0, 0, vectorSpaceModelConstructor_, 0, 0, 0, 0);
 }
@@ -29,8 +31,9 @@ DLL_PUBLIC StorageModule::StorageModule(
 DLL_PUBLIC StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
-		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR)
+		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
 	init( 0, 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
 	//... no need to make database loadable by module yet

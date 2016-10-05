@@ -103,17 +103,20 @@ struct StorageModule
 	StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
-		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
+		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
 	/// \brief Storage module constructor for alternative database implementation
 	/// \param[in] databaseConstructor_ alternative database implementation
 	explicit StorageModule(
-		const DatabaseConstructor* databaseConstructor_);
+		const DatabaseConstructor* databaseConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
 	/// \brief Storage module constructor for alternative vector space model
 	/// \param[in] vectorSpaceModelConstructor_ alternative vector space model
 	explicit StorageModule(
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_);
+		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
 	DatabaseConstructor databaseConstructor;				///< alternative key value store database 
 	StatisticsProcessorConstructor statisticsProcessorConstructor;		///< alternative packing/unpacking of statistics messages
