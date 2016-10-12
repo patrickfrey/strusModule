@@ -63,5 +63,7 @@ install(DIRECTORY include/strus
           DESTINATION include
           FILES_MATCHING PATTERN "*.hpp")
 
-include( cmake/standard_targets.cmake )
+# Create directory holding strus modules
+install(DIRECTORY DESTINATION ${LIB_INSTALL_DIR}/modules)
 
+include( cmake/standard_targets.cmake )
