@@ -280,6 +280,7 @@ make test
 %{_libdir}/strus/libstrus_module_storage.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@.@STRUS_PATCH_VERSION@
 %{_libdir}/strus/libstrus_module_trace.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
 %{_libdir}/strus/libstrus_module_trace.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@.@STRUS_PATCH_VERSION@
+%dir %{_libdir}/strus/modules
 
 %files devel
 %defattr( -, root, root )
