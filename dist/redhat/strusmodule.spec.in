@@ -258,6 +258,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 rm -rf $RPM_BUILD_ROOT%{_libdir}/debug
 rm -rf $RPM_BUILD_ROOT%{_prefix}/src/debug
 
+# have one package owning the module directory, strusModule seems a good candidate
+mkdir %{_libdir}/strus/modules
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
