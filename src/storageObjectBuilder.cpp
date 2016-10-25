@@ -35,14 +35,14 @@ using namespace strus;
 
 StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_queryProcessor( strus::createQueryProcessor(errorhnd_))
-	,m_storage(strus::createStorage(errorhnd_))
+	,m_storage(strus::createStorageType_std(errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 
-	DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
+	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ "leveldb"] = dbref;
 	m_dbmap[ ""] = dbref;
@@ -181,18 +181,10 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 	}
 }
 
-const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& config) const
+const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& name) const
 {
 	try
 	{
-		std::string configstr( config);
-		std::string name;
-		(void)strus::extractStringFromConfigString( name, configstr, "database", m_errorhnd);
-		if (m_errorhnd->hasError())
-		{
-			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
-			return 0;
-		}
 		std::map<std::string,DatabaseReference>::const_iterator
 			di = m_dbmap.find( utils::tolower( name));
 		if (di == m_dbmap.end())
