@@ -16,7 +16,6 @@
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
-#include "strus/storageClientInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
 #include "strus/weightingFunctionInterface.hpp"
