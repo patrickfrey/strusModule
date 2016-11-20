@@ -27,6 +27,7 @@ include_directories(
 	"${strus_INCLUDE_DIRS}"
 	"${strusanalyzer_INCLUDE_DIRS}"
 	"${strustrace_INCLUDE_DIRS}"
+	"${Boost_INCLUDE_DIRS}"
 )
 
 link_directories(
@@ -35,6 +36,7 @@ link_directories(
 	"${strus_LIBRARY_DIRS}"
 	"${strusanalyzer_LIBRARY_DIRS}"
 	"${strustrace_LIBRARY_DIRS}"
+	"${Boost_LIBRARY_DIRS}"
 )
 
 

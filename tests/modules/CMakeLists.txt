@@ -13,6 +13,7 @@ link_directories(
    "${PROJECT_SOURCE_DIR}/src"
    "${strusanalyzer_LIBRARY_DIRS}"
    "${strus_LIBRARY_DIRS}"
+   "${Boost_LIBRARY_DIRS}"
 )
 
 

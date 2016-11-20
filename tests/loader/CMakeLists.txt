@@ -7,12 +7,14 @@ include_directories(
   "${PROJECT_SOURCE_DIR}/include" 
   "${CMAKE_CURRENT_BINARY_DIR}"
   "${strus_INCLUDE_DIRS}"
+  "${strusbase_INCLUDE_DIRS}"
 )
 
 link_directories(
    "${PROJECT_SOURCE_DIR}/src"
    "${strusanalyzer_LIBRARY_DIRS}"
    "${strus_LIBRARY_DIRS}"
+   "${strusbase_LIBRARY_DIRS}"
 )
 
 if(APPLE)
