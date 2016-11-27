@@ -208,8 +208,8 @@ Requires: strustrace >= %{dep_version}
 %if %{suse} || %{sles}
 %if %{sles12}
 %if ! 0%{?is_opensuse}
-#!BuildIgnore: strusgperftools
-#!BuildIgnore: struslibunwind
+#!BuildIgnore: gperftools
+#!BuildIgnore: libunwind
 %endif
 %endif
 %endif
