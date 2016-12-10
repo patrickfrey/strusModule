@@ -42,8 +42,6 @@ configure_file( "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp.in"  "${PROJECT_S
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh.in"  "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD.in"  "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc"  @ONLY )
-configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-Debian_7.0.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-Debian_7.0.dsc"  @ONLY )
-configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-xUbuntu_12.04.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-xUbuntu_12.04.dsc"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/redhat/strusmodule.spec.in"  "${PROJECT_SOURCE_DIR}/dist/redhat/strusmodule.spec"  @ONLY )
 
 set( STRUS_GETTEXT_PACKAGE "strus-dom" )       #... 1st parameter of bindtextdomain(...)
