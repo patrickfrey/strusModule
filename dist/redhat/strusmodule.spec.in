@@ -181,15 +181,6 @@ Requires: strus >= %{dep_version}
 Requires: strusanalyzer >= %{dep_version}
 Requires: strustrace >= %{dep_version}
 
-%if %{suse} || %{sles}
-%if %{sles12}
-%if ! 0%{?is_opensuse}
-#!BuildIgnore: gperftools
-#!BuildIgnore: libunwind
-%endif
-%endif
-%endif
-
 # Check if 'Distribution' is really set by OBS (as mentioned in bacula)
 %if ! 0%{?opensuse_bs}
 Distribution: %{dist}
