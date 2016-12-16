@@ -22,7 +22,7 @@ class DatabaseInterface;
 /// \brief Forward declaration
 class StatisticsProcessorInterface;
 /// \brief Forward declaration
-class VectorSpaceModelInterface;
+class VectorStorageInterface;
 /// \brief Forward declaration
 class WeightingFunctionInterface;
 /// \brief Forward declaration
@@ -52,9 +52,9 @@ struct StatisticsProcessorConstructor
 };
 
 /// \brief Structure to declare an alternative vector space model to map vectors to sets of features
-struct VectorSpaceModelConstructor
+struct VectorStorageConstructor
 {
-	typedef VectorSpaceModelInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	typedef VectorStorageInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
 	Create create;					///< constructor of the object
 };
@@ -113,14 +113,14 @@ struct StorageModule
 		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
 	/// \brief Storage module constructor for alternative vector space model
-	/// \param[in] vectorSpaceModelConstructor_ alternative vector space model
+	/// \param[in] vectorStorageConstructor_ alternative vector space model
 	explicit StorageModule(
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
 	DatabaseConstructor databaseConstructor;				///< alternative key value store database 
 	StatisticsProcessorConstructor statisticsProcessorConstructor;		///< alternative packing/unpacking of statistics messages
-	VectorSpaceModelConstructor vectorSpaceModelConstructor;		///< alternative vectorspace model for mapping vectors to features
+	VectorStorageConstructor vectorStorageConstructor;			///< alternative vectorspace model for mapping vectors to features
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
@@ -130,7 +130,7 @@ private:
 	void init(
 		const DatabaseConstructor* databaseConstructor_,
 		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,

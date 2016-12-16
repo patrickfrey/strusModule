@@ -21,11 +21,11 @@ DLL_PUBLIC StorageModule::StorageModule(
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const char* version_3rdparty, const char* license_3rdparty)
 	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
-	init( 0, 0, vectorSpaceModelConstructor_, 0, 0, 0, 0);
+	init( 0, 0, vectorStorageConstructor_, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC StorageModule::StorageModule(
@@ -42,7 +42,7 @@ DLL_PUBLIC StorageModule::StorageModule(
 void StorageModule::init(
 		const DatabaseConstructor* databaseConstructor_,
 		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
-		const VectorSpaceModelConstructor* vectorSpaceModelConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
@@ -68,15 +68,15 @@ void StorageModule::init(
 		statisticsProcessorConstructor.name = 0;
 		statisticsProcessorConstructor.create = 0;
 	}
-	if (vectorSpaceModelConstructor_)
+	if (vectorStorageConstructor_)
 	{
-		vectorSpaceModelConstructor.name = vectorSpaceModelConstructor_->name;
-		vectorSpaceModelConstructor.create = vectorSpaceModelConstructor_->create;
+		vectorStorageConstructor.name = vectorStorageConstructor_->name;
+		vectorStorageConstructor.create = vectorStorageConstructor_->create;
 	}
 	else
 	{
-		vectorSpaceModelConstructor.name = 0;
-		vectorSpaceModelConstructor.create = 0;
+		vectorStorageConstructor.name = 0;
+		vectorStorageConstructor.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

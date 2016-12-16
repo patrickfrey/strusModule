@@ -14,7 +14,7 @@
 #include "strus/databaseInterface.hpp"
 #include "strus/segmenterInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
-#include "strus/vectorSpaceModelInterface.hpp"
+#include "strus/vectorStorageInterface.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -40,7 +40,7 @@ public:
 	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
 	virtual const QueryProcessorInterface* getQueryProcessor() const;
 	virtual const StatisticsProcessorInterface* getStatisticsProcessor( const std::string& name) const;
-	virtual const VectorSpaceModelInterface* getVectorSpaceModel( const std::string& name) const;
+	virtual const VectorStorageInterface* getVectorStorage( const std::string& name) const;
 	virtual QueryEvalInterface* createQueryEval() const;
 
 public/*ModuleLoader*/:
@@ -54,8 +54,8 @@ private:
 	std::map<std::string,DatabaseReference> m_dbmap;			///< cached database handles
 	typedef Reference<StatisticsProcessorInterface> StatisticsProcessorReference;
 	std::map<std::string,StatisticsProcessorReference> m_statsprocmap;	///< statistics processor interface map
-	typedef Reference<VectorSpaceModelInterface> VectorSpaceModelReference;
-	std::map<std::string,VectorSpaceModelReference> m_vsmodelmap;		///< vector space model handle map
+	typedef Reference<VectorStorageInterface> VectorStorageReference;
+	std::map<std::string,VectorStorageReference> m_vsmodelmap;		///< vector space model handle map
 	ErrorBufferInterface* m_errorhnd;					///< buffer for reporting errors
 };
 

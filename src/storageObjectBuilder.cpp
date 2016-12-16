@@ -163,11 +163,11 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor Constructor loaded from module: '%s': %s"), mod->statisticsProcessorConstructor.name, m_errorhnd->fetchError());
 			m_statsprocmap[ utils::tolower( mod->statisticsProcessorConstructor.name)] = spref;
 		}
-		if (mod->vectorSpaceModelConstructor.create && mod->vectorSpaceModelConstructor.name)
+		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
 		{
-			VectorSpaceModelReference ref( mod->vectorSpaceModelConstructor.create( m_errorhnd));
-			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorSpaceModelConstructor.name, m_errorhnd->fetchError());
-			m_vsmodelmap[ utils::tolower( mod->vectorSpaceModelConstructor.name)] = ref;
+			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_errorhnd));
+			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
+			m_vsmodelmap[ utils::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}
 	}
 	catch (const std::runtime_error& err)
@@ -216,11 +216,11 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics processor from storage object builder: %s"), *m_errorhnd, 0);
 }
 
-const VectorSpaceModelInterface* StorageObjectBuilder::getVectorSpaceModel( const std::string& name) const
+const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std::string& name) const
 {
 	try
 	{
-		std::map<std::string,VectorSpaceModelReference>::const_iterator
+		std::map<std::string,VectorStorageReference>::const_iterator
 			si = m_vsmodelmap.find( utils::tolower( name));
 		if (si == m_vsmodelmap.end())
 		{
