@@ -134,6 +134,7 @@ int main( int argc, const char* argv[])
 
 		for (; argi < argc; ++argi)
 		{
+			std::cout << "module " << argv[ argi] << std::endl;
 			loadModule( argv[ argi]);
 		}
 		return 0;

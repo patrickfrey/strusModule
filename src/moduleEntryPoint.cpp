@@ -86,14 +86,14 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 
 	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
 
-	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_GLOBAL);
+	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
 	if (!hnd)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorOpenModule;
 		initStatusMessage( status, ::dlerror());
 		return 0;
 	}
-	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)dlsym( hnd, "entryPoint");
+	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)::dlsym( hnd, "entryPoint");
 	if (!entryPoint)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorNoEntryPoint;
