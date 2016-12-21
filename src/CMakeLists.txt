@@ -55,6 +55,9 @@ target_link_libraries( strus_module_storage ${CMAKE_DL_LIBS} strus_base ${Intl_L
 add_library( strus_module_trace SHARED ${source_files_module} traceModule.cpp )
 target_link_libraries( strus_module_trace ${CMAKE_DL_LIBS} strus_base ${Intl_LIBRARIES} )
 
+add_executable( strusModuleInfo strusModuleInfo.cpp internationalization.cpp )
+target_link_libraries( strusModuleInfo  "${Boost_LIBRARIES}" strus_module strus_module_analyzer  strus_module_storage strus_error strus_base ${Intl_LIBRARIES})
+
 set_target_properties(
     strus_module
     PROPERTIES
@@ -98,4 +101,7 @@ install( TARGETS strus_module_storage
            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
 install( TARGETS strus_module_trace
            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strus )
+	   
+install( TARGETS strusModuleInfo 
+	   RUNTIME DESTINATION bin )
 
