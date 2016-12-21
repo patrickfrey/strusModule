@@ -72,6 +72,10 @@ struct ModuleEntryPoint
 		int errorcode;
 		char errormsg[ 256];
 	};
+
+private:
+	ModuleEntryPoint( const ModuleEntryPoint&){}	//< non copyable
+	ModuleEntryPoint(){}				//< no implicit construction without data
 };
 
 typedef bool (*MatchModuleVersionFunc)( const ModuleEntryPoint* entryPoint, int& errorcode);
