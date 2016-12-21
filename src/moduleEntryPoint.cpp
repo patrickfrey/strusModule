@@ -7,6 +7,7 @@
  */
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/base/dll_tags.hpp"
+#include "internationalization.hpp"
 #include <cstring>
 #include <vector>
 #include <stdexcept>
@@ -55,13 +56,13 @@ static const char* errorMessage( int error)
 {
 	switch (error)
 	{
-		case ModuleEntryPoint::ErrorUnknownModuleType: return "module type unknown";
-		case ModuleEntryPoint::ErrorSignature: return "module signature mismatch";
-		case ModuleEntryPoint::ErrorModMinorVersion: return "module newer in minor version than module loader, it is compatible but may contain objects that cannot be loaded";
-		case ModuleEntryPoint::ErrorCompMajorVersion: return "loaded objects major version mismatch";
-		case ModuleEntryPoint::ErrorCompMinorVersion: return "loaded objects minor version smaller than required by the loader";
-		case ModuleEntryPoint::ErrorOpenModule: return "system error loading module";
-		case ModuleEntryPoint::ErrorNoEntryPoint:return "no module entry point found";
+		case ModuleEntryPoint::ErrorUnknownModuleType: return _TXT("module type unknown");
+		case ModuleEntryPoint::ErrorSignature: return _TXT("module signature mismatch");
+		case ModuleEntryPoint::ErrorModMinorVersion: return _TXT("module newer in minor version than module loader, it is compatible but may contain objects that cannot be loaded");
+		case ModuleEntryPoint::ErrorCompMajorVersion: return _TXT("loaded objects major version mismatch");
+		case ModuleEntryPoint::ErrorCompMinorVersion: return _TXT("loaded objects minor version smaller than required by the loader");
+		case ModuleEntryPoint::ErrorOpenModule: return _TXT("system error loading module");
+		case ModuleEntryPoint::ErrorNoEntryPoint:return _TXT("no module entry point found");
 
 		default: return "unknown error";
 	};

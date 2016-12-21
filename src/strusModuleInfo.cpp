@@ -72,7 +72,7 @@ static void loadModule( const std::string& path)
 		}
 		else
 		{
-			std::cout << "status error: " << status.errorcode << std::endl;
+			std::cout << "status error: " << status.errormsg << std::endl;
 		}
 	}
 	catch (const std::runtime_error& err)
