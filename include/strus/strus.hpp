@@ -108,7 +108,6 @@
 #include "strus/lib/tokenizer_word.hpp"
 #include "strus/lib/tokenizer_punctuation.hpp"
 #include "strus/analyzer/token.hpp"
-#include "strus/tokenizerFunctionContextInterface.hpp"
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/tokenizerFunctionInstanceInterface.hpp"
 
@@ -117,7 +116,6 @@
 #include "strus/lib/normalizer_dateconv.hpp"
 #include "strus/lib/normalizer_dictmap.hpp"
 #include "strus/lib/normalizer_snowball.hpp"
-#include "strus/normalizerFunctionContextInterface.hpp"
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInstanceInterface.hpp"
 
