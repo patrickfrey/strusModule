@@ -233,6 +233,7 @@ make test
 %files
 %defattr( -, root, root )
 %dir %{_libdir}/strus
+%{_bindir}/strusModuleInfo
 %{_libdir}/strus/libstrus_module.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
 %{_libdir}/strus/libstrus_module.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@.@STRUS_PATCH_VERSION@
 %{_libdir}/strus/libstrus_module_analyzer.so.@STRUS_MAJOR_VERSION@.@STRUS_MINOR_VERSION@
