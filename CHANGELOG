@@ -1,3 +1,10 @@
+strusModule (0.13.0)
+  * adapted interface changes in analyzer and strus core
+  * forbid some implicit module header constructors
+  * added program strusModuleInfo to check module version
+  * many build fixes
+ -- Patrick Frey <patrickpfrey@yahoo.com>  Mon, 6 Feb 2017 15:00:00 +0100
+
 strusModule (0.12.0)
   * adapted interface changes of strus analyzer
  -- Patrick Frey <patrickpfrey@yahoo.com>  Sat, 1 Oct 2016 20:00:00 +0100
