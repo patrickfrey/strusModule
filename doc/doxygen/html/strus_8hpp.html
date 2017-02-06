@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.10</span>
+   &#160;<span id="projectnumber">0.13</span>
    </div>
   </td>
  </tr>
@@ -132,7 +132,7 @@
 <code>#include &quot;strus/lib/textproc.hpp&quot;</code><br/>
 <code>#include &quot;strus/textProcessorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/detector_std.hpp&quot;</code><br/>
-<code>#include &quot;strus/documentClass.hpp&quot;</code><br/>
+<code>#include &quot;strus/analyzer/documentClass.hpp&quot;</code><br/>
 <code>#include &quot;strus/documentClassDetectorInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/segmenter_textwolf.hpp&quot;</code><br/>
 <code>#include &quot;strus/segmenterContextInterface.hpp&quot;</code><br/>
@@ -141,19 +141,23 @@
 <code>#include &quot;strus/lib/tokenizer_word.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/tokenizer_punctuation.hpp&quot;</code><br/>
 <code>#include &quot;strus/analyzer/token.hpp&quot;</code><br/>
-<code>#include &quot;strus/tokenizerFunctionContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/tokenizerFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/tokenizerFunctionInstanceInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/normalizer_charconv.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/normalizer_dateconv.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/normalizer_dictmap.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/normalizer_snowball.hpp&quot;</code><br/>
-<code>#include &quot;strus/normalizerFunctionContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/normalizerFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/normalizerFunctionInstanceInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/lib/aggregator_vsm.hpp&quot;</code><br/>
 <code>#include &quot;strus/aggregatorFunctionInterface.hpp&quot;</code><br/>
 <code>#include &quot;strus/aggregatorFunctionInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternLexerInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternLexerInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternLexerContextInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternMatcherInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternMatcherInstanceInterface.hpp&quot;</code><br/>
+<code>#include &quot;strus/patternMatcherContextInterface.hpp&quot;</code><br/>
 <code>#include &quot;<a class="el" href="analyzerModule_8hpp_source.html">strus/analyzerModule.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="storageModule_8hpp_source.html">strus/storageModule.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="moduleEntryPoint_8hpp_source.html">strus/moduleEntryPoint.hpp</a>&quot;</code><br/>
@@ -170,7 +174,7 @@
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 10:35:28 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 6 2017 18:09:26 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>strusModule: strus::TraceLoggerConstructor Struct Reference</title>
+<title>strusModule: strus::PatternLexerConstructor Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -54,67 +54,60 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacestrus.html">strus</a></li><li class="navelem"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html">TraceLoggerConstructor</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacestrus.html">strus</a></li><li class="navelem"><a class="el" href="structstrus_1_1PatternLexerConstructor.html">PatternLexerConstructor</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structstrus_1_1TraceLoggerConstructor-members.html">List of all members</a>  </div>
+<a href="structstrus_1_1PatternLexerConstructor-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">strus::TraceLoggerConstructor Struct Reference</div>  </div>
+<div class="title">strus::PatternLexerConstructor Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure describing a logger for method call traces.  
- <a href="structstrus_1_1TraceLoggerConstructor.html#details">More...</a></p>
+<p>Structure to define the lexer for pattern matching the analyzer may refer to.  
+ <a href="structstrus_1_1PatternLexerConstructor.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="traceModule_8hpp_source.html">traceModule.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="analyzerModule_8hpp_source.html">analyzerModule.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a603159cde34ac45ea947ba8f3b344cf7"><td class="memItemLeft" align="right" valign="top">typedef TraceLoggerInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html#a603159cde34ac45ea947ba8f3b344cf7">CreateTraceLogger</a> )(const std::string &amp;config, ErrorBufferInterface *errorhnd)</td></tr>
-<tr class="separator:a603159cde34ac45ea947ba8f3b344cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb81c68ac9cab58801b5096a9420baa"><td class="memItemLeft" align="right" valign="top">typedef PatternLexerInterface *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PatternLexerConstructor.html#a5eb81c68ac9cab58801b5096a9420baa">Create</a> )(ErrorBufferInterface *errorhnd)</td></tr>
+<tr class="separator:a5eb81c68ac9cab58801b5096a9420baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a60c4d99020008c2d6cd666ecc678ec2a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html#a60c4d99020008c2d6cd666ecc678ec2a">title</a></td></tr>
-<tr class="memdesc:a60c4d99020008c2d6cd666ecc678ec2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">title of the trace logger  <a href="#a60c4d99020008c2d6cd666ecc678ec2a">More...</a><br/></td></tr>
-<tr class="separator:a60c4d99020008c2d6cd666ecc678ec2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac2cb7fd665c6696709e01a5424c7076"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html#a603159cde34ac45ea947ba8f3b344cf7">CreateTraceLogger</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html#aac2cb7fd665c6696709e01a5424c7076">create</a></td></tr>
-<tr class="memdesc:aac2cb7fd665c6696709e01a5424c7076"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="#aac2cb7fd665c6696709e01a5424c7076">More...</a><br/></td></tr>
-<tr class="separator:aac2cb7fd665c6696709e01a5424c7076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e28358e100dabaea8cb1071dc142562"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PatternLexerConstructor.html#a9e28358e100dabaea8cb1071dc142562">name</a></td></tr>
+<tr class="memdesc:a9e28358e100dabaea8cb1071dc142562"><td class="mdescLeft">&#160;</td><td class="mdescRight">name of the pattern lexer  <a href="#a9e28358e100dabaea8cb1071dc142562">More...</a><br/></td></tr>
+<tr class="separator:a9e28358e100dabaea8cb1071dc142562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd133e22ae95c645b08bf9e12b33934"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrus_1_1PatternLexerConstructor.html#a5eb81c68ac9cab58801b5096a9420baa">Create</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PatternLexerConstructor.html#a1fd133e22ae95c645b08bf9e12b33934">create</a></td></tr>
+<tr class="memdesc:a1fd133e22ae95c645b08bf9e12b33934"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="#a1fd133e22ae95c645b08bf9e12b33934">More...</a><br/></td></tr>
+<tr class="separator:a1fd133e22ae95c645b08bf9e12b33934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure describing a logger for method call traces. </p>
+<div class="textblock"><p>Structure to define the lexer for pattern matching the analyzer may refer to. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a603159cde34ac45ea947ba8f3b344cf7"></a>
+<a class="anchor" id="a5eb81c68ac9cab58801b5096a9420baa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef TraceLoggerInterface*(* strus::TraceLoggerConstructor::CreateTraceLogger)(const std::string &amp;config, ErrorBufferInterface *errorhnd)</td>
+          <td class="memname">typedef PatternLexerInterface*(* strus::PatternLexerConstructor::Create)(ErrorBufferInterface *errorhnd)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>configuration string of the logger (semicolon (Unix) or colon (Windows) separated list of attribute=value assignments) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">errorhnd</td><td>error buffer interface </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aac2cb7fd665c6696709e01a5424c7076"></a>
+<a class="anchor" id="a1fd133e22ae95c645b08bf9e12b33934"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structstrus_1_1TraceLoggerConstructor.html#a603159cde34ac45ea947ba8f3b344cf7">CreateTraceLogger</a> strus::TraceLoggerConstructor::create</td>
+          <td class="memname"><a class="el" href="structstrus_1_1PatternLexerConstructor.html#a5eb81c68ac9cab58801b5096a9420baa">Create</a> strus::PatternLexerConstructor::create</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -123,22 +116,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a60c4d99020008c2d6cd666ecc678ec2a"></a>
+<a class="anchor" id="a9e28358e100dabaea8cb1071dc142562"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* strus::TraceLoggerConstructor::title</td>
+          <td class="memname">const char* strus::PatternLexerConstructor::name</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>title of the trace logger </p>
+<p>name of the pattern lexer </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/patrick/Projects/github/strusModule/include/strus/<a class="el" href="traceModule_8hpp_source.html">traceModule.hpp</a></li>
+<li>/home/patrick/Projects/github/strusModule/include/strus/<a class="el" href="analyzerModule_8hpp_source.html">analyzerModule.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->

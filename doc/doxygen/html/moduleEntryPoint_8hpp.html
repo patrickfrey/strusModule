@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.10</span>
+   &#160;<span id="projectnumber">0.13</span>
    </div>
   </td>
  </tr>
@@ -59,6 +59,7 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">moduleEntryPoint.hpp File Reference</div>  </div>
@@ -68,9 +69,6 @@
 <p>Header with object types needed for declaration of a strus module.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="versionModule_8hpp_source.html">strus/versionModule.hpp</a>&quot;</code><br/>
-<code>#include &quot;strus/versionAnalyzer.hpp&quot;</code><br/>
-<code>#include &quot;strus/versionStorage.hpp&quot;</code><br/>
-<code>#include &quot;strus/versionTrace.hpp&quot;</code><br/>
 <code>#include &lt;cstring&gt;</code><br/>
 </div>
 <p><a href="moduleEntryPoint_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -89,10 +87,15 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacestrus"><td class="mdescLeft">&#160;</td><td class="mdescRight">strus toplevel namespace <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a2f384feb12e11a9c846665e9395d3a5e"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a2f384feb12e11a9c846665e9395d3a5e">strus::MatchModuleVersionFunc</a> )(const ModuleEntryPoint *entryPoint, int &amp;errorcode)</td></tr>
+<tr class="separator:a2f384feb12e11a9c846665e9395d3a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2078828f56450e7fa5f082f7cc60964b"><td class="memItemLeft" align="right" valign="top">const ModuleEntryPoint *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a2078828f56450e7fa5f082f7cc60964b">strus::loadModuleEntryPoint</a> (const char *modfilename, ModuleEntryPoint::Status &amp;status)</td></tr>
-<tr class="separator:a2078828f56450e7fa5f082f7cc60964b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc83565a38c706d89cabc03dc245052"><td class="memItemLeft" align="right" valign="top">const ModuleEntryPoint *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a7bc83565a38c706d89cabc03dc245052">strus::loadModuleEntryPoint</a> (const char *modfilename, ModuleEntryPoint::Status &amp;status, MatchModuleVersionFunc)</td></tr>
+<tr class="separator:a7bc83565a38c706d89cabc03dc245052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header with object types needed for declaration of a strus module. </p>
@@ -100,7 +103,7 @@ Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 10:35:28 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 6 2017 18:09:26 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

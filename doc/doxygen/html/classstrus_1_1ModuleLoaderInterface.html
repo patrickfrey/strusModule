@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.10</span>
+   &#160;<span id="projectnumber">0.13</span>
    </div>
   </td>
  </tr>
@@ -100,6 +100,12 @@ AnalyzerObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bott
 TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f">createTraceObjectBuilder</a> (const std::string &amp;config) const =0</td></tr>
 <tr class="memdesc:a6938606adb84539631685f522957f45f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the builder for call trace proxy objects for analyzer or storage. The returned builder is built from components loaded from module or the standard builders defined by name.  <a href="#a6938606adb84539631685f522957f45f">More...</a><br/></td></tr>
 <tr class="separator:a6938606adb84539631685f522957f45f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bcd25de538ea75acb62078bbc5d575"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ab9bcd25de538ea75acb62078bbc5d575">get3rdPartyLicenseTexts</a> () const =0</td></tr>
+<tr class="memdesc:ab9bcd25de538ea75acb62078bbc5d575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the license texts of loaded 3rdParty components, that need to be visible.  <a href="#ab9bcd25de538ea75acb62078bbc5d575">More...</a><br/></td></tr>
+<tr class="separator:ab9bcd25de538ea75acb62078bbc5d575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b9be55ab54618f672420a6c5c4864d5"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a8b9be55ab54618f672420a6c5c4864d5">get3rdPartyVersionTexts</a> () const =0</td></tr>
+<tr class="memdesc:a8b9be55ab54618f672420a6c5c4864d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the version info of loaded 3rdParty components, if of any interest.  <a href="#a8b9be55ab54618f672420a6c5c4864d5">More...</a><br/></td></tr>
+<tr class="separator:a8b9be55ab54618f672420a6c5c4864d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface providing a mechanism to load modules and to create the objects defined in the modules. </p>
@@ -305,6 +311,58 @@ TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"
 
 </div>
 </div>
+<a class="anchor" id="ab9bcd25de538ea75acb62078bbc5d575"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::get3rdPartyLicenseTexts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the license texts of loaded 3rdParty components, that need to be visible. </p>
+<dl class="section return"><dt>Returns</dt><dd>the list of license tests </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8b9be55ab54618f672420a6c5c4864d5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::get3rdPartyVersionTexts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the version info of loaded 3rdParty components, if of any interest. </p>
+<dl class="section return"><dt>Returns</dt><dd>the list of version strings </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a984e437dd896680d6acef0730a403950"></a>
 <div class="memitem">
 <div class="memproto">
@@ -344,7 +402,7 @@ TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 10:35:28 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 6 2017 18:09:26 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.10</span>
+   &#160;<span id="projectnumber">0.13</span>
    </div>
   </td>
  </tr>
@@ -54,6 +54,7 @@
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">strus Namespace Reference</div>  </div>
@@ -80,6 +81,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1AggregatorConstructor.html">AggregatorConstructor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define a proprietary function to aggregate a value for a document as meta data (counting, classification, etc.)  <a href="structstrus_1_1AggregatorConstructor.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PatternLexerConstructor.html">PatternLexerConstructor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define the lexer for pattern matching the analyzer may refer to.  <a href="structstrus_1_1PatternLexerConstructor.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PatternMatcherConstructor.html">PatternMatcherConstructor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to define the lexer for pattern matching the analyzer may refer to.  <a href="structstrus_1_1PatternMatcherConstructor.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1AnalyzerModule.html">AnalyzerModule</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure that contains all analyzer module objects.  <a href="structstrus_1_1AnalyzerModule.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -89,11 +96,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface providing a mechanism to load modules and to create the objects defined in the modules.  <a href="classstrus_1_1ModuleLoaderInterface.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseReference.html">DatabaseReference</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare the key value store database to use by the storage as module object.  <a href="structstrus_1_1DatabaseReference.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1DatabaseConstructor.html">DatabaseConstructor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare the key value store database to use by the storage as module object.  <a href="structstrus_1_1DatabaseConstructor.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1StatisticsProcessorReference.html">StatisticsProcessorReference</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare an alternative packing/unpacking of statistics messages.  <a href="structstrus_1_1StatisticsProcessorReference.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1StatisticsProcessorConstructor.html">StatisticsProcessorConstructor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare an alternative packing/unpacking of statistics messages.  <a href="structstrus_1_1StatisticsProcessorConstructor.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1VectorStorageConstructor.html">VectorStorageConstructor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare an alternative vector space model to map vectors to sets of features.  <a href="structstrus_1_1VectorStorageConstructor.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1PostingIteratorJoinConstructor.html">PostingIteratorJoinConstructor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to declare an operator to join sets of postings represented as iterator as module object.  <a href="structstrus_1_1PostingIteratorJoinConstructor.html#details">More...</a><br/></td></tr>
@@ -117,17 +127,35 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure that contains all trace module objects.  <a href="structstrus_1_1TraceModule.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a2f384feb12e11a9c846665e9395d3a5e"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a2f384feb12e11a9c846665e9395d3a5e">MatchModuleVersionFunc</a> )(const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *entryPoint, int &amp;errorcode)</td></tr>
+<tr class="separator:a2f384feb12e11a9c846665e9395d3a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a671164004a4658fc0bbd99217d27dd99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">ModuleLoaderInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a671164004a4658fc0bbd99217d27dd99">createModuleLoader</a> (ErrorBufferInterface *errorhnd)</td></tr>
 <tr class="memdesc:a671164004a4658fc0bbd99217d27dd99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a module loader interface with the functions needed for creating strus objects.  <a href="#a671164004a4658fc0bbd99217d27dd99">More...</a><br/></td></tr>
 <tr class="separator:a671164004a4658fc0bbd99217d27dd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2078828f56450e7fa5f082f7cc60964b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a2078828f56450e7fa5f082f7cc60964b">loadModuleEntryPoint</a> (const char *modfilename, <a class="el" href="structstrus_1_1ModuleEntryPoint_1_1Status.html">ModuleEntryPoint::Status</a> &amp;status)</td></tr>
-<tr class="separator:a2078828f56450e7fa5f082f7cc60964b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc83565a38c706d89cabc03dc245052"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestrus.html#a7bc83565a38c706d89cabc03dc245052">loadModuleEntryPoint</a> (const char *modfilename, <a class="el" href="structstrus_1_1ModuleEntryPoint_1_1Status.html">ModuleEntryPoint::Status</a> &amp;status, <a class="el" href="namespacestrus.html#a2f384feb12e11a9c846665e9395d3a5e">MatchModuleVersionFunc</a>)</td></tr>
+<tr class="separator:a7bc83565a38c706d89cabc03dc245052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>strus toplevel namespace </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="a2f384feb12e11a9c846665e9395d3a5e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool(* strus::MatchModuleVersionFunc)(const <a class="el" href="structstrus_1_1ModuleEntryPoint.html">ModuleEntryPoint</a> *entryPoint, int &amp;errorcode)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a671164004a4658fc0bbd99217d27dd99"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +175,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2078828f56450e7fa5f082f7cc60964b"></a>
+<a class="anchor" id="a7bc83565a38c706d89cabc03dc245052"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -161,7 +189,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">ModuleEntryPoint::Status &amp;&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MatchModuleVersionFunc&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -177,7 +211,7 @@ Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 6 2016 10:35:28 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 6 2017 18:09:26 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
