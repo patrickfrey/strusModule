@@ -16,7 +16,6 @@
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
-#include "strus/storageClientInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
 #include "strus/weightingFunctionInterface.hpp"
@@ -35,14 +34,14 @@ using namespace strus;
 
 StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_queryProcessor( strus::createQueryProcessor(errorhnd_))
-	,m_storage(strus::createStorage(errorhnd_))
+	,m_storage(strus::createStorageType_std(errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 
-	DatabaseReference dbref( strus::createDatabase_leveldb( m_errorhnd));
+	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ "leveldb"] = dbref;
 	m_dbmap[ ""] = dbref;
@@ -152,17 +151,23 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 	{
 		m_storageModules.push_back( mod);
 
-		if (mod->databaseReference.create && mod->databaseReference.name)
+		if (mod->databaseConstructor.create && mod->databaseConstructor.name)
 		{
-			DatabaseReference dbref( mod->databaseReference.create( m_errorhnd));
-			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base reference loaded from module: '%s': %s"), mod->databaseReference.name, m_errorhnd->fetchError());
-			m_dbmap[ utils::tolower( mod->databaseReference.name)] = dbref;
+			DatabaseReference dbref( mod->databaseConstructor.create( m_errorhnd));
+			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base Constructor loaded from module: '%s': %s"), mod->databaseConstructor.name, m_errorhnd->fetchError());
+			m_dbmap[ utils::tolower( mod->databaseConstructor.name)] = dbref;
 		}
-		if (mod->statisticsProcessorReference.create && mod->statisticsProcessorReference.name)
+		if (mod->statisticsProcessorConstructor.create && mod->statisticsProcessorConstructor.name)
 		{
-			StatisticsProcessorReference spref( mod->statisticsProcessorReference.create( m_errorhnd));
-			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor reference loaded from module: '%s': %s"), mod->statisticsProcessorReference.name, m_errorhnd->fetchError());
-			m_statsprocmap[ utils::tolower( mod->statisticsProcessorReference.name)] = spref;
+			StatisticsProcessorReference spref( mod->statisticsProcessorConstructor.create( m_errorhnd));
+			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor Constructor loaded from module: '%s': %s"), mod->statisticsProcessorConstructor.name, m_errorhnd->fetchError());
+			m_statsprocmap[ utils::tolower( mod->statisticsProcessorConstructor.name)] = spref;
+		}
+		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
+		{
+			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_errorhnd));
+			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
+			m_vsmodelmap[ utils::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}
 	}
 	catch (const std::runtime_error& err)
@@ -175,18 +180,10 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 	}
 }
 
-const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& config) const
+const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& name) const
 {
 	try
 	{
-		std::string configstr( config);
-		std::string name;
-		(void)strus::extractStringFromConfigString( name, configstr, "database", m_errorhnd);
-		if (m_errorhnd->hasError())
-		{
-			m_errorhnd->explain(_TXT("cannot evaluate database: %s"));
-			return 0;
-		}
 		std::map<std::string,DatabaseReference>::const_iterator
 			di = m_dbmap.find( utils::tolower( name));
 		if (di == m_dbmap.end())
@@ -217,6 +214,24 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 		}
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error getting statistics processor from storage object builder: %s"), *m_errorhnd, 0);
+}
+
+const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std::string& name) const
+{
+	try
+	{
+		std::map<std::string,VectorStorageReference>::const_iterator
+			si = m_vsmodelmap.find( utils::tolower( name));
+		if (si == m_vsmodelmap.end())
+		{
+			throw strus::runtime_error( _TXT( "undefined vector space model '%s'"), name.c_str());
+		}
+		else
+		{
+			return si->second.get();
+		}
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting vector space model from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const

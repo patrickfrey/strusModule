@@ -10,6 +10,7 @@
 #ifndef _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
 #define _STRUS_MODULE_LOADER_INTERFACE_HPP_INCLUDED
 #include <string>
+#include <vector>
 
 /// \brief strus toplevel namespace
 namespace strus
@@ -57,6 +58,14 @@ public:
 	/// \param[in] config trace object builder config
 	/// \return the builder object (with ownership)
 	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const=0;
+
+	/// \brief Get the license texts of loaded 3rdParty components, that need to be visible
+	/// \return the list of license tests
+	virtual std::vector<std::string> get3rdPartyLicenseTexts() const=0;
+
+	/// \brief Get the version info of loaded 3rdParty components, if of any interest
+	/// \return the list of version strings
+	virtual std::vector<std::string> get3rdPartyVersionTexts() const=0;
 };
 
 }//namespace

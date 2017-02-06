@@ -18,6 +18,8 @@
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInterface.hpp"
+#include "strus/patternLexerInterface.hpp"
+#include "strus/patternMatcherInterface.hpp"
 #include "strus/segmenterInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
@@ -77,7 +79,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining tokenizer function"));
+				m_errorhnd->report(_TXT("error defining tokenizer function '%s'"), ti->name);
 			}
 		}
 	}
@@ -96,7 +98,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining normalizer function"));
+				m_errorhnd->report(_TXT("error defining normalizer function '%s'"), ni->name);
 			}
 		}
 	}
@@ -115,7 +117,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report("error defining aggregator function");
+				m_errorhnd->report(_TXT("error defining aggregator function '%s'"), ni->name);
 			}
 		}
 	}
@@ -124,6 +126,36 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 		Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
 		m_segmenterMap[ utils::tolower(mod->segmenterConstructor.name)] = segref;
 		m_mimeSegmenterMap[ utils::tolower(segref->mimeType())] = segref;
+	}
+	if (mod->patternLexerConstructor.name && mod->patternLexerConstructor.create)
+	{
+		PatternLexerInterface* func = mod->patternLexerConstructor.create( m_errorhnd);
+		if (!func)
+		{
+			m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternLexerConstructor.name);
+			return;
+		}
+		m_textProcessor->definePatternLexer( mod->patternLexerConstructor.name, func);
+		if (m_errorhnd->hasError())
+		{
+			delete func;
+			m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternLexerConstructor.name);
+		}
+	}
+	if (mod->patternMatcherConstructor.name && mod->patternMatcherConstructor.create)
+	{
+		PatternMatcherInterface* func = mod->patternMatcherConstructor.create( m_errorhnd);
+		if (!func)
+		{
+			m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+			return;
+		}
+		m_textProcessor->definePatternMatcher( mod->patternLexerConstructor.name, func);
+		if (m_errorhnd->hasError())
+		{
+			delete func;
+			m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+		}
 	}
 	m_analyzerModules.push_back( mod);
 }
@@ -160,7 +192,7 @@ const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const st
 
 DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
 		const SegmenterInterface* segmenter,
-		const SegmenterOptions& opts) const
+		const analyzer::SegmenterOptions& opts) const
 {
 	return strus::createDocumentAnalyzer( segmenter, opts, m_errorhnd);
 }

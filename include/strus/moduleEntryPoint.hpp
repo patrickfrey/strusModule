@@ -10,9 +10,6 @@
 #ifndef _STRUS_MODULE_HEADER_HPP_INCLUDED
 #define _STRUS_MODULE_HEADER_HPP_INCLUDED
 #include "strus/versionModule.hpp"
-#include "strus/versionAnalyzer.hpp"
-#include "strus/versionStorage.hpp"
-#include "strus/versionTrace.hpp"
 #include <cstring>
 
 /// \brief strus toplevel namespace
@@ -46,41 +43,21 @@ struct ModuleEntryPoint
 	unsigned short compversion_major;	///< major version of components in the module
 	unsigned short compversion_minor;	///< minor version of components in the module
 	unsigned int _reserved[6];		///< reserved for future use
+	const char* version_3rdparty;		///< 3rd party version info
+	const char* license_3rdparty;		///< 3rd party license text
 
 	/// \brief Constructor for derived classes
-	explicit ModuleEntryPoint( Type type_)
-		:type(type_),modversion_minor(STRUS_MODULE_VERSION_MINOR)
+	explicit ModuleEntryPoint( Type type_, unsigned short version_major, unsigned short version_minor, const char* version_3rdparty_=0, const char* license_3rdparty_=0)
+		:type(type_),modversion_minor(STRUS_MODULE_VERSION_MINOR),version_3rdparty(version_3rdparty_),license_3rdparty(license_3rdparty_)
 	{
 		const char* declaration_signature = STRUS_MODULE_SIGNATURE;
 		//... signature contains major version number in it
 		std::memset( signature, 0, sizeof(signature));
 		std::memcpy( signature, declaration_signature, std::strlen( declaration_signature));
 		std::memset( _reserved, 0, sizeof(_reserved));
-		switch (type)
-		{
-			case Analyzer:
-				compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
-				compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
-				break;
-
-			case Storage:
-				compversion_major = STRUS_STORAGE_VERSION_MAJOR;
-				compversion_minor = STRUS_STORAGE_VERSION_MINOR;
-				break;
-
-			case Trace:
-				compversion_major = STRUS_TRACE_VERSION_MAJOR;
-				compversion_minor = STRUS_TRACE_VERSION_MINOR;
-				break;
-
-			default:
-				compversion_major = 0xFFFF;
-				compversion_minor = 0xFFFF;
-				break;
-		}
+		compversion_major = version_major;
+		compversion_minor = version_minor;
 	}
-
-	static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode);
 
 	struct Status
 	{
@@ -95,10 +72,14 @@ struct ModuleEntryPoint
 		int errorcode;
 		char errormsg[ 256];
 	};
+
+private:
+	ModuleEntryPoint( const ModuleEntryPoint&){}	//< non copyable
+	ModuleEntryPoint(){}				//< no implicit construction without data
 };
 
-
-const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status);
+typedef bool (*MatchModuleVersionFunc)( const ModuleEntryPoint* entryPoint, int& errorcode);
+const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc);
 
 }//namespace
 #endif

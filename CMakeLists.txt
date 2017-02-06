@@ -6,7 +6,7 @@ include(cmake/install_prefix.cmake)
 # Project globals:
 project( StrusModule )
 set( STRUS_MAJOR_VERSION 0 )
-set( STRUS_MINOR_VERSION 10 )
+set( STRUS_MINOR_VERSION 13 )
 set( STRUS_PATCH_VERSION 0 )
 set( STRUS_VERSION ${STRUS_MAJOR_VERSION}.${STRUS_MINOR_VERSION}.${STRUS_PATCH_VERSION} )
 
@@ -42,8 +42,6 @@ configure_file( "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp.in"  "${PROJECT_S
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh.in"  "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD.in"  "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc"  @ONLY )
-configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-Debian_7.0.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-Debian_7.0.dsc"  @ONLY )
-configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-xUbuntu_12.04.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule-xUbuntu_12.04.dsc"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/redhat/strusmodule.spec.in"  "${PROJECT_SOURCE_DIR}/dist/redhat/strusmodule.spec"  @ONLY )
 
 set( STRUS_GETTEXT_PACKAGE "strus-dom" )       #... 1st parameter of bindtextdomain(...)
@@ -63,5 +61,8 @@ install(DIRECTORY include/strus
           DESTINATION include
           FILES_MATCHING PATTERN "*.hpp")
 
-include( cmake/standard_targets.cmake )
+# Create directory holding strus modules
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/modules")
+install(DIRECTORY "${CMAKE_BINARY_DIR}/modules" DESTINATION ${LIB_INSTALL_DIR}/strus/modules)
 
+include( cmake/standard_targets.cmake )

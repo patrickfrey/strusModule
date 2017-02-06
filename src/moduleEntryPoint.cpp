@@ -7,6 +7,7 @@
  */
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/base/dll_tags.hpp"
+#include "internationalization.hpp"
 #include <cstring>
 #include <vector>
 #include <stdexcept>
@@ -18,51 +19,6 @@
 #endif
 
 using namespace strus;
-
-DLL_PUBLIC bool ModuleEntryPoint::matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorcode)
-{
-	const char* loader_signature = STRUS_MODULE_SIGNATURE;
-	//... signature contains major version number in it
-	if (std::strcmp( entryPoint->signature, loader_signature) != 0)
-	{
-		errorcode = ErrorSignature;
-		return false;
-	}
-	unsigned short expected_modversion_minor = STRUS_MODULE_VERSION_MINOR;
-	if (entryPoint->modversion_minor > expected_modversion_minor)
-	{
-		errorcode = ErrorModMinorVersion;
-		return false;
-	}
-	unsigned short expected_compversion_major = 0;
-	unsigned short expected_compversion_minor = 0;
-	switch (entryPoint->type)
-	{
-		case Analyzer:
-			expected_compversion_major = STRUS_ANALYZER_VERSION_MAJOR;
-			expected_compversion_minor = STRUS_ANALYZER_VERSION_MINOR;
-
-		case Storage:
-			expected_compversion_major = STRUS_STORAGE_VERSION_MAJOR;
-			expected_compversion_minor = STRUS_STORAGE_VERSION_MINOR;
-
-		default:
-			errorcode = ErrorUnknownModuleType;
-			return false;
-	}
-	if (entryPoint->compversion_major != expected_compversion_major)
-	{
-		errorcode = ErrorCompMajorVersion;
-		return false;
-	}
-	if (entryPoint->compversion_minor < expected_compversion_minor)
-	{
-		errorcode = ErrorCompMinorVersion;
-		return false;
-	}
-	return true;
-}
-
 
 namespace {
 class ModuleHandleList
@@ -100,13 +56,13 @@ static const char* errorMessage( int error)
 {
 	switch (error)
 	{
-		case ModuleEntryPoint::ErrorUnknownModuleType: return "module type unknown";
-		case ModuleEntryPoint::ErrorSignature: return "module signature mismatch";
-		case ModuleEntryPoint::ErrorModMinorVersion: return "module newer in minor version than module loader, it is compatible but may contain objects that cannot be loaded";
-		case ModuleEntryPoint::ErrorCompMajorVersion: return "loaded objects major version mismatch";
-		case ModuleEntryPoint::ErrorCompMinorVersion: return "loaded objects minor version smaller than required by the loader";
-		case ModuleEntryPoint::ErrorOpenModule: return "system error loading module";
-		case ModuleEntryPoint::ErrorNoEntryPoint:return "no module entry point found";
+		case ModuleEntryPoint::ErrorUnknownModuleType: return _TXT("module type unknown");
+		case ModuleEntryPoint::ErrorSignature: return _TXT("module signature mismatch");
+		case ModuleEntryPoint::ErrorModMinorVersion: return _TXT("module newer in minor version than module loader, it is compatible but may contain objects that cannot be loaded");
+		case ModuleEntryPoint::ErrorCompMajorVersion: return _TXT("loaded objects major version mismatch");
+		case ModuleEntryPoint::ErrorCompMinorVersion: return _TXT("loaded objects minor version smaller than required by the loader");
+		case ModuleEntryPoint::ErrorOpenModule: return _TXT("system error loading module");
+		case ModuleEntryPoint::ErrorNoEntryPoint:return _TXT("no module entry point found");
 
 		default: return "unknown error";
 	};
@@ -123,21 +79,21 @@ static void initStatusMessage( ModuleEntryPoint::Status& status, const char* msg
 	status.errormsg[ msglen] = '\0';
 }
 
-DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status)
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc matchVersion)
 {
 	status.errorcode = 0;
 	status.errormsg[0] = '\0';
 
 	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
 
-	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_GLOBAL);
+	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
 	if (!hnd)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorOpenModule;
 		initStatusMessage( status, ::dlerror());
 		return 0;
 	}
-	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)dlsym( hnd, "entryPoint");
+	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)::dlsym( hnd, "entryPoint");
 	if (!entryPoint)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorNoEntryPoint;
@@ -145,7 +101,7 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 		return 0;
 	}
 	int errorcode = 0;
-	if (ModuleEntryPoint::matchModuleVersion( entryPoint, errorcode))
+	if (!(*matchVersion)( entryPoint, errorcode))
 	{
 		status.errorcode = errorcode;
 		initStatusMessage( status, errorMessage( status.errorcode));

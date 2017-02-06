@@ -17,9 +17,6 @@
 # Dependency files
 *.d
 
-# Packaging directory
-pkg/
-
 # Valgring suppression files
 *.sup
 
@@ -55,6 +52,7 @@ dist/obs/strusmodule-xUbuntu_12.04.dsc
 dist/redhat/strusmodule.spec
 
 # Compiled Programs
+src/strusModuleInfo
 tests/loader/testModuleLoader
 
 .travis.yml

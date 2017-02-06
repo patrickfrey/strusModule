@@ -22,6 +22,8 @@ class DatabaseInterface;
 /// \brief Forward declaration
 class StatisticsProcessorInterface;
 /// \brief Forward declaration
+class VectorStorageInterface;
+/// \brief Forward declaration
 class WeightingFunctionInterface;
 /// \brief Forward declaration
 class SummarizerFunctionInterface;
@@ -34,7 +36,7 @@ class ErrorBufferInterface;
 
 
 /// \brief Structure to declare the key value store database to use by the storage as module object
-struct DatabaseReference
+struct DatabaseConstructor
 {
 	typedef DatabaseInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the database implementation
@@ -42,9 +44,17 @@ struct DatabaseReference
 };
 
 /// \brief Structure to declare an alternative packing/unpacking of statistics messages
-struct StatisticsProcessorReference
+struct StatisticsProcessorConstructor
 {
 	typedef StatisticsProcessorInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	const char* name;				///< name of the implementation
+	Create create;					///< constructor of the object
+};
+
+/// \brief Structure to declare an alternative vector space model to map vectors to sets of features
+struct VectorStorageConstructor
+{
+	typedef VectorStorageInterface* (*Create)( ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
 	Create create;					///< constructor of the object
 };
@@ -93,10 +103,24 @@ struct StorageModule
 	StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
-		const SummarizerFunctionConstructor* summarizerFunctionConstructor_);
+		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
-	DatabaseReference databaseReference;					///< alternative key value store database 
-	StatisticsProcessorReference statisticsProcessorReference;		///< alternative packing/unpacking of statistics messages
+	/// \brief Storage module constructor for alternative database implementation
+	/// \param[in] databaseConstructor_ alternative database implementation
+	explicit StorageModule(
+		const DatabaseConstructor* databaseConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
+
+	/// \brief Storage module constructor for alternative vector space model
+	/// \param[in] vectorStorageConstructor_ alternative vector space model
+	explicit StorageModule(
+		const VectorStorageConstructor* vectorStorageConstructor_,
+		const char* version_3rdparty=0, const char* license_3rdparty=0);
+
+	DatabaseConstructor databaseConstructor;				///< alternative key value store database 
+	StatisticsProcessorConstructor statisticsProcessorConstructor;		///< alternative packing/unpacking of statistics messages
+	VectorStorageConstructor vectorStorageConstructor;			///< alternative vectorspace model for mapping vectors to features
 	const PostingIteratorJoinConstructor* postingIteratorJoinConstructor;	///< join operator function for postings
 	const WeightingFunctionConstructor* weightingFunctionConstructor;	///< alternative weighting functions for ranking
 	const SummarizerFunctionConstructor* summarizerFunctionConstructor;	///< summarizer functions
@@ -104,8 +128,9 @@ struct StorageModule
 
 private:
 	void init(
-		const DatabaseReference* databaseReference_,
-		const StatisticsProcessorReference* statisticsProcessorReference_,
+		const DatabaseConstructor* databaseConstructor_,
+		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,

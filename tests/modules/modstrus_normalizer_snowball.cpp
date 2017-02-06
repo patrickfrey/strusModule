@@ -8,6 +8,7 @@
 #include "strus/base/dll_tags.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/lib/normalizer_snowball.hpp"
+#include "strus/strus.hpp"
 
 static const strus::NormalizerConstructor normalizers[] =
 {

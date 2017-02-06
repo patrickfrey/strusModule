@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/analyzerModule.hpp"
+#include "strus/versionAnalyzer.hpp"
 #include "strus/base/dll_tags.hpp"
 #include <string>
 
@@ -13,35 +14,43 @@ using namespace strus;
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const DocumentClassDetectorConstructor& documentClassDetectorConstructor_,
-		const SegmenterConstructor& segmenterConstructor_,
-		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+		const SegmenterConstructor& segmenterConstructor_)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
-	init( &documentClassDetectorConstructor_, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
-	//... no need to make query/document analyzer and textprocessor loadable by module yet
+	init( &documentClassDetectorConstructor_, &segmenterConstructor_, 0, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
-		const SegmenterConstructor& segmenterConstructor_,
-		const TokenizerConstructor* tokenizerConstructors_,
-		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+		const SegmenterConstructor& segmenterConstructor_)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
-	init( 0, &segmenterConstructor_, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
-	//... no need to make query/document analyzer and textprocessor loadable by module yet
+	init( 0, &segmenterConstructor_, 0, 0, 0, 0, 0);
 }
 
 DLL_PUBLIC AnalyzerModule::AnalyzerModule(
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
 		const AggregatorConstructor* aggregatorConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Analyzer)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
 {
-	init( 0, 0, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_);
-	//... no need to make query/document analyzer and textprocessor loadable by module yet
+	init( 0, 0, tokenizerConstructors_, normalizerConstructors_, aggregatorConstructors_, 0, 0);
+}
+
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR)
+{
+	init( 0, 0, 0, 0, 0, &patternLexerConstructor_, &patternMatcherConstructor_);
+}
+
+DLL_PUBLIC AnalyzerModule::AnalyzerModule(
+		const PatternLexerConstructor& patternLexerConstructor_,
+		const PatternMatcherConstructor& patternMatcherConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Analyzer, STRUS_ANALYZER_VERSION_MAJOR, STRUS_ANALYZER_VERSION_MINOR, version_3rdparty, license_3rdparty)
+{
+	init( 0, 0, 0, 0, 0, &patternLexerConstructor_, &patternMatcherConstructor_);
 }
 
 void AnalyzerModule::init(
@@ -49,7 +58,9 @@ void AnalyzerModule::init(
 		const SegmenterConstructor* segmenterConstructor_,
 		const TokenizerConstructor* tokenizerConstructors_,
 		const NormalizerConstructor* normalizerConstructors_,
-		const AggregatorConstructor* aggregatorConstructors_)
+		const AggregatorConstructor* aggregatorConstructors_,
+		const PatternLexerConstructor* patternLexerConstructor_,
+		const PatternMatcherConstructor* patternMatcherConstructor_)
 {
 	if (documentClassDetectorConstructor_)
 	{
@@ -74,5 +85,25 @@ void AnalyzerModule::init(
 	tokenizerConstructors = tokenizerConstructors_;
 	normalizerConstructors = normalizerConstructors_;
 	aggregatorConstructors = aggregatorConstructors_;
+	if (patternLexerConstructor_)
+	{
+		patternLexerConstructor.name = patternLexerConstructor_->name;
+		patternLexerConstructor.create = patternLexerConstructor_->create;
+	}
+	else
+	{
+		patternLexerConstructor.name = 0;
+		patternLexerConstructor.create = 0;
+	}
+	if (patternMatcherConstructor_)
+	{
+		patternMatcherConstructor.name = patternMatcherConstructor_->name;
+		patternMatcherConstructor.create = patternMatcherConstructor_->create;
+	}
+	else
+	{
+		patternMatcherConstructor.name = 0;
+		patternMatcherConstructor.create = 0;
+	}
 }
 

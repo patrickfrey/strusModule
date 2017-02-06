@@ -6,48 +6,77 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/storageModule.hpp"
+#include "strus/versionStorage.hpp"
 #include "strus/base/dll_tags.hpp"
 #include <cstring>
 
 using namespace strus;
 
 DLL_PUBLIC StorageModule::StorageModule(
+		const DatabaseConstructor* databaseConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
+{
+	init( databaseConstructor_, 0, 0, 0, 0, 0, 0);
+}
+
+DLL_PUBLIC StorageModule::StorageModule(
+		const VectorStorageConstructor* vectorStorageConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
+{
+	init( 0, 0, vectorStorageConstructor_, 0, 0, 0, 0);
+}
+
+DLL_PUBLIC StorageModule::StorageModule(
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
-		const SummarizerFunctionConstructor* summarizerFunctionConstructor_)
-	:ModuleEntryPoint(ModuleEntryPoint::Storage)
+		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
+		const char* version_3rdparty, const char* license_3rdparty)
+	:ModuleEntryPoint(ModuleEntryPoint::Storage, STRUS_STORAGE_VERSION_MAJOR, STRUS_STORAGE_VERSION_MINOR, version_3rdparty, license_3rdparty)
 {
-	init( 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
+	init( 0, 0, 0, postingIteratorJoinConstructor_, weightingFunctionConstructor_, summarizerFunctionConstructor_, 0);
 	//... no need to make database loadable by module yet
 }
 
 void StorageModule::init(
-		const DatabaseReference* databaseReference_,
-		const StatisticsProcessorReference* statisticsProcessorReference_,
+		const DatabaseConstructor* databaseConstructor_,
+		const StatisticsProcessorConstructor* statisticsProcessorConstructor_,
+		const VectorStorageConstructor* vectorStorageConstructor_,
 		const PostingIteratorJoinConstructor* postingIteratorJoinConstructor_,
 		const WeightingFunctionConstructor* weightingFunctionConstructor_,
 		const SummarizerFunctionConstructor* summarizerFunctionConstructor_,
 		const ScalarFunctionParserConstructor* scalarFunctionParserConstructor_)
 {
-	if (databaseReference_)
+	if (databaseConstructor_)
 	{
-		databaseReference.name = databaseReference_->name;
-		databaseReference.create = databaseReference_->create;
+		databaseConstructor.name = databaseConstructor_->name;
+		databaseConstructor.create = databaseConstructor_->create;
 	}
 	else
 	{
-		databaseReference.name = 0;
-		databaseReference.create = 0;
+		databaseConstructor.name = 0;
+		databaseConstructor.create = 0;
 	}
-	if (statisticsProcessorReference_)
+	if (statisticsProcessorConstructor_)
 	{
-		statisticsProcessorReference.name = statisticsProcessorReference_->name;
-		statisticsProcessorReference.create = statisticsProcessorReference_->create;
+		statisticsProcessorConstructor.name = statisticsProcessorConstructor_->name;
+		statisticsProcessorConstructor.create = statisticsProcessorConstructor_->create;
 	}
 	else
 	{
-		statisticsProcessorReference.name = 0;
-		statisticsProcessorReference.create = 0;
+		statisticsProcessorConstructor.name = 0;
+		statisticsProcessorConstructor.create = 0;
+	}
+	if (vectorStorageConstructor_)
+	{
+		vectorStorageConstructor.name = vectorStorageConstructor_->name;
+		vectorStorageConstructor.create = vectorStorageConstructor_->create;
+	}
+	else
+	{
+		vectorStorageConstructor.name = 0;
+		vectorStorageConstructor.create = 0;
 	}
 	postingIteratorJoinConstructor = postingIteratorJoinConstructor_;
 	weightingFunctionConstructor = weightingFunctionConstructor_;

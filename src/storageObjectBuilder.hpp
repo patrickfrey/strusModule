@@ -14,6 +14,7 @@
 #include "strus/databaseInterface.hpp"
 #include "strus/segmenterInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
+#include "strus/vectorStorageInterface.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -39,20 +40,23 @@ public:
 	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
 	virtual const QueryProcessorInterface* getQueryProcessor() const;
 	virtual const StatisticsProcessorInterface* getStatisticsProcessor( const std::string& name) const;
+	virtual const VectorStorageInterface* getVectorStorage( const std::string& name) const;
 	virtual QueryEvalInterface* createQueryEval() const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 
 private:
-	std::vector<const StorageModule*> m_storageModules;	///< loaded modules
-	Reference<QueryProcessorInterface> m_queryProcessor;	///< query processor handle
-	Reference<StorageInterface> m_storage;			///< storage handle
+	std::vector<const StorageModule*> m_storageModules;			///< loaded modules
+	Reference<QueryProcessorInterface> m_queryProcessor;			///< query processor handle
+	Reference<StorageInterface> m_storage;					///< storage handle
 	typedef Reference<DatabaseInterface> DatabaseReference;
-	std::map<std::string,DatabaseReference> m_dbmap;	///< cached database handles
+	std::map<std::string,DatabaseReference> m_dbmap;			///< cached database handles
 	typedef Reference<StatisticsProcessorInterface> StatisticsProcessorReference;
-	std::map<std::string,StatisticsProcessorReference> m_statsprocmap; ///< statistics processor interface map
-	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
+	std::map<std::string,StatisticsProcessorReference> m_statsprocmap;	///< statistics processor interface map
+	typedef Reference<VectorStorageInterface> VectorStorageReference;
+	std::map<std::string,VectorStorageReference> m_vsmodelmap;		///< vector space model handle map
+	ErrorBufferInterface* m_errorhnd;					///< buffer for reporting errors
 };
 
 }//namespace

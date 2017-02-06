@@ -57,6 +57,9 @@ public:
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
 	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const;
 
+	virtual std::vector<std::string> get3rdPartyLicenseTexts() const;
+	virtual std::vector<std::string> get3rdPartyVersionTexts() const;
+
 private:
 	const ModuleEntryPoint* loadModuleAlt(
 			const std::string& name,
@@ -70,6 +73,8 @@ private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
 	std::vector<const TraceModule*> m_traceModules;
+	std::vector<std::string> m_version_3rdparty_ar;
+	std::vector<std::string> m_license_3rdparty_ar;
 	ErrorBufferInterface* m_errorhnd;
 };
 

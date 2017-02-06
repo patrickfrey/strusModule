@@ -95,7 +95,7 @@
 
 // Document detection
 #include "strus/lib/detector_std.hpp"
-#include "strus/documentClass.hpp"
+#include "strus/analyzer/documentClass.hpp"
 #include "strus/documentClassDetectorInterface.hpp"
 
 // Document segmenter (segmenting a document into typed text segments that can be processed by the analyzer):
@@ -108,7 +108,6 @@
 #include "strus/lib/tokenizer_word.hpp"
 #include "strus/lib/tokenizer_punctuation.hpp"
 #include "strus/analyzer/token.hpp"
-#include "strus/tokenizerFunctionContextInterface.hpp"
 #include "strus/tokenizerFunctionInterface.hpp"
 #include "strus/tokenizerFunctionInstanceInterface.hpp"
 
@@ -117,7 +116,6 @@
 #include "strus/lib/normalizer_dateconv.hpp"
 #include "strus/lib/normalizer_dictmap.hpp"
 #include "strus/lib/normalizer_snowball.hpp"
-#include "strus/normalizerFunctionContextInterface.hpp"
 #include "strus/normalizerFunctionInterface.hpp"
 #include "strus/normalizerFunctionInstanceInterface.hpp"
 
@@ -125,6 +123,14 @@
 #include "strus/lib/aggregator_vsm.hpp"
 #include "strus/aggregatorFunctionInterface.hpp"
 #include "strus/aggregatorFunctionInstanceInterface.hpp"
+
+// Pattern matching (functions for pattern matching)
+#include "strus/patternLexerInterface.hpp"
+#include "strus/patternLexerInstanceInterface.hpp"
+#include "strus/patternLexerContextInterface.hpp"
+#include "strus/patternMatcherInterface.hpp"
+#include "strus/patternMatcherInstanceInterface.hpp"
+#include "strus/patternMatcherContextInterface.hpp"
 
 // Loading strus objects from modules
 #include "strus/analyzerModule.hpp"

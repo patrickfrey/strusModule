@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "strus/traceModule.hpp"
+#include "strus/versionTrace.hpp"
 #include "strus/base/dll_tags.hpp"
 #include <string>
 
@@ -13,7 +14,7 @@ using namespace strus;
 
 DLL_PUBLIC TraceModule::TraceModule(
 		const TraceLoggerConstructor* traceLoggerConstructors_)
-	:ModuleEntryPoint(ModuleEntryPoint::Trace)
+	:ModuleEntryPoint(ModuleEntryPoint::Trace, STRUS_TRACE_VERSION_MAJOR, STRUS_TRACE_VERSION_MINOR)
 {
 	init( traceLoggerConstructors_);
 }
