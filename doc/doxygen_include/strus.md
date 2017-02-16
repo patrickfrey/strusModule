@@ -107,10 +107,14 @@ strus::StorageModule entryPoint( postingJoinOperators, weightingFunctions, summa
 How to implement an analyzer module
 ---------------------------------
 In an analyzer module you write extensions of the following type
+* document class detector (DocumentClassDetectorInterface)
 * document segmentation (SegmenterInterface)
 * segment tokenization (TokenizerFunctionInterface)
 * token normalization (NormalizerFunctionInterface)
-
+* aggregation (AggregatorFunctionInterface)
+* pattern lexer (PatternLexerInterface)
+* pattern matcher (PatternMatcherInterface)
+ 
 The following examples show two analyzer module templates.
 Both include the main header file "strus/strus.hpp" with all strus
 core and analyzer declarations. For better built times it is 
@@ -206,7 +210,7 @@ static const strus::SegmenterConstructor segmenter =
 /*--- Module declaration */
 extern "C" DLL_PUBLIC strus::AnalyzerModule entryPoint;
 
-strus::AnalyzerModule entryPoint( segmenter, 0, 0);
+strus::AnalyzerModule entryPoint( segmenter);
 \endcode
 
 
