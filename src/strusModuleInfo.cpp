@@ -15,6 +15,7 @@
 #include "strus/versionTrace.hpp"
 #include "internationalization.hpp"
 #include "strus/moduleEntryPoint.hpp"
+#include "strus/base/string_format.hpp"
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -68,16 +69,16 @@ static void loadModule( const std::string& path)
 		strus::ModuleEntryPoint::Status status;
 		if (loadModuleEntryPoint( path.c_str(), status, &printModuleVersion))
 		{
-			std::cout << "status ok" << std::endl;
+			std::cout << _TXT("status ok") << std::endl;
 		}
 		else
 		{
-			std::cout << "status error: " << status.errormsg << std::endl;
+			std::cout << strus::string_format( _TXT("status error: %s"), status.errormsg) << std::endl;
 		}
 	}
 	catch (const std::runtime_error& err)
 	{
-		std::cout << "status error: " << err.what() << std::endl;
+		std::cout << strus::string_format( _TXT("status error: %s"), err.what()) << std::endl;
 	}
 }
 
@@ -108,7 +109,7 @@ int main( int argc, const char* argv[])
 			}
 			else if (0==std::strcmp( argv[argi], "-v") || 0==std::strcmp( argv[argi], "--version"))
 			{
-				std::cerr << "strus storage version " << STRUS_MODULE_VERSION_STRING << std::endl;
+				std::cerr << strus::string_format( _TXT("strus storage version %s"), STRUS_MODULE_VERSION_STRING) << std::endl;
 				doExit = true;
 			}
 			else if (argv[argi][0] == '-')
@@ -128,13 +129,22 @@ int main( int argc, const char* argv[])
 				break;
 			}
 		}
-		if (doExit) return 0;
+		if (argc == 1)
+		{
+			std::cerr << _TXT("expected module path as argument") << std::endl;
+			printUsage();
+			return 0;
+		}
+		if (doExit)
+		{
+			return 0;
+		}
 		std::auto_ptr<strus::ModuleLoaderInterface> moduleLoader( strus::createModuleLoader( g_errorBuffer));
 		if (!moduleLoader.get()) throw strus::runtime_error(_TXT("failed to create module loader"));
 
 		for (; argi < argc; ++argi)
 		{
-			std::cout << "module " << argv[ argi] << std::endl;
+			std::cerr << strus::string_format(_TXT("loading module %s"), argv[ argi]) << std::endl;
 			loadModule( argv[ argi]);
 		}
 		return 0;
