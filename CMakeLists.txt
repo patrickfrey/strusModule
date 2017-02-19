@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR )
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR )
 
 # must be done BEFORE project in order to work!
 include(cmake/install_prefix.cmake)
@@ -10,12 +10,14 @@ set( STRUS_MINOR_VERSION 14 )
 set( STRUS_PATCH_VERSION 0 )
 set( STRUS_VERSION ${STRUS_MAJOR_VERSION}.${STRUS_MINOR_VERSION}.${STRUS_PATCH_VERSION} )
 
+if(NOT STRUS_ALL)
 include( cmake/dist.cmake )
 include( cmake/LinuxDistribution.cmake )
 include( cmake/build_rules.cmake )
 include( cmake/boost.cmake )
 include( cmake/intl.cmake )
 include( cmake/find_strus_package.cmake )
+endif()
 
 find_strus_package( base )
 find_strus_package( core )
@@ -54,7 +56,9 @@ enable_testing()
 add_subdirectory( src )
 add_subdirectory( tests )
   
+if(NOT STRUS_ALL)
 include( cmake/report_build_settings.cmake )
+endif()
 
 # Install header files:
 install(DIRECTORY include/strus
@@ -65,4 +69,6 @@ install(DIRECTORY include/strus
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/modules")
 install(DIRECTORY "${CMAKE_BINARY_DIR}/modules" DESTINATION ${LIB_INSTALL_DIR}/strus/modules)
 
+if(NOT STRUS_ALL)
 include( cmake/standard_targets.cmake )
+endif()
