@@ -40,8 +40,6 @@ public:
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
-	virtual const SegmenterInterface* getSegmenter( const std::string& segmenterName) const;
-	virtual const SegmenterInterface* findMimeTypeSegmenter( const std::string& mimetype) const;
 	virtual DocumentAnalyzerInterface* createDocumentAnalyzer(
 			const SegmenterInterface* segmenter,
 			const analyzer::SegmenterOptions& opts) const;
@@ -54,9 +52,6 @@ public/*ModuleLoader*/:
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	Reference<TextProcessorInterface> m_textProcessor;
-	typedef std::map<std::string,Reference<SegmenterInterface> > SegmenterMap;
-	SegmenterMap m_segmenterMap;				///< map of defined document segmenters (key is segmenter name)
-	SegmenterMap m_mimeSegmenterMap;			///< map of defined document segmenters (key is MIME type)
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 

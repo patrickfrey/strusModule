@@ -7,9 +7,6 @@
  */
 #include "analyzerObjectBuilder.hpp"
 #include "strus/lib/textproc.hpp"
-#include "strus/lib/segmenter_textwolf.hpp"
-#include "strus/lib/segmenter_cjson.hpp"
-#include "strus/lib/segmenter_tsv.hpp"
 #include "strus/lib/analyzer.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
@@ -33,18 +30,6 @@ AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
 	if (!m_textProcessor.get()) throw strus::runtime_error(_TXT("error creating text processor"));
-	Reference<SegmenterInterface> segref_xml( strus::createSegmenter_textwolf( m_errorhnd));
-	m_segmenterMap[ "textwolf"] = segref_xml;
-	m_segmenterMap[ ""] = segref_xml;
-	m_mimeSegmenterMap[ utils::tolower( segref_xml->mimeType())] = segref_xml;
-
-	Reference<SegmenterInterface> segref_cjson( strus::createSegmenter_cjson( m_errorhnd));
-	m_segmenterMap[ "cjson"] = segref_cjson;
-	m_mimeSegmenterMap[ utils::tolower( segref_cjson->mimeType())] = segref_cjson;
-
-	Reference<SegmenterInterface> segref_tsv( strus::createSegmenter_tsv( m_errorhnd));
-	m_segmenterMap[ "tsv"] = segref_tsv;
-	m_mimeSegmenterMap[ utils::tolower( segref_tsv->mimeType())] = segref_tsv;
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
@@ -59,135 +44,111 @@ void AnalyzerObjectBuilder::addResourcePath( const std::string& path)
 
 void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 {
-	if (m_errorhnd->hasError())
-	{
-		m_errorhnd->report(_TXT("cannot add analyzer module with previous unhandled errors"));
-		return;
-	}
-	if (mod->tokenizerConstructors)
-	{
-		TokenizerConstructor const* ti = mod->tokenizerConstructors;
-		for (; ti->create != 0; ++ti)
-		{
-			TokenizerFunctionInterface* func = ti->create( m_errorhnd);
-			if (!func)
-			{
-				m_errorhnd->report(_TXT("error creating tokenizer function"));
-				return;
-			}
-			m_textProcessor->defineTokenizer( ti->name, func);
-			if (m_errorhnd->hasError())
-			{
-				delete func;
-				m_errorhnd->report(_TXT("error defining tokenizer function '%s'"), ti->name);
-			}
-		}
-	}
-	if (mod->normalizerConstructors)
-	{
-		NormalizerConstructor const* ni = mod->normalizerConstructors;
-		for (; ni->create != 0; ++ni)
-		{
-			NormalizerFunctionInterface* func = ni->create( m_errorhnd);
-			if (!func)
-			{
-				m_errorhnd->report(_TXT("error creating normalizer function"));
-				return;
-			}
-			m_textProcessor->defineNormalizer( ni->name, func);
-			if (m_errorhnd->hasError())
-			{
-				delete func;
-				m_errorhnd->report(_TXT("error defining normalizer function '%s'"), ni->name);
-			}
-		}
-	}
-	if (mod->aggregatorConstructors)
-	{
-		AggregatorConstructor const* ni = mod->aggregatorConstructors;
-		for (; ni->create != 0; ++ni)
-		{
-			AggregatorFunctionInterface* func = ni->create( m_errorhnd);
-			if (!func)
-			{
-				m_errorhnd->report(_TXT("error creating aggregator function"));
-				return;
-			}
-			m_textProcessor->defineAggregator( ni->name, func);
-			if (m_errorhnd->hasError())
-			{
-				delete func;
-				m_errorhnd->report(_TXT("error defining aggregator function '%s'"), ni->name);
-			}
-		}
-	}
-	if (mod->segmenterConstructor.name && mod->segmenterConstructor.create)
-	{
-		Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
-		m_segmenterMap[ utils::tolower(mod->segmenterConstructor.name)] = segref;
-		m_mimeSegmenterMap[ utils::tolower(segref->mimeType())] = segref;
-	}
-	if (mod->patternLexerConstructor.name && mod->patternLexerConstructor.create)
-	{
-		PatternLexerInterface* func = mod->patternLexerConstructor.create( m_errorhnd);
-		if (!func)
-		{
-			m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternLexerConstructor.name);
-			return;
-		}
-		m_textProcessor->definePatternLexer( mod->patternLexerConstructor.name, func);
-		if (m_errorhnd->hasError())
-		{
-			delete func;
-			m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternLexerConstructor.name);
-		}
-	}
-	if (mod->patternMatcherConstructor.name && mod->patternMatcherConstructor.create)
-	{
-		PatternMatcherInterface* func = mod->patternMatcherConstructor.create( m_errorhnd);
-		if (!func)
-		{
-			m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternMatcherConstructor.name);
-			return;
-		}
-		m_textProcessor->definePatternMatcher( mod->patternLexerConstructor.name, func);
-		if (m_errorhnd->hasError())
-		{
-			delete func;
-			m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternMatcherConstructor.name);
-		}
-	}
-	m_analyzerModules.push_back( mod);
-}
-
-const SegmenterInterface* AnalyzerObjectBuilder::getSegmenter( const std::string& segmenterName) const
-{
 	try
 	{
-		SegmenterMap::const_iterator si = m_segmenterMap.find( utils::tolower( segmenterName));
-		if (si == m_segmenterMap.end())
+		if (m_errorhnd->hasError())
 		{
-			throw strus::runtime_error(_TXT("unknown document segmenter '%s'"), segmenterName.c_str());
-			return 0;
+			m_errorhnd->report(_TXT("cannot add analyzer module with previous unhandled errors"));
+			return;
 		}
-		return si->second.get();
-	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by name: %s"), *m_errorhnd, 0);
-}
-
-const SegmenterInterface* AnalyzerObjectBuilder::findMimeTypeSegmenter( const std::string& mimetype) const
-{
-	try
-	{
-		SegmenterMap::const_iterator si = m_mimeSegmenterMap.find( utils::tolower( mimetype));
-		if (si == m_mimeSegmenterMap.end())
+		if (mod->tokenizerConstructors)
 		{
-			throw strus::runtime_error(_TXT("no segmenter available for this MIME type: '%s'"), mimetype.c_str());
-			return 0;
+			TokenizerConstructor const* ti = mod->tokenizerConstructors;
+			for (; ti->create != 0; ++ti)
+			{
+				TokenizerFunctionInterface* func = ti->create( m_errorhnd);
+				if (!func)
+				{
+					m_errorhnd->report(_TXT("error creating tokenizer function"));
+					return;
+				}
+				m_textProcessor->defineTokenizer( ti->name, func);
+				if (m_errorhnd->hasError())
+				{
+					delete func;
+					m_errorhnd->report(_TXT("error defining tokenizer function '%s'"), ti->name);
+				}
+			}
 		}
-		return si->second.get();
+		if (mod->normalizerConstructors)
+		{
+			NormalizerConstructor const* ni = mod->normalizerConstructors;
+			for (; ni->create != 0; ++ni)
+			{
+				NormalizerFunctionInterface* func = ni->create( m_errorhnd);
+				if (!func)
+				{
+					m_errorhnd->report(_TXT("error creating normalizer function"));
+					return;
+				}
+				m_textProcessor->defineNormalizer( ni->name, func);
+				if (m_errorhnd->hasError())
+				{
+					delete func;
+					m_errorhnd->report(_TXT("error defining normalizer function '%s'"), ni->name);
+				}
+			}
+		}
+		if (mod->aggregatorConstructors)
+		{
+			AggregatorConstructor const* ni = mod->aggregatorConstructors;
+			for (; ni->create != 0; ++ni)
+			{
+				AggregatorFunctionInterface* func = ni->create( m_errorhnd);
+				if (!func)
+				{
+					m_errorhnd->report(_TXT("error creating aggregator function"));
+					return;
+				}
+				m_textProcessor->defineAggregator( ni->name, func);
+				if (m_errorhnd->hasError())
+				{
+					delete func;
+					m_errorhnd->report(_TXT("error defining aggregator function '%s'"), ni->name);
+				}
+			}
+		}
+		if (mod->segmenterConstructor.name && mod->segmenterConstructor.create)
+		{
+			Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
+			if (segref.get())
+			{
+				m_textProcessor->defineSegmenter( mod->segmenterConstructor.name, segref.release());
+			}
+		}
+		if (mod->patternLexerConstructor.name && mod->patternLexerConstructor.create)
+		{
+			PatternLexerInterface* func = mod->patternLexerConstructor.create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternLexerConstructor.name);
+				return;
+			}
+			m_textProcessor->definePatternLexer( mod->patternLexerConstructor.name, func);
+			if (m_errorhnd->hasError())
+			{
+				delete func;
+				m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternLexerConstructor.name);
+			}
+		}
+		if (mod->patternMatcherConstructor.name && mod->patternMatcherConstructor.create)
+		{
+			PatternMatcherInterface* func = mod->patternMatcherConstructor.create( m_errorhnd);
+			if (!func)
+			{
+				m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+				return;
+			}
+			m_textProcessor->definePatternMatcher( mod->patternLexerConstructor.name, func);
+			if (m_errorhnd->hasError())
+			{
+				delete func;
+				m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+			}
+		}
+		m_analyzerModules.push_back( mod);
 	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error getting segmenter by MIME type: %s"), *m_errorhnd, 0);
+	CATCH_ERROR_MAP( _TXT("error adding analyzer module: %s"), *m_errorhnd);
 }
 
 DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
