@@ -155,7 +155,7 @@ DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
 		const SegmenterInterface* segmenter,
 		const analyzer::SegmenterOptions& opts) const
 {
-	return strus::createDocumentAnalyzer( segmenter, opts, m_errorhnd);
+	return strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter, opts, m_errorhnd);
 }
 
 QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
