@@ -41,7 +41,7 @@ int utils::toint( const std::string& val)
 	}
 	catch (const boost::bad_lexical_cast& err)
 	{
-		throw strus::runtime_error( _TXT( "failed to convert string '%s' to integer: "), val.c_str(), err.what());
+		throw strus::runtime_error( _TXT( "failed to convert string '%s' to integer: %s"), val.c_str(), err.what());
 	}
 }
 
