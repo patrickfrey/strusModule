@@ -10,6 +10,7 @@
 #include "strus/moduleLoaderInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "testModuleDirectory.hpp"
+#include "strus/base/local_ptr.hpp"
 #include <memory>
 #include <string>
 #include <stdexcept>
@@ -18,13 +19,13 @@
 
 int main( int argc, const char** argv)
 {
-	std::auto_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr, 1));
+	strus::local_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr, 1));
 	if (!errorbuf.get())
 	{
 		std::cerr << "error creating error buffer" << std::endl;
 		return -1;
 	}
-	std::auto_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
+	strus::local_ptr<strus::ModuleLoaderInterface> modloader( strus::createModuleLoader( errorbuf.get()));
 	if (!modloader.get())
 	{
 		std::cerr << "error creating module loader" << std::endl;

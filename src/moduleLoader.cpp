@@ -23,6 +23,7 @@
 #include "analyzerObjectBuilder.hpp"
 #include "strus/base/fileio.hpp"
 #include "strus/base/configParser.hpp"
+#include "strus/base/local_ptr.hpp"
 #include "strus/traceLoggerInterface.hpp"
 #include "utils.hpp"
 #include "errorUtils.hpp"
@@ -158,7 +159,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
+		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
@@ -174,7 +175,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		std::auto_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
+		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
 		std::vector<std::string>::const_iterator
 			pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
 		for (; pi != pe; ++pi)
