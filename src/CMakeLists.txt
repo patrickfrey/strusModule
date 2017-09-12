@@ -31,7 +31,6 @@ include_directories(
 )
 
 link_directories(
-	"${PROJECT_SOURCE_DIR}/src"
 	"${strusbase_LIBRARY_DIRS}"
 	"${strus_LIBRARY_DIRS}"
 	"${strusanalyzer_LIBRARY_DIRS}"

@@ -11,7 +11,7 @@ include_directories(
 )
 
 link_directories(
-   "${PROJECT_SOURCE_DIR}/src"
+   "${CMAKE_CURRENT_BINARY_DIR}/../../src"
    "${strusanalyzer_LIBRARY_DIRS}"
    "${strus_LIBRARY_DIRS}"
    "${strusbase_LIBRARY_DIRS}"
