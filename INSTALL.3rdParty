@@ -5,7 +5,5 @@ Library dependencies of strusModule:
 
 Ubuntu:
 	sudo apt-get install liboost-all-dev
-	sudo apt-get install libleveldb-dev
-	sudo apt-get install libsnappy-dev
 
 
