@@ -52,6 +52,11 @@ configure_file( "${PROJECT_SOURCE_DIR}/src/internationalization.cpp.in"  "${PROJ
 
 enable_testing()
 
+# Path declarations:
+set( MODULE_INCLUDE_DIRS            "${CMAKE_CURRENT_BINARY_DIR}/include"  "${PROJECT_SOURCE_DIR}/include" )
+set( MAIN_SOURCE_DIR                     "${PROJECT_SOURCE_DIR}/src" )
+set( MAIN_TESTS_DIR                        "${PROJECT_SOURCE_DIR}/tests" )
+
 # Subdirectories:
 add_subdirectory( src )
 add_subdirectory( tests )

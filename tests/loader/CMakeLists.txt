@@ -4,14 +4,14 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR )
 # SOURCES AND INCLUDES
 # --------------------------------------
 include_directories(  
-  "${PROJECT_SOURCE_DIR}/include" 
+  "${MODULE_INCLUDE_DIRS}" 
   "${CMAKE_CURRENT_BINARY_DIR}"
   "${strus_INCLUDE_DIRS}"
   "${strusbase_INCLUDE_DIRS}"
 )
 
 link_directories(
-   "${CMAKE_CURRENT_BINARY_DIR}/../../src"
+   "${MAIN_SOURCE_DIR}"
    "${strusanalyzer_LIBRARY_DIRS}"
    "${strus_LIBRARY_DIRS}"
    "${strusbase_LIBRARY_DIRS}"

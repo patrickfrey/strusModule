@@ -22,7 +22,7 @@ set( source_files_module
 )
 
 include_directories(
-	"${PROJECT_SOURCE_DIR}/include"
+	"${MODULE_INCLUDE_DIRS}" 
 	"${strusbase_INCLUDE_DIRS}"
 	"${strus_INCLUDE_DIRS}"
 	"${strusanalyzer_INCLUDE_DIRS}"
