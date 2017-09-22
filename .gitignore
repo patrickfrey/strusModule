@@ -57,5 +57,3 @@ build
 # Compiled Programs
 src/strusModuleInfo
 tests/loader/testModuleLoader
-
-.travis.yml
