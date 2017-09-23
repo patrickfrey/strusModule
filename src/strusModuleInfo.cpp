@@ -141,7 +141,7 @@ int main( int argc, const char* argv[])
 			return 0;
 		}
 		strus::local_ptr<strus::ModuleLoaderInterface> moduleLoader( strus::createModuleLoader( g_errorBuffer));
-		if (!moduleLoader.get()) throw strus::runtime_error(_TXT("failed to create module loader"));
+		if (!moduleLoader.get()) throw strus::runtime_error( "%s", _TXT("failed to create module loader"));
 
 		for (; argi < argc; ++argi)
 		{
