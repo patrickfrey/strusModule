@@ -22,7 +22,9 @@
 #include "storageObjectBuilder.hpp"
 #include "analyzerObjectBuilder.hpp"
 #include "strus/base/fileio.hpp"
+#include "strus/base/env.hpp"
 #include "strus/base/configParser.hpp"
+#include "strus/base/local_ptr.hpp"
 #include "strus/traceLoggerInterface.hpp"
 #include "utils.hpp"
 #include "errorUtils.hpp"
@@ -36,6 +38,7 @@
 using namespace strus;
 
 #undef STRUS_LOWLEVEL_DEBUG
+#define ENV_STRUS_MODULE_PATH "STRUS_MODULE_PATH"
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
 	:m_errorhnd(errorhnd_)
@@ -101,6 +104,12 @@ bool ModuleLoader::loadModule(const std::string& name)
 			std::vector<std::string> paths;
 			try
 			{
+				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
+				if (ec)
+				{
+					m_errorhnd->report(_TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
+					return false;
+				}
 				addPath_( paths, STRUS_MODULE_DIRECTORIES);
 			}
 			catch (const std::bad_alloc&)
@@ -113,6 +122,17 @@ bool ModuleLoader::loadModule(const std::string& name)
 		else
 		{
 			entryPoint = loadModuleAlt( name, m_modulePaths);
+			if (!entryPoint)
+			{
+				std::vector<std::string> paths;
+				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
+				if (ec)
+				{
+					m_errorhnd->report(_TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
+					return false;
+				}
+				entryPoint = loadModuleAlt( name, paths);
+			}
 		}
 		if (entryPoint)
 		{
@@ -158,7 +178,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		std::auto_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
+		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
@@ -174,7 +194,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		std::auto_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
+		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
 		std::vector<std::string>::const_iterator
 			pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
 		for (; pi != pe; ++pi)

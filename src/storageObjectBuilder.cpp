@@ -47,7 +47,7 @@ StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
 	m_dbmap[ ""] = dbref;
 
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
-	if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default statistics processor"));
+	if (!spref.get()) throw strus::runtime_error( "%s", _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
 	m_statsprocmap[ ""] = spref;
 }
@@ -61,7 +61,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
 	if (m_errorhnd->hasError())
 	{
-		m_errorhnd->report(_TXT("cannot add storage module with previous unhandled errors"));
+		m_errorhnd->report( "%s", _TXT( "cannot add storage module with previous unhandled errors"));
 		return;
 	}
 	if (mod->postingIteratorJoinConstructor)
@@ -72,7 +72,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			PostingJoinOperatorInterface* func = pi->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating posting join operator"));
+				m_errorhnd->report( "%s", _TXT("error creating posting join operator"));
 				return;
 			}
 			else
@@ -81,7 +81,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report(_TXT("error defining posting join operator"));
+					m_errorhnd->report( "%s", _TXT("error defining posting join operator"));
 					return;
 				}
 			}

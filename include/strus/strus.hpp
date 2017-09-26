@@ -84,10 +84,12 @@
 #include "strus/queryAnalyzerInterface.hpp"
 #include "strus/documentAnalyzerInterface.hpp"
 #include "strus/documentAnalyzerContextInterface.hpp"
-#include "strus/analyzer/attribute.hpp"
+#include "strus/analyzer/documentAttribute.hpp"
 #include "strus/analyzer/document.hpp"
-#include "strus/analyzer/metaData.hpp"
-#include "strus/analyzer/term.hpp"
+#include "strus/analyzer/documentMetaData.hpp"
+#include "strus/analyzer/documentTerm.hpp"
+#include "strus/analyzer/queryTerm.hpp"
+#include "strus/analyzer/queryTermExpression.hpp"
 
 // Text processor (functions for the document analysis to produce index terms, attributes and meta data out of segments of text):
 #include "strus/lib/textproc.hpp"
