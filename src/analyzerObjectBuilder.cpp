@@ -20,7 +20,6 @@
 #include "strus/segmenterInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
-#include "utils.hpp"
 #include <string>
 #include <cstring>
 
