@@ -23,7 +23,7 @@
 #include "strus/statisticsProcessorInterface.hpp"
 #include "strus/base/fileio.hpp"
 #include "strus/base/configParser.hpp"
-#include "utils.hpp"
+#include "strus/base/string_conv.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
 #include <string>
@@ -155,19 +155,19 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 		{
 			DatabaseReference dbref( mod->databaseConstructor.create( m_errorhnd));
 			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base Constructor loaded from module: '%s': %s"), mod->databaseConstructor.name, m_errorhnd->fetchError());
-			m_dbmap[ utils::tolower( mod->databaseConstructor.name)] = dbref;
+			m_dbmap[ string_conv::tolower( mod->databaseConstructor.name)] = dbref;
 		}
 		if (mod->statisticsProcessorConstructor.create && mod->statisticsProcessorConstructor.name)
 		{
 			StatisticsProcessorReference spref( mod->statisticsProcessorConstructor.create( m_errorhnd));
 			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor Constructor loaded from module: '%s': %s"), mod->statisticsProcessorConstructor.name, m_errorhnd->fetchError());
-			m_statsprocmap[ utils::tolower( mod->statisticsProcessorConstructor.name)] = spref;
+			m_statsprocmap[ string_conv::tolower( mod->statisticsProcessorConstructor.name)] = spref;
 		}
 		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
 		{
 			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_errorhnd));
 			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
-			m_vsmodelmap[ utils::tolower( mod->vectorStorageConstructor.name)] = ref;
+			m_vsmodelmap[ string_conv::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}
 	}
 	catch (const std::runtime_error& err)
@@ -185,7 +185,7 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& n
 	try
 	{
 		std::map<std::string,DatabaseReference>::const_iterator
-			di = m_dbmap.find( utils::tolower( name));
+			di = m_dbmap.find( string_conv::tolower( name));
 		if (di == m_dbmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined key value store database '%s'"), name.c_str());
@@ -203,7 +203,7 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 	try
 	{
 		std::map<std::string,StatisticsProcessorReference>::const_iterator
-			si = m_statsprocmap.find( utils::tolower( name));
+			si = m_statsprocmap.find( string_conv::tolower( name));
 		if (si == m_statsprocmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined statistics processor '%s'"), name.c_str());
@@ -221,7 +221,7 @@ const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std:
 	try
 	{
 		std::map<std::string,VectorStorageReference>::const_iterator
-			si = m_vsmodelmap.find( utils::tolower( name));
+			si = m_vsmodelmap.find( string_conv::tolower( name));
 		if (si == m_vsmodelmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined vector space model '%s'"), name.c_str());

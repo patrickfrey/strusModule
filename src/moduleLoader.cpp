@@ -25,8 +25,8 @@
 #include "strus/base/env.hpp"
 #include "strus/base/configParser.hpp"
 #include "strus/base/local_ptr.hpp"
+#include "strus/base/string_conv.hpp"
 #include "strus/traceLoggerInterface.hpp"
-#include "utils.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
 #include <string>
@@ -53,9 +53,9 @@ static void addPath_( std::vector<std::string>& paths, const char* pt)
 	char const* ee = std::strchr( cc, STRUS_MODULE_PATHSEP);
 	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, STRUS_MODULE_PATHSEP))
 	{
-		paths.push_back( utils::trim( std::string( cc, ee)));
+		paths.push_back( string_conv::trim( std::string( cc, ee)));
 	}
-	paths.push_back( utils::trim( std::string( cc)));
+	paths.push_back( string_conv::trim( std::string( cc)));
 }
 
 void ModuleLoader::addSystemModulePath()
@@ -222,25 +222,25 @@ TraceLoggerInterface* ModuleLoader::createTraceLogger( const std::string& logger
 		std::size_t ci = 0;
 		for (; car[ci].title; ++ci)
 		{
-			if (utils::caseInsensitiveEquals( loggerName, car[ci].title))
+			if (strus::caseInsensitiveEquals( loggerName, car[ci].title))
 			{
 				return car->create( config, m_errorhnd);
 			}
 		}
 	}
-	if (utils::caseInsensitiveEquals( loggerName, "dump"))
+	if (strus::caseInsensitiveEquals( loggerName, "dump"))
 	{
 		return createTraceLogger_dump( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "json"))
+	else if (strus::caseInsensitiveEquals( loggerName, "json"))
 	{
 		return createTraceLogger_json( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "breakpoint"))
+	else if (strus::caseInsensitiveEquals( loggerName, "breakpoint"))
 	{
 		return createTraceLogger_breakpoint( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "count"))
+	else if (strus::caseInsensitiveEquals( loggerName, "count"))
 	{
 		return createTraceLogger_count( config, m_errorhnd);
 	}
@@ -342,7 +342,7 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 	{
 		std::string modfilename( *pi + dirSeparator() + name);
 		std::string altmodfilename( *pi + dirSeparator() + "modstrus_" + name);
-		if (!utils::caseInsensitiveEquals(
+		if (!strus::caseInsensitiveEquals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
 		{

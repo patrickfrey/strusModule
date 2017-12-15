@@ -13,7 +13,6 @@ set( source_files_loader
 	storageObjectBuilder.cpp
 	analyzerObjectBuilder.cpp
 	moduleLoader.cpp
-	utils.cpp
 )
 
 set( source_files_module
