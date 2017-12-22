@@ -26,7 +26,7 @@ find_strus_package( analyzer )
 find_strus_package( trace )
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
-configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp"  @ONLY )
+configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${CMAKE_BINARY_DIR}/include/strus/versionModule.hpp"  @ONLY )
 
 IF (WIN32)
 set( STRUS_MODULE_EXTENSION  ".dll" )
