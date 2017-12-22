@@ -40,8 +40,8 @@ ENDIF (WIN32)
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 set( CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON )
-configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp"  @ONLY )
-configure_file( "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp.in"  "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp"  @ONLY )
+configure_file( "${PROJECT_SOURCE_DIR}/include/strus/versionModule.hpp.in"  "${CMAKE_CURRENT_BINARY_DIR}/include/strus/versionModule.hpp"  @ONLY )
+configure_file( "${PROJECT_SOURCE_DIR}/src/moduleDirectory.hpp.in"  "${CMAKE_CURRENT_BINARY_DIR}/src/moduleDirectory.hpp"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh.in"  "${PROJECT_SOURCE_DIR}/dist/obs/deploy_to_obs.sh"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD.in"  "${PROJECT_SOURCE_DIR}/dist/archlinux/PKGBUILD"  @ONLY )
 configure_file( "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc.in"  "${PROJECT_SOURCE_DIR}/dist/obs/strusmodule.dsc"  @ONLY )
@@ -70,6 +70,9 @@ endif()
 install(DIRECTORY include/strus
           DESTINATION include
           FILES_MATCHING PATTERN "*.hpp")
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/strus
+          DESTINATION include
+          FILES_MATCHING PATTERN "versionModule.hpp")
 
 # Create directory holding strus modules
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/modules")

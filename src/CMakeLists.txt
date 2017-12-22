@@ -21,12 +21,13 @@ set( source_files_module
 )
 
 include_directories(
-	"${MODULE_INCLUDE_DIRS}" 
+	"${MODULE_INCLUDE_DIRS}"
 	"${strusbase_INCLUDE_DIRS}"
 	"${strus_INCLUDE_DIRS}"
 	"${strusanalyzer_INCLUDE_DIRS}"
 	"${strustrace_INCLUDE_DIRS}"
 	"${Boost_INCLUDE_DIRS}"
+	"${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 link_directories(
