@@ -51,8 +51,9 @@ dist/obs/strusmodule-Debian_7.0.dsc
 dist/obs/strusmodule-xUbuntu_12.04.dsc
 dist/redhat/strusmodule.spec
 
-# Suggested build directory
+# Suggested build directories
 build
+build_clang
 
 # Compiled Programs
 src/strusModuleInfo
