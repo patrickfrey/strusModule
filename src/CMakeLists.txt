@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR )
 set( source_files_loader
 	libstrus_module.cpp
 	moduleEntryPoint.cpp
-	${CMAKE_CURRENT_BINARY_DIR}internationalization.cpp
+	${CMAKE_CURRENT_BINARY_DIR}/internationalization.cpp
 	analyzerModule.cpp
 	storageModule.cpp
 	traceModule.cpp
@@ -17,7 +17,7 @@ set( source_files_loader
 
 set( source_files_module
 	moduleEntryPoint.cpp
-	${CMAKE_CURRENT_BINARY_DIR}internationalization.cpp
+	${CMAKE_CURRENT_BINARY_DIR}/internationalization.cpp
 )
 
 include_directories(
