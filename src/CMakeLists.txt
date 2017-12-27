@@ -38,7 +38,6 @@ link_directories(
 	"${strusanalyzer_LIBRARY_DIRS}"
 	"${strustrace_LIBRARY_DIRS}"
 	"${Boost_LIBRARY_DIRS}"
-	${Intl_LIBRARIES}
 )
 
 
