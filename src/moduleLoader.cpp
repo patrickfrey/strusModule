@@ -45,7 +45,13 @@ ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
 {}
 
 ModuleLoader::~ModuleLoader()
-{}
+{
+	std::vector<ModuleEntryPoint::Handle>::iterator hi = m_handleList.begin(), he = m_handleList.end();
+	for (; hi != he; ++hi)
+	{
+		ModuleEntryPoint::closeHandle( *hi);
+	}
+}
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
 {
@@ -355,10 +361,15 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		if (isFile( modfilename))
 		{
 			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status, &matchModuleVersion);
+			ModuleEntryPoint::Handle modhnd = NULL;
+			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status, modhnd, &matchModuleVersion);
 			if (!entrypoint)
 			{
 				m_errorhnd->report(_TXT("error loading module '%s': %s"), modfilename.c_str(), status.errormsg);
+			}
+			else
+			{
+				m_handleList.push_back( modhnd);
 			}
 			return entrypoint;
 		}
@@ -368,10 +379,15 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		if (isFile( altmodfilename))
 		{
 			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status, &matchModuleVersion);
+			ModuleEntryPoint::Handle modhnd = NULL;
+			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status, modhnd, &matchModuleVersion);
 			if (!entrypoint)
 			{
 				m_errorhnd->report(_TXT("error loading module '%s': %s"), altmodfilename.c_str(), status.errormsg);
+			}
+			else
+			{
+				m_handleList.push_back( modhnd);
 			}
 			return entrypoint;
 		}

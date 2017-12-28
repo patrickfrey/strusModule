@@ -68,7 +68,8 @@ static void loadModule( const std::string& path)
 	try
 	{
 		strus::ModuleEntryPoint::Status status;
-		if (loadModuleEntryPoint( path.c_str(), status, &printModuleVersion))
+		strus::ModuleEntryPoint::Handle hnd;
+		if (loadModuleEntryPoint( path.c_str(), status, hnd, &printModuleVersion))
 		{
 			std::cout << _TXT("status ok") << std::endl;
 		}

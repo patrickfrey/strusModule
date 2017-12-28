@@ -8,6 +8,7 @@
 #ifndef _STRUS_MODULE_LOADER_HPP_INCLUDED
 #define _STRUS_MODULE_LOADER_HPP_INCLUDED
 #include "strus/moduleLoaderInterface.hpp"
+#include "strus/moduleEntryPoint.hpp"
 #include <string>
 #include <vector>
 
@@ -75,6 +76,7 @@ private:
 	std::vector<const TraceModule*> m_traceModules;
 	std::vector<std::string> m_version_3rdparty_ar;
 	std::vector<std::string> m_license_3rdparty_ar;
+	std::vector<ModuleEntryPoint::Handle> m_handleList;
 	ErrorBufferInterface* m_errorhnd;
 };
 
