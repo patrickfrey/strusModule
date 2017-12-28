@@ -22,7 +22,7 @@ using namespace strus;
 
 DLL_PUBLIC void ModuleEntryPoint::closeHandle( Handle& hnd)
 {
-	if (hnd) ::dlclose( hnd);
+	//[+] PH:HACK: Disabled because of segfaults in bindings caused by this: if (hnd) ::dlclose( hnd);
 }
 
 static const char* errorMessage( int error)
@@ -52,12 +52,12 @@ static void initStatusMessage( ModuleEntryPoint::Status& status, const char* msg
 	status.errormsg[ msglen] = '\0';
 }
 
-DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, ModuleEntryPoint::Handle& hndst, MatchModuleVersionFunc matchVersion)
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, ModuleEntryPoint::Handle& hnd, MatchModuleVersionFunc matchVersion)
 {
 	status.errorcode = 0;
 	status.errormsg[0] = '\0';
 
-	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
+	hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
 	if (!hnd)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorOpenModule;
@@ -68,6 +68,7 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 	if (!entryPoint)
 	{
 		::dlclose( hnd);
+		hnd = 0;
 		status.errorcode = ModuleEntryPoint::ErrorNoEntryPoint;
 		initStatusMessage( status, errorMessage( status.errorcode));
 		return 0;
@@ -76,11 +77,11 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 	if (!(*matchVersion)( entryPoint, errorcode))
 	{
 		::dlclose( hnd);
+		hnd = 0;
 		status.errorcode = errorcode;
 		initStatusMessage( status, errorMessage( status.errorcode));
 		return 0;
 	}
-	hndst = ModuleEntryPoint::Handle( hnd);
 	return entryPoint;
 }
 
