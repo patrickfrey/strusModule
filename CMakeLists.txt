@@ -61,6 +61,10 @@ set( MODULE_INCLUDE_DIRS            "${CMAKE_CURRENT_BINARY_DIR}/include"  "${PR
 set( MAIN_SOURCE_DIR                     "${PROJECT_SOURCE_DIR}/src" )
 set( MAIN_TESTS_DIR                        "${PROJECT_SOURCE_DIR}/tests" )
 
+# Create directory holding strus modules
+file( MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/modules")
+install( DIRECTORY "${CMAKE_BINARY_DIR}/modules" DESTINATION ${LIB_INSTALL_DIR}/strus/ )
+
 # Subdirectories:
 add_subdirectory( src )
 add_subdirectory( tests )
