@@ -15,41 +15,45 @@ Install packages with 'apt-get'/aptitude.
 	strusBase strus strusAnalyzer strusTrace
 
 # Configure build and install strus prerequisite packages with GNU C/C++
-	$ for strusprj in strusBase strus strusAnalyzer strusTrace
-	$ do
-	$ git clone https://github.com/patrickfrey/$strusprj $strusprj
-	$ cd $strusprj
-	$ cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=/usr/local/lib .
-	$ make
-	$ make install
-	$ cd ..
-	$ done
+	for strusprj in strusBase strus strusAnalyzer strusTrace
+	do
+	git clone https://github.com/patrickfrey/$strusprj $strusprj
+	cd $strusprj
+	cmake -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=/usr/local/lib .
+	make
+	make install
+	cd ..
+	done
 
 # Configure build and install strus prerequisite packages with Clang C/C++
-	$ for strusprj in strusBase strus strusAnalyzer strusTrace
-	$ do
-	$ git clone https://github.com/patrickfrey/$strusprj $strusprj
-	$ cd $strusprj
-	$ cmake -DCMAKE_BUILD_TYPE=Release \
+	for strusprj in strusBase strus strusAnalyzer strusTrace
+	do
+	git clone https://github.com/patrickfrey/$strusprj $strusprj
+	cd $strusprj
+	cmake -DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_COMPILER="clang" -DCMAKE_CXX_COMPILER="clang++" .
-	$ make
-	$ make install
-	$ cd ..
-	$ done
+	make
+	make install
+	cd ..
+	done
+
+# Fetch sources
+	git clone https://github.com/patrickfrey/strusModule
+	cd strusModule
 
 # Configure with GNU C/C++
-	$ cmake -DCMAKE_BUILD_TYPE=Release .
+	cmake -DCMAKE_BUILD_TYPE=Release .
 
 # Configure with Clang C/C++
-	$ cmake -DCMAKE_BUILD_TYPE=Release \
+	cmake -DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_COMPILER="clang" -DCMAKE_CXX_COMPILER="clang++" .
 
 # Build
-	$ make
+	make
 
 # Run tests
-	$ make test
+	make test
 
 # Install
-	$ make install
+	make install
 
