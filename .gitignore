@@ -58,3 +58,6 @@ build_clang
 # Compiled Programs
 src/strusModuleInfo
 tests/loader/testModuleLoader
+
+# deploy to obs tar:
+strusmodule-*.tar.gz
