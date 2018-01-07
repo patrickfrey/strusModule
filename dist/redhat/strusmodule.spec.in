@@ -202,7 +202,7 @@ BuildRequires: fedora-release
 %if %{fedora} && 0%{?opensuse_bs}
 BuildRequires: generic-release
 %endif
-%if %{suse}
+%if %{osu}
 BuildRequires: openSUSE-release
 %endif
 %if %{sles}
