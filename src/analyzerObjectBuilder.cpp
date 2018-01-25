@@ -47,7 +47,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 	{
 		if (m_errorhnd->hasError())
 		{
-			m_errorhnd->report(_TXT("cannot add analyzer module with previous unhandled errors"));
+			m_errorhnd->explain(_TXT("cannot add analyzer module with previous unhandled errors: %s"));
 			return;
 		}
 		if (mod->tokenizerConstructors)
@@ -58,14 +58,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 				TokenizerFunctionInterface* func = ti->create( m_errorhnd);
 				if (!func)
 				{
-					m_errorhnd->report(_TXT("error creating tokenizer function"));
+					m_errorhnd->explain(_TXT("error creating tokenizer function: %s"));
 					return;
 				}
 				m_textProcessor->defineTokenizer( ti->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report(_TXT("error defining tokenizer function '%s'"), ti->name);
+					m_errorhnd->explain(_TXT("error defining tokenizer function '%s'"));
 				}
 			}
 		}
@@ -77,14 +77,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 				NormalizerFunctionInterface* func = ni->create( m_errorhnd);
 				if (!func)
 				{
-					m_errorhnd->report(_TXT("error creating normalizer function"));
+					m_errorhnd->explain(_TXT("error creating normalizer function: %s"));
 					return;
 				}
 				m_textProcessor->defineNormalizer( ni->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report(_TXT("error defining normalizer function '%s'"), ni->name);
+					m_errorhnd->explain(_TXT("error defining normalizer function: %s"));
 				}
 			}
 		}
@@ -96,14 +96,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 				AggregatorFunctionInterface* func = ni->create( m_errorhnd);
 				if (!func)
 				{
-					m_errorhnd->report(_TXT("error creating aggregator function"));
+					m_errorhnd->explain(_TXT("error creating aggregator function: %s"));
 					return;
 				}
 				m_textProcessor->defineAggregator( ni->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report(_TXT("error defining aggregator function '%s'"), ni->name);
+					m_errorhnd->explain(_TXT("error defining aggregator function: %s"));
 				}
 			}
 		}
@@ -120,14 +120,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			PatternLexerInterface* func = mod->patternLexerConstructor.create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternLexerConstructor.name);
+				m_errorhnd->explain(_TXT("error creating pattern lexer: %s"));
 				return;
 			}
 			m_textProcessor->definePatternLexer( mod->patternLexerConstructor.name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternLexerConstructor.name);
+				m_errorhnd->explain(_TXT("error defining pattern lexer: %s"));
 			}
 		}
 		if (mod->patternMatcherConstructor.name && mod->patternMatcherConstructor.create)
@@ -135,14 +135,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			PatternMatcherInterface* func = mod->patternMatcherConstructor.create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+				m_errorhnd->explain(_TXT("error creating pattern lexer: %s"));
 				return;
 			}
 			m_textProcessor->definePatternMatcher( mod->patternLexerConstructor.name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining pattern lexer '%s'"), mod->patternMatcherConstructor.name);
+				m_errorhnd->explain(_TXT("error defining pattern lexer: %s"));
 			}
 		}
 		m_analyzerModules.push_back( mod);
