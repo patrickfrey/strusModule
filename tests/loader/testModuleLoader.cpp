@@ -38,7 +38,20 @@ int main( int argc, const char** argv)
 	for (; ai != ae; ++ai)
 	{
 		std::cerr << "loading module '" << argv[ai] << "'" << std::endl;
-		modloader->loadModule( argv[ai]);
+		std::vector<std::string> modfiles = modloader->moduleLoadTryPaths( argv[ai]);
+		std::vector<std::string>::const_iterator mi = modfiles.begin(), me = modfiles.end();
+		for (; mi != me; ++mi)
+		{
+			std::cerr << "try '" << *mi << "'" << std::endl;
+		}
+		if (modloader->loadModule( argv[ai]))
+		{
+			std::cerr << "ok." << std::endl;
+		}
+		else
+		{
+			std::cerr << "failed." << std::endl;
+		}
 	}
 	if (argc == 1)
 	{

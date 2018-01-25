@@ -52,6 +52,7 @@ public:
 	virtual void addSystemModulePath();
 	virtual void addModulePath( const std::string& path);
 	virtual bool loadModule( const std::string& name);
+	virtual std::vector<std::string> moduleLoadTryPaths( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
@@ -62,9 +63,12 @@ public:
 	virtual std::vector<std::string> get3rdPartyVersionTexts() const;
 
 private:
+	const ModuleEntryPoint* searchAndLoadEntryPoint( const std::string& name, std::vector<std::string>& paths_tried);
 	const ModuleEntryPoint* loadModuleAlt(
 			const std::string& name,
-			const std::vector<std::string>& paths);
+			const std::vector<std::string>& paths,
+			std::vector<std::string>& paths_tried);
+	const ModuleEntryPoint* tryLoadPathAsModule( const std::string& modpath);
 
 	TraceLoggerInterface* createTraceLogger( const std::string& loggerName, const std::string& config) const;
 
