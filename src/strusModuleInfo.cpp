@@ -17,8 +17,10 @@
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/base/string_format.hpp"
 #include "strus/base/local_ptr.hpp"
+#include "strus/base/fileio.hpp"
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -146,8 +148,34 @@ int main( int argc, const char* argv[])
 
 		for (; argi < argc; ++argi)
 		{
-			std::cerr << strus::string_format(_TXT("loading module %s"), argv[ argi]) << std::endl;
-			loadModule( argv[ argi]);
+			if (0==std::strchr( argv[ argi], strus::dirSeparator()))
+			{
+				std::cerr << strus::string_format(_TXT("search module %s"), argv[ argi]) << std::endl;
+				std::vector<std::string> modfiles = moduleLoader->moduleLoadTryPaths( argv[argi]);
+				std::vector<std::string>::const_iterator mi = modfiles.begin(), me = modfiles.end();
+				for (; mi != me; ++mi)
+				{
+					std::cerr << "try path '" << *mi << "'" << std::endl;
+				}
+				if (modfiles.empty())
+				{
+					std::cout << strus::string_format( _TXT("status error: %s"), _TXT("not found")) << std::endl;
+				}
+				else if (strus::isFile( modfiles.back()))
+				{
+					std::cerr << strus::string_format(_TXT("load module %s"), modfiles.back().c_str()) << std::endl;
+					loadModule( modfiles.back().c_str());
+				}
+				else
+				{
+					std::cout << strus::string_format( _TXT("status error: %s"), _TXT("not found")) << std::endl;
+				}
+			}
+			else
+			{
+				std::cerr << strus::string_format(_TXT("load module %s"), argv[ argi]) << std::endl;
+				loadModule( argv[ argi]);
+			}
 		}
 		return 0;
 	}
