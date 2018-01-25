@@ -41,6 +41,10 @@ public:
 	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
 	virtual bool loadModule( const std::string& name)=0;
 
+	/// \brief Get the list of files tried to load for module with a given name
+	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
+	virtual std::vector<std::string> moduleLoadTryPaths( const std::string& name)=0;
+
 	/// \brief Declare a path for analyzer components to find resource files
 	/// \param[in] path path to add
 	virtual void addResourcePath( const std::string& path)=0;

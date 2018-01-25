@@ -100,45 +100,37 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 }
 
+const ModuleEntryPoint* ModuleLoader::searchAndLoadEntryPoint( const std::string& name, std::vector<std::string>& paths_tried)
+{
+	const ModuleEntryPoint* entryPoint = loadModuleAlt( name, m_modulePaths, paths_tried);
+	if (!entryPoint)
+	{
+		std::vector<std::string> paths;
+		int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
+		if (ec)
+		{
+			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationReadEnv,ec), _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
+			return 0;
+		}
+		if (m_modulePaths.empty())
+		{
+			addPath_( paths, STRUS_MODULE_DIRECTORIES);
+		}
+		entryPoint = loadModuleAlt( name, paths, paths_tried);
+	}
+	return entryPoint;
+}
+
 bool ModuleLoader::loadModule(const std::string& name)
 {
 	try
 	{
-		const ModuleEntryPoint* entryPoint;
-		if (m_modulePaths.empty())
+		std::vector<std::string> paths_tried;
+		const ModuleEntryPoint* entryPoint = searchAndLoadEntryPoint( name, paths_tried);
+		if (!entryPoint)
 		{
-			std::vector<std::string> paths;
-			try
-			{
-				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
-				if (ec)
-				{
-					m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationReadEnv,ec), _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
-					return false;
-				}
-				addPath_( paths, STRUS_MODULE_DIRECTORIES);
-			}
-			catch (const std::bad_alloc&)
-			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
-				return false;
-			}
-			entryPoint = loadModuleAlt( name, paths);
-		}
-		else
-		{
-			entryPoint = loadModuleAlt( name, m_modulePaths);
-			if (!entryPoint)
-			{
-				std::vector<std::string> paths;
-				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
-				if (ec)
-				{
-					m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationReadEnv,ec), _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
-					return false;
-				}
-				entryPoint = loadModuleAlt( name, paths);
-			}
+			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseNotFound), _TXT("failed to find module '%s': "), name.c_str());
+			return false;
 		}
 		if (entryPoint)
 		{
@@ -178,6 +170,17 @@ bool ModuleLoader::loadModule(const std::string& name)
 		}
 	}
 	CATCH_ERROR_MAP_RETURN( _TXT("error loading module: %s"), *m_errorhnd, 0);
+}
+
+std::vector<std::string> ModuleLoader::moduleLoadTryPaths( const std::string& name)
+{
+	try
+	{
+		std::vector<std::string> rt;
+		searchAndLoadEntryPoint( name, rt);
+		return rt;
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error seeking for module (moduleLoadTryPaths): %s"), *m_errorhnd, std::vector<std::string>());
 }
 
 StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
@@ -341,60 +344,63 @@ static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorco
 
 const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		const std::string& name,
-		const std::vector<std::string>& paths)
+		const std::vector<std::string>& paths,
+		std::vector<std::string>& paths_tried)
 {
 	std::vector<std::string>::const_iterator pi = paths.begin(), pe = paths.end();
 	for (; pi != pe; ++pi)
 	{
-		std::string modfilename( *pi + dirSeparator() + name);
-		std::string altmodfilename( *pi + dirSeparator() + "modstrus_" + name);
+		std::string modfilename;
+		if (stringStartsWith( name, "modstrus_"))
+		{
+			modfilename = *pi + dirSeparator() + name;
+		}
+		else if (stringStartsWith( name, "strus_"))
+		{
+			modfilename = *pi + dirSeparator() + "mod" + name;
+		}
+		else
+		{
+			modfilename = *pi + dirSeparator() + "modstrus_" + name;
+		}
 		if (!strus::caseInsensitiveEquals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
 		{
 			modfilename.append( STRUS_MODULE_EXTENSION);
-			altmodfilename.append( STRUS_MODULE_EXTENSION);
 		}
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "try to load module '" << modfilename << "'" << std::endl;
-#endif
-		if (isFile( modfilename))
-		{
-			ModuleEntryPoint::Status status;
-			ModuleEntryPoint::Handle modhnd = NULL;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status, modhnd, &matchModuleVersion);
-			if (!entrypoint)
-			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseUnknown), _TXT("error loading module '%s': %s"), modfilename.c_str(), status.errormsg);
-			}
-			else
-			{
-				m_handleList.push_back( modhnd);
-			}
-			return entrypoint;
-		}
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "try to load module '" << altmodfilename << "'" << std::endl;
-#endif
-		if (isFile( altmodfilename))
-		{
-			ModuleEntryPoint::Status status;
-			ModuleEntryPoint::Handle modhnd = NULL;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status, modhnd, &matchModuleVersion);
-			if (!entrypoint)
-			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseUnknown), _TXT("error loading module '%s': %s"), altmodfilename.c_str(), status.errormsg);
-			}
-			else
-			{
-				m_handleList.push_back( modhnd);
-			}
-			return entrypoint;
-		}
+		const ModuleEntryPoint* entrypoint;
+		paths_tried.push_back( modfilename);
+		if (!!(entrypoint = tryLoadPathAsModule( modfilename))) return entrypoint;
 	}
-	m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseNotFound), _TXT("failed to find module '%s': "), name.c_str());
 	return 0;
 }
 
+const ModuleEntryPoint* ModuleLoader::tryLoadPathAsModule( const std::string& modpath)
+{
+#ifdef STRUS_LOWLEVEL_DEBUG
+	std::cerr << "try to load module '" << modpath << "'" << std::endl;
+#endif
+	if (isFile( modpath))
+	{
+		ModuleEntryPoint::Status status;
+		ModuleEntryPoint::Handle modhnd = NULL;
+		const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modpath.c_str(), status, modhnd, &matchModuleVersion);
+		if (!entrypoint)
+		{
+			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseUnknown),
+						_TXT("error loading module '%s': %s"), modpath.c_str(), status.errormsg);
+		}
+		else
+		{
+			m_handleList.push_back( modhnd);
+		}
+		return entrypoint;
+	}
+	else
+	{
+		return NULL;
+	}
+}
 
 
