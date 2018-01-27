@@ -33,7 +33,7 @@ class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
 {
 public:
-	explicit StorageObjectBuilder( ErrorBufferInterface* errorhnd_);
+	StorageObjectBuilder( const std::string& workdir_, ErrorBufferInterface* errorhnd_);
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
@@ -47,6 +47,7 @@ public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 
 private:
+	std::string m_workdir;							///< working directory for data created or written
 	std::vector<const StorageModule*> m_storageModules;			///< loaded modules
 	Reference<QueryProcessorInterface> m_queryProcessor;			///< query processor handle
 	Reference<StorageInterface> m_storage;					///< storage handle

@@ -100,6 +100,18 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 }
 
+void ModuleLoader::defineWorkingDirectory( const std::string& path)
+{
+	try
+	{
+		m_workdir = path;
+	}
+	catch (const std::bad_alloc&)
+	{
+		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+	}
+}
+
 const ModuleEntryPoint* ModuleLoader::searchAndLoadEntryPoint( const std::string& name, std::vector<std::string>& paths_tried)
 {
 	const ModuleEntryPoint* entryPoint = loadModuleAlt( name, m_modulePaths, paths_tried);
@@ -125,6 +137,11 @@ bool ModuleLoader::loadModule(const std::string& name)
 {
 	try
 	{
+		if (hasUpdirReference( name))
+		{
+			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseNotAllowed), _TXT("tried to load module with upper directory reference in the module name"));
+			return false;
+		}
 		std::vector<std::string> paths_tried;
 		const ModuleEntryPoint* entryPoint = searchAndLoadEntryPoint( name, paths_tried);
 		if (!entryPoint)
@@ -187,7 +204,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
+		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_workdir, m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
@@ -353,15 +370,15 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		std::string modfilename;
 		if (stringStartsWith( name, "modstrus_"))
 		{
-			modfilename = *pi + dirSeparator() + name;
+			modfilename = strus::joinFilePath( *pi, name);
 		}
 		else if (stringStartsWith( name, "strus_"))
 		{
-			modfilename = *pi + dirSeparator() + "mod" + name;
+			modfilename = strus::joinFilePath( *pi, "mod" + name);
 		}
 		else
 		{
-			modfilename = *pi + dirSeparator() + "modstrus_" + name;
+			modfilename = strus::joinFilePath( *pi, "modstrus_" + name);
 		}
 		if (!strus::caseInsensitiveEquals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),

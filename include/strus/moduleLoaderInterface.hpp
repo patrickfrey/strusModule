@@ -49,6 +49,10 @@ public:
 	/// \param[in] path path to add
 	virtual void addResourcePath( const std::string& path)=0;
 
+	/// \brief Declare the root path for all data created and written by strus modules
+	/// \param[in] path path to define as root path
+	virtual void defineWorkingDirectory( const std::string& path)=0;
+
 	/// \brief Create a builder for storage objects build from components loaded from module or the defaults defined.
 	/// \return the builder object (with ownership)
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const=0;

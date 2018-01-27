@@ -54,6 +54,7 @@ public:
 	virtual bool loadModule( const std::string& name);
 	virtual std::vector<std::string> moduleLoadTryPaths( const std::string& name);
 	virtual void addResourcePath( const std::string& path);
+	virtual void defineWorkingDirectory( const std::string& path);
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
@@ -75,6 +76,7 @@ private:
 private:
 	std::vector<std::string> m_modulePaths;
 	std::vector<std::string> m_resourcePaths;
+	std::string m_workdir;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
 	std::vector<const TraceModule*> m_traceModules;
