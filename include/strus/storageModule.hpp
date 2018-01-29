@@ -38,7 +38,7 @@ class ErrorBufferInterface;
 /// \brief Structure to declare the key value store database to use by the storage as module object
 struct DatabaseConstructor
 {
-	typedef DatabaseInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	typedef DatabaseInterface* (*Create)( const std::string& workdir, ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the database implementation
 	Create create;					///< constructor of the object
 };
@@ -54,7 +54,7 @@ struct StatisticsProcessorConstructor
 /// \brief Structure to declare an alternative vector space model to map vectors to sets of features
 struct VectorStorageConstructor
 {
-	typedef VectorStorageInterface* (*Create)( ErrorBufferInterface* errorhnd);
+	typedef VectorStorageInterface* (*Create)( const std::string& workdir, ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
 	Create create;					///< constructor of the object
 };
