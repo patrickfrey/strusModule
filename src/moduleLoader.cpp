@@ -173,6 +173,14 @@ bool ModuleLoader::loadModule(const std::string& name)
 				{
 					m_version_3rdparty_ar.push_back( entryPoint->version_3rdparty);
 				}
+				std::string pname;
+				int ec = strus::getFileName( name, pname, false);
+				if (ec)
+				{
+					m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ec), "%s", ::strerror(ec));
+					return false;
+				}
+				m_modules.push_back( pname);
 				return true;
 			}
 			catch (const std::bad_alloc&)

@@ -56,6 +56,11 @@ public:
 	virtual void addResourcePath( const std::string& path);
 	virtual void defineWorkingDirectory( const std::string& path);
 
+	virtual std::vector<std::string> modulePaths() const		{return m_modulePaths;}
+	virtual std::vector<std::string> modules() const		{return m_modules;}
+	virtual std::vector<std::string> resourcePaths() const		{return m_resourcePaths;}
+	virtual std::string workdir() const				{return m_workdir;}
+
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
 	virtual TraceObjectBuilderInterface* createTraceObjectBuilder( const std::string& config) const;
@@ -75,6 +80,7 @@ private:
 
 private:
 	std::vector<std::string> m_modulePaths;
+	std::vector<std::string> m_modules;
 	std::vector<std::string> m_resourcePaths;
 	std::string m_workdir;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
