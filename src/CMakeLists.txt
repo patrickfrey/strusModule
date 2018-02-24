@@ -44,6 +44,8 @@ link_directories(
 # -------------------------------------------
 # LIBRARY
 # -------------------------------------------
+add_cppcheck( strus_module ${source_files_loader} ${source_files_module} analyzerModule.cpp storageModule.cpp traceModule.cpp strusModuleInfo.cpp internationalization.cpp )
+
 add_library( strus_module SHARED ${source_files_loader} )
 target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_base strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_segmenter_tsv strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb ${Intl_LIBRARIES} )
 
