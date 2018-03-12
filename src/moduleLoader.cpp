@@ -72,7 +72,7 @@ void ModuleLoader::addSystemModulePath()
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -84,7 +84,7 @@ void ModuleLoader::addModulePath(const std::string& path)
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -96,7 +96,7 @@ void ModuleLoader::addResourcePath( const std::string& path)
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -108,7 +108,7 @@ void ModuleLoader::defineWorkingDirectory( const std::string& path)
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -121,7 +121,7 @@ const ModuleEntryPoint* ModuleLoader::searchAndLoadEntryPoint( const std::string
 		int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
 		if (ec)
 		{
-			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationReadEnv,ec), _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
+			m_errorhnd->report( ec, _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
 			return 0;
 		}
 		if (m_modulePaths.empty())
@@ -139,14 +139,14 @@ bool ModuleLoader::loadModule(const std::string& name)
 	{
 		if (hasUpdirReference( name))
 		{
-			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseNotAllowed), _TXT("tried to load module with upper directory reference in the module name"));
+			m_errorhnd->report( ErrorCodeInvalidFilePath, _TXT("tried to load module with upper directory reference in the module name"));
 			return false;
 		}
 		std::vector<std::string> paths_tried;
 		const ModuleEntryPoint* entryPoint = searchAndLoadEntryPoint( name, paths_tried);
 		if (!entryPoint)
 		{
-			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseNotFound), _TXT("failed to find module '%s': "), name.c_str());
+			m_errorhnd->report( ErrorCodeLoadModuleFailed, _TXT("failed to load module '%s': "), name.c_str());
 			return false;
 		}
 		if (entryPoint)
@@ -177,7 +177,7 @@ bool ModuleLoader::loadModule(const std::string& name)
 				int ec = strus::getFileName( name, pname, false);
 				if (ec)
 				{
-					m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ec), "%s", ::strerror(ec));
+					m_errorhnd->report( ec, "%s", ::strerror(ec));
 					return false;
 				}
 				m_modules.push_back( pname);
@@ -185,7 +185,7 @@ bool ModuleLoader::loadModule(const std::string& name)
 			}
 			catch (const std::bad_alloc&)
 			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOutOfMem), _TXT("out of memory in module loader"));
+				m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 				return false;
 			}
 		}
@@ -413,8 +413,7 @@ const ModuleEntryPoint* ModuleLoader::tryLoadPathAsModule( const std::string& mo
 		const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modpath.c_str(), status, modhnd, &matchModuleVersion);
 		if (!entrypoint)
 		{
-			m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationLoadModule,ErrorCauseUnknown),
-						_TXT("error loading module '%s': %s"), modpath.c_str(), status.errormsg);
+			m_errorhnd->report( ErrorCodeLoadModuleFailed, _TXT("error loading module '%s': %s"), modpath.c_str(), status.errormsg);
 		}
 		else
 		{

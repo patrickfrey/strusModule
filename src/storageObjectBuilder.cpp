@@ -62,7 +62,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
 	if (m_errorhnd->hasError())
 	{
-		m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseOperationOrder), _TXT( "cannot add storage module with previous unhandled errors"));
+		m_errorhnd->report( ErrorCodeOperationOrder, _TXT( "cannot add storage module with previous unhandled errors"));
 		return;
 	}
 	if (mod->postingIteratorJoinConstructor)
@@ -73,7 +73,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			PostingJoinOperatorInterface* func = pi->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error creating posting join operator"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating posting join operator"));
 				return;
 			}
 			else
@@ -82,7 +82,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error defining posting join operator"));
+					m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining posting join operator"));
 					return;
 				}
 			}
@@ -96,14 +96,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			WeightingFunctionInterface* func = wi->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error creating weighting function"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating weighting function"));
 				return;
 			}
 			m_queryProcessor->defineWeightingFunction( wi->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error defining weighting function"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining weighting function"));
 				return;
 			}
 		}
@@ -116,14 +116,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			SummarizerFunctionInterface* func = si->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error creating summarizer function '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating summarizer function '%s'"), si->name);
 				return;
 			}
 			m_queryProcessor->defineSummarizerFunction( si->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error defining summarizer function '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining summarizer function '%s'"), si->name);
 				return;
 			}
 		}
@@ -136,14 +136,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			ScalarFunctionParserInterface* func = si->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error creating scalar function parser '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating scalar function parser '%s'"), si->name);
 				return;
 			}
 			m_queryProcessor->defineScalarFunctionParser( si->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report( *ErrorCode(StrusComponentModule,ErrorOperationBuildData,ErrorCauseRuntimeError), _TXT("error defining scalar function parser '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining scalar function parser '%s'"), si->name);
 				return;
 			}
 		}
