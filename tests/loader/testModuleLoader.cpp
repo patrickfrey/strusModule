@@ -19,7 +19,7 @@
 
 int main( int argc, const char** argv)
 {
-	strus::local_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr, 1));
+	strus::local_ptr<strus::ErrorBufferInterface> errorbuf( strus::createErrorBuffer_standard( stderr, 1, NULL/*debug trace interface*/));
 	if (!errorbuf.get())
 	{
 		std::cerr << "error creating error buffer" << std::endl;
