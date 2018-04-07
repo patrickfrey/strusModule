@@ -48,7 +48,7 @@ StorageObjectBuilder::StorageObjectBuilder( const std::string& workdir_, ErrorBu
 	m_dbmap[ ""] = dbref;
 
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
-	if (!spref.get()) throw strus::runtime_error( "%s", _TXT( "failed to create handle for default statistics processor"));
+	if (!spref.get()) throw std::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
 	m_statsprocmap[ ""] = spref;
 }

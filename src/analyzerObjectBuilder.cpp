@@ -28,7 +28,7 @@ using namespace strus;
 AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
-	if (!m_textProcessor.get()) throw strus::runtime_error( "%s", _TXT("error creating text processor"));
+	if (!m_textProcessor.get()) throw std::runtime_error( _TXT("error creating text processor"));
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
