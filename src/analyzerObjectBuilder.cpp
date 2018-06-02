@@ -8,6 +8,8 @@
 #include "analyzerObjectBuilder.hpp"
 #include "strus/lib/textproc.hpp"
 #include "strus/lib/analyzer.hpp"
+#include "strus/lib/detector_std.hpp"
+#include "strus/lib/contentstats_std.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/base/fileio.hpp"
@@ -18,6 +20,7 @@
 #include "strus/patternLexerInterface.hpp"
 #include "strus/patternMatcherInterface.hpp"
 #include "strus/segmenterInterface.hpp"
+#include "strus/contentStatisticsInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
 #include <string>
@@ -26,19 +29,21 @@
 using namespace strus;
 
 AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
-	:m_textProcessor( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
+	:m_textproc( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
 {
-	if (!m_textProcessor.get()) throw std::runtime_error( _TXT("error creating text processor"));
+	if (!m_textproc.get()) throw std::runtime_error( _TXT("error creating text processor"));
+	m_docdetect.reset( strus::createDetector_std( m_textproc.get(), m_errorhnd));
+	if (!m_docdetect.get()) throw std::runtime_error( _TXT("error creating document class detector"));
 }
 
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
 {
-	return m_textProcessor.get();
+	return m_textproc.get();
 }
 
 void AnalyzerObjectBuilder::addResourcePath( const std::string& path)
 {
-	m_textProcessor->addResourcePath( path);
+	m_textproc->addResourcePath( path);
 }
 
 void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
@@ -61,7 +66,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 					m_errorhnd->explain(_TXT("error creating tokenizer function: %s"));
 					return;
 				}
-				m_textProcessor->defineTokenizer( ti->name, func);
+				m_textproc->defineTokenizer( ti->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
@@ -80,7 +85,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 					m_errorhnd->explain(_TXT("error creating normalizer function: %s"));
 					return;
 				}
-				m_textProcessor->defineNormalizer( ni->name, func);
+				m_textproc->defineNormalizer( ni->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
@@ -99,7 +104,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 					m_errorhnd->explain(_TXT("error creating aggregator function: %s"));
 					return;
 				}
-				m_textProcessor->defineAggregator( ni->name, func);
+				m_textproc->defineAggregator( ni->name, func);
 				if (m_errorhnd->hasError())
 				{
 					delete func;
@@ -112,7 +117,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 			Reference<SegmenterInterface> segref( mod->segmenterConstructor.create( m_errorhnd));
 			if (segref.get())
 			{
-				m_textProcessor->defineSegmenter( mod->segmenterConstructor.name, segref.release());
+				m_textproc->defineSegmenter( mod->segmenterConstructor.name, segref.release());
 			}
 		}
 		if (mod->patternLexerConstructor.name && mod->patternLexerConstructor.create)
@@ -123,7 +128,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 				m_errorhnd->explain(_TXT("error creating pattern lexer: %s"));
 				return;
 			}
-			m_textProcessor->definePatternLexer( mod->patternLexerConstructor.name, func);
+			m_textproc->definePatternLexer( mod->patternLexerConstructor.name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
@@ -138,7 +143,7 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 				m_errorhnd->explain(_TXT("error creating pattern lexer: %s"));
 				return;
 			}
-			m_textProcessor->definePatternMatcher( mod->patternLexerConstructor.name, func);
+			m_textproc->definePatternMatcher( mod->patternLexerConstructor.name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
@@ -154,7 +159,7 @@ DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
 		const SegmenterInterface* segmenter,
 		const analyzer::SegmenterOptions& opts) const
 {
-	return strus::createDocumentAnalyzer( m_textProcessor.get(), segmenter, opts, m_errorhnd);
+	return strus::createDocumentAnalyzer( m_textproc.get(), segmenter, opts, m_errorhnd);
 }
 
 QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
@@ -162,4 +167,18 @@ QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
 	return strus::createQueryAnalyzer( m_errorhnd);
 }
 
+DocumentAnalyzerMapInterface* AnalyzerObjectBuilder::createDocumentAnalyzerMap() const
+{
+	return strus::createDocumentAnalyzerMap( m_errorhnd);
+}
+
+DocumentClassDetectorInterface* AnalyzerObjectBuilder::createDocumentClassDetector() const
+{
+	return strus::createDetector_std( m_textproc.get(), m_errorhnd);
+}
+
+ContentStatisticsInterface* AnalyzerObjectBuilder::createContentStatistics() const
+{
+	return strus::createContentStatistics_std( m_textproc.get(), m_docdetect.get(), m_errorhnd);
+}
 

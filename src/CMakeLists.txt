@@ -47,7 +47,7 @@ link_directories(
 add_cppcheck( strus_module ${source_files_loader} ${source_files_module} analyzerModule.cpp storageModule.cpp traceModule.cpp strusModuleInfo.cpp internationalization.cpp )
 
 add_library( strus_module SHARED ${source_files_loader} )
-target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_base strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_segmenter_tsv strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb ${Intl_LIBRARIES} )
+target_link_libraries( strus_module ${CMAKE_DL_LIBS} strus_base strus_traceproc_std strus_traceobj strus_analyzer strus_segmenter_textwolf strus_segmenter_cjson strus_segmenter_tsv strus_textproc strus_queryeval strus_queryproc strus_statsproc strus_storage strus_database_leveldb strus_detector_std strus_contentstats_std ${Intl_LIBRARIES} )
 
 add_library( strus_module_analyzer SHARED ${source_files_module} analyzerModule.cpp )
 target_link_libraries( strus_module_analyzer ${CMAKE_DL_LIBS} strus_base ${Intl_LIBRARIES} )

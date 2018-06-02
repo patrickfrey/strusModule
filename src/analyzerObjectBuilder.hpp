@@ -8,6 +8,7 @@
 #ifndef _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
 #define _STRUS_MODULE_ANALYZER_OBJECT_BUILDER_HPP_INCLUDED
 #include "strus/analyzerObjectBuilderInterface.hpp"
+#include "strus/documentClassDetectorInterface.hpp"
 #include "strus/reference.hpp"
 #include "strus/textProcessorInterface.hpp"
 #include <string>
@@ -22,6 +23,10 @@ struct AnalyzerModule;
 class DocumentAnalyzerInterface;
 /// \brief Forward declaration
 class QueryAnalyzerInterface;
+/// \brief Forward declaration
+class DocumentAnalyzerMapInterface;
+/// \brief Forward declaration
+class ContentStatisticsInterface;
 /// \brief Forward declaration
 class TextProcessorInterface;
 /// \brief Forward declaration
@@ -44,14 +49,18 @@ public:
 			const SegmenterInterface* segmenter,
 			const analyzer::SegmenterOptions& opts) const;
 	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
+	virtual DocumentAnalyzerMapInterface* createDocumentAnalyzerMap() const;
+	virtual DocumentClassDetectorInterface* createDocumentClassDetector() const;
+	virtual ContentStatisticsInterface* createContentStatistics() const;
 
 public/*ModuleLoader*/:
 	void addAnalyzerModule( const AnalyzerModule* mod);
 	void addResourcePath( const std::string& path);
 
 private:
-	std::vector<const AnalyzerModule*> m_analyzerModules;
-	Reference<TextProcessorInterface> m_textProcessor;
+	std::vector<const AnalyzerModule*> m_analyzerModules;	///< analyzer modules loader
+	Reference<TextProcessorInterface> m_textproc;		///< text processor
+	Reference<DocumentClassDetectorInterface> m_docdetect;	///< document class detector
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
 };
 
