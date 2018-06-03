@@ -169,7 +169,7 @@ QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
 
 DocumentAnalyzerMapInterface* AnalyzerObjectBuilder::createDocumentAnalyzerMap() const
 {
-	return strus::createDocumentAnalyzerMap( m_errorhnd);
+	return strus::createDocumentAnalyzerMap( this, m_errorhnd);
 }
 
 DocumentClassDetectorInterface* AnalyzerObjectBuilder::createDocumentClassDetector() const
