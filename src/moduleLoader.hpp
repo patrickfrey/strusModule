@@ -27,9 +27,9 @@ class StorageClientInterface;
 /// \brief Forward declaration
 class QueryEvalInterface;
 /// \brief Forward declaration
-class DocumentAnalyzerInterface;
+class DocumentAnalyzerInstanceInterface;
 /// \brief Forward declaration
-class QueryAnalyzerInterface;
+class QueryAnalyzerInstanceInterface;
 /// \brief Forward declaration
 class StorageObjectBuilderInterface;
 /// \brief Forward declaration

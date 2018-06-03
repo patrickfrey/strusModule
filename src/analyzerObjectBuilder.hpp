@@ -20,9 +20,9 @@ namespace strus
 /// \brief Forward declaration
 struct AnalyzerModule;
 /// \brief Forward declaration
-class DocumentAnalyzerInterface;
+class DocumentAnalyzerInstanceInterface;
 /// \brief Forward declaration
-class QueryAnalyzerInterface;
+class QueryAnalyzerInstanceInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerMapInterface;
 /// \brief Forward declaration
@@ -45,10 +45,10 @@ public:
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
-	virtual DocumentAnalyzerInterface* createDocumentAnalyzer(
+	virtual DocumentAnalyzerInstanceInterface* createDocumentAnalyzer(
 			const SegmenterInterface* segmenter,
 			const analyzer::SegmenterOptions& opts) const;
-	virtual QueryAnalyzerInterface* createQueryAnalyzer() const;
+	virtual QueryAnalyzerInstanceInterface* createQueryAnalyzer() const;
 	virtual DocumentAnalyzerMapInterface* createDocumentAnalyzerMap() const;
 	virtual DocumentClassDetectorInterface* createDocumentClassDetector() const;
 	virtual ContentStatisticsInterface* createContentStatistics() const;

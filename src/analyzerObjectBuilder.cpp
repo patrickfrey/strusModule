@@ -155,14 +155,14 @@ void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
 	CATCH_ERROR_MAP( _TXT("error adding analyzer module: %s"), *m_errorhnd);
 }
 
-DocumentAnalyzerInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
+DocumentAnalyzerInstanceInterface* AnalyzerObjectBuilder::createDocumentAnalyzer(
 		const SegmenterInterface* segmenter,
 		const analyzer::SegmenterOptions& opts) const
 {
 	return strus::createDocumentAnalyzer( m_textproc.get(), segmenter, opts, m_errorhnd);
 }
 
-QueryAnalyzerInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
+QueryAnalyzerInstanceInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const
 {
 	return strus::createQueryAnalyzer( m_errorhnd);
 }
