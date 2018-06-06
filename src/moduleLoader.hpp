@@ -9,6 +9,7 @@
 #define _STRUS_MODULE_LOADER_HPP_INCLUDED
 #include "strus/moduleLoaderInterface.hpp"
 #include "strus/moduleEntryPoint.hpp"
+#include "strus/fileLocatorInterface.hpp"
 #include <string>
 #include <vector>
 
@@ -41,7 +42,6 @@ class TraceLoggerInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 
-
 /// \brief Implementation of ModuleLoaderInterface
 class ModuleLoader
 	:public ModuleLoaderInterface
@@ -58,7 +58,7 @@ public:
 
 	virtual std::vector<std::string> modulePaths() const		{return m_modulePaths;}
 	virtual std::vector<std::string> modules() const		{return m_modules;}
-	virtual std::vector<std::string> resourcePaths() const		{return m_resourcePaths;}
+	virtual std::vector<std::string> resourcePaths() const		{return m_filelocator->getResourcePaths();}
 	virtual std::string workdir() const				{return m_workdir;}
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
@@ -81,7 +81,6 @@ private:
 private:
 	std::vector<std::string> m_modulePaths;
 	std::vector<std::string> m_modules;
-	std::vector<std::string> m_resourcePaths;
 	std::string m_workdir;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
@@ -90,6 +89,7 @@ private:
 	std::vector<std::string> m_license_3rdparty_ar;
 	std::vector<ModuleEntryPoint::Handle> m_handleList;
 	ErrorBufferInterface* m_errorhnd;
+	FileLocatorInterface* m_filelocator;
 };
 
 }//namespace

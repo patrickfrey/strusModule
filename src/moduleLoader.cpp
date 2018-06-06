@@ -7,6 +7,7 @@
  */
 #include "moduleLoader.hpp"
 #include "moduleDirectory.hpp"
+#include "strus/lib/filelocator.hpp"
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/versionStorage.hpp"
@@ -41,8 +42,10 @@ using namespace strus;
 #define ENV_STRUS_MODULE_PATH "STRUS_MODULE_PATH"
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_errorhnd(errorhnd_)
-{}
+	:m_errorhnd(errorhnd_),m_filelocator(strus::createFileLocator_std(errorhnd_))
+{
+	if (!m_filelocator) throw std::runtime_error(m_errorhnd->fetchError());
+}
 
 ModuleLoader::~ModuleLoader()
 {
@@ -51,6 +54,7 @@ ModuleLoader::~ModuleLoader()
 	{
 		ModuleEntryPoint::closeHandle( *hi);
 	}
+	delete m_filelocator;
 }
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
@@ -92,7 +96,7 @@ void ModuleLoader::addResourcePath( const std::string& path)
 {
 	try
 	{
-		addPath_( m_resourcePaths, path.c_str());
+		m_filelocator->addResourcePath( path);
 	}
 	catch (const std::bad_alloc&)
 	{
@@ -228,13 +232,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
-		std::vector<std::string>::const_iterator
-			pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
-		for (; pi != pe; ++pi)
-		{
-			builder->addResourcePath( *pi);
-		}
+		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const AnalyzerModule*>::const_iterator
 			mi = m_analyzerModules.begin(), me = m_analyzerModules.end();
 		for (; mi != me; ++mi)

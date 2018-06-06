@@ -35,13 +35,15 @@ class SegmenterOptions;
 class SegmenterInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
+/// \brief Forward declaration
+class FileLocatorInterface;
 
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
 class AnalyzerObjectBuilder
 	:public AnalyzerObjectBuilderInterface
 {
 public:
-	explicit AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_);
+	explicit AnalyzerObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_);
 	virtual ~AnalyzerObjectBuilder(){}
 
 	virtual const TextProcessorInterface* getTextProcessor() const;
@@ -55,13 +57,13 @@ public:
 
 public/*ModuleLoader*/:
 	void addAnalyzerModule( const AnalyzerModule* mod);
-	void addResourcePath( const std::string& path);
 
 private:
 	std::vector<const AnalyzerModule*> m_analyzerModules;	///< analyzer modules loader
 	Reference<TextProcessorInterface> m_textproc;		///< text processor
 	Reference<DocumentClassDetectorInterface> m_docdetect;	///< document class detector
 	ErrorBufferInterface* m_errorhnd;			///< buffer for reporting errors
+	const FileLocatorInterface* m_filelocator;		///< resources and file locator interface
 };
 
 }//namespace

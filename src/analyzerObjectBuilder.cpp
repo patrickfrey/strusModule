@@ -10,6 +10,8 @@
 #include "strus/lib/analyzer.hpp"
 #include "strus/lib/detector_std.hpp"
 #include "strus/lib/contentstats_std.hpp"
+#include "strus/lib/filelocator.hpp"
+#include "strus/fileLocatorInterface.hpp"
 #include "strus/analyzerModule.hpp"
 #include "strus/errorBufferInterface.hpp"
 #include "strus/base/fileio.hpp"
@@ -28,8 +30,8 @@
 
 using namespace strus;
 
-AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
-	:m_textproc( strus::createTextProcessor(errorhnd_)),m_errorhnd(errorhnd_)
+AnalyzerObjectBuilder::AnalyzerObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
+	:m_textproc( strus::createTextProcessor(filelocator_,errorhnd_)),m_errorhnd(errorhnd_),m_filelocator(filelocator_)
 {
 	if (!m_textproc.get()) throw std::runtime_error( _TXT("error creating text processor"));
 	m_docdetect.reset( strus::createDetector_std( m_textproc.get(), m_errorhnd));
@@ -39,11 +41,6 @@ AnalyzerObjectBuilder::AnalyzerObjectBuilder( ErrorBufferInterface* errorhnd_)
 const TextProcessorInterface* AnalyzerObjectBuilder::getTextProcessor() const
 {
 	return m_textproc.get();
-}
-
-void AnalyzerObjectBuilder::addResourcePath( const std::string& path)
-{
-	m_textproc->addResourcePath( path);
 }
 
 void AnalyzerObjectBuilder::addAnalyzerModule( const AnalyzerModule* mod)
