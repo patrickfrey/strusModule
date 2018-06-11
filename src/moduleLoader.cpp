@@ -108,7 +108,7 @@ void ModuleLoader::defineWorkingDirectory( const std::string& path)
 {
 	try
 	{
-		m_filelocator->defineWorkDir( path);
+		m_filelocator->defineWorkingDirectory( path);
 	}
 	catch (const std::bad_alloc&)
 	{

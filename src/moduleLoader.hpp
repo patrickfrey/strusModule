@@ -62,7 +62,7 @@ public:
 	virtual std::vector<std::string> modulePaths() const		{return m_modulePaths;}
 	virtual std::vector<std::string> modules() const		{return m_modules;}
 	virtual std::vector<std::string> resourcePaths() const		{return m_filelocator->getResourcePaths();}
-	virtual std::string workdir() const				{return m_filelocator->getWorkDir();}
+	virtual std::string workingDirectory() const			{return m_filelocator->getWorkingDirectory();}
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;

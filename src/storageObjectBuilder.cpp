@@ -34,9 +34,9 @@
 using namespace strus;
 
 StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
-	:m_workdir(filelocator_->getWorkDir())
+	:m_workdir(filelocator_->getWorkingDirectory())
 	,m_queryProcessor( strus::createQueryProcessor(filelocator_,errorhnd_))
-	,m_storage(strus::createStorageType_std(filelocator_->getWorkDir(),errorhnd_))
+	,m_storage(strus::createStorageType_std(filelocator_->getWorkingDirectory(),errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {

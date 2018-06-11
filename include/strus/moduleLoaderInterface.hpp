@@ -67,7 +67,7 @@ public:
 
 	/// \brief Get the root path for all data created and written by strus modules
 	/// \return data root path
-	virtual std::string workdir() const=0;
+	virtual std::string workingDirectory() const=0;
 
 	/// \brief Create a builder for storage objects build from components loaded from module or the defaults defined.
 	/// \return the builder object (with ownership)
