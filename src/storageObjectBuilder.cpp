@@ -17,6 +17,7 @@
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/fileLocatorInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
 #include "strus/weightingFunctionInterface.hpp"
 #include "strus/summarizerFunctionInterface.hpp"
@@ -32,17 +33,17 @@
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder( const std::string& workdir_, ErrorBufferInterface* errorhnd_)
-	:m_workdir(workdir_)
-	,m_queryProcessor( strus::createQueryProcessor(errorhnd_))
-	,m_storage(strus::createStorageType_std(workdir_,errorhnd_))
+StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
+	:m_workdir(filelocator_->getWorkDir())
+	,m_queryProcessor( strus::createQueryProcessor(filelocator_,errorhnd_))
+	,m_storage(strus::createStorageType_std(filelocator_->getWorkDir(),errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 
-	DatabaseReference dbref( strus::createDatabaseType_leveldb( workdir_, m_errorhnd));
+	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_workdir, m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ "leveldb"] = dbref;
 	m_dbmap[ ""] = dbref;

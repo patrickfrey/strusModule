@@ -41,6 +41,9 @@ class TraceObjectBuilderInterface;
 class TraceLoggerInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
+/// \brief Forward declaration
+class FileLocatorInterface;
+
 
 /// \brief Implementation of ModuleLoaderInterface
 class ModuleLoader
@@ -59,7 +62,7 @@ public:
 	virtual std::vector<std::string> modulePaths() const		{return m_modulePaths;}
 	virtual std::vector<std::string> modules() const		{return m_modules;}
 	virtual std::vector<std::string> resourcePaths() const		{return m_filelocator->getResourcePaths();}
-	virtual std::string workdir() const				{return m_workdir;}
+	virtual std::string workdir() const				{return m_filelocator->getWorkDir();}
 
 	virtual StorageObjectBuilderInterface* createStorageObjectBuilder() const;
 	virtual AnalyzerObjectBuilderInterface* createAnalyzerObjectBuilder() const;
@@ -81,7 +84,6 @@ private:
 private:
 	std::vector<std::string> m_modulePaths;
 	std::vector<std::string> m_modules;
-	std::string m_workdir;
 	std::vector<const AnalyzerModule*> m_analyzerModules;
 	std::vector<const StorageModule*> m_storageModules;
 	std::vector<const TraceModule*> m_traceModules;

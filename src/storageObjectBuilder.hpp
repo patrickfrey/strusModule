@@ -27,13 +27,15 @@ struct StorageModule;
 class QueryEvalInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
+/// \brief Forward declaration
+class FileLocatorInterface;
 
 /// \brief Implementation of StorageObjectBuilderInterface for the module loader
 class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
 {
 public:
-	StorageObjectBuilder( const std::string& workdir_, ErrorBufferInterface* errorhnd_);
+	StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_);
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;

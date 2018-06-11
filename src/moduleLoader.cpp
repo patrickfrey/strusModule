@@ -108,7 +108,7 @@ void ModuleLoader::defineWorkingDirectory( const std::string& path)
 {
 	try
 	{
-		m_workdir = path;
+		m_filelocator->defineWorkDir( path);
 	}
 	catch (const std::bad_alloc&)
 	{
@@ -216,7 +216,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_workdir, m_errorhnd));
+		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
