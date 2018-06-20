@@ -42,6 +42,8 @@ class TraceLoggerInterface;
 /// \brief Forward declaration
 class ErrorBufferInterface;
 /// \brief Forward declaration
+class DebugTraceContextInterface;
+/// \brief Forward declaration
 class FileLocatorInterface;
 
 
@@ -91,6 +93,7 @@ private:
 	std::vector<std::string> m_license_3rdparty_ar;
 	std::vector<ModuleEntryPoint::Handle> m_handleList;
 	ErrorBufferInterface* m_errorhnd;
+	DebugTraceContextInterface* m_debugtrace;
 	FileLocatorInterface* m_filelocator;
 };
 

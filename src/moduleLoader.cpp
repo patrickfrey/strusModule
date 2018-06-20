@@ -16,6 +16,7 @@
 #include "strus/traceModule.hpp"
 #include "strus/versionTrace.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/debugTraceInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/lib/traceobj.hpp"
@@ -38,13 +39,14 @@
 
 using namespace strus;
 
-#undef STRUS_LOWLEVEL_DEBUG
 #define ENV_STRUS_MODULE_PATH "STRUS_MODULE_PATH"
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_errorhnd(errorhnd_),m_filelocator(strus::createFileLocator_std(errorhnd_))
+	:m_errorhnd(errorhnd_),m_debugtrace(0),m_filelocator(strus::createFileLocator_std(errorhnd_))
 {
 	if (!m_filelocator) throw std::runtime_error(m_errorhnd->fetchError());
+	DebugTraceInterface* dbg = m_errorhnd->debugTrace();
+	if (dbg) m_debugtrace = dbg->createTraceContext( "module");
 }
 
 ModuleLoader::~ModuleLoader()
@@ -55,6 +57,7 @@ ModuleLoader::~ModuleLoader()
 		ModuleEntryPoint::closeHandle( *hi);
 	}
 	delete m_filelocator;
+	if (m_debugtrace) delete m_debugtrace;
 }
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
@@ -401,11 +404,10 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 
 const ModuleEntryPoint* ModuleLoader::tryLoadPathAsModule( const std::string& modpath)
 {
-#ifdef STRUS_LOWLEVEL_DEBUG
-	std::cerr << "try to load module '" << modpath << "'" << std::endl;
-#endif
 	if (isFile( modpath))
 	{
+		if (m_debugtrace) m_debugtrace->event( "tryload", "module %s", modpath.c_str());
+
 		ModuleEntryPoint::Status status;
 		ModuleEntryPoint::Handle modhnd = NULL;
 		const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modpath.c_str(), status, modhnd, &matchModuleVersion);
