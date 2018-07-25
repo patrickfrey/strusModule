@@ -23,6 +23,8 @@
 #include "strus/patternMatcherInterface.hpp"
 #include "strus/segmenterInterface.hpp"
 #include "strus/contentStatisticsInterface.hpp"
+#include "strus/posTaggerInterface.hpp"
+#include "strus/posTaggerInstanceInterface.hpp"
 #include "internationalization.hpp"
 #include "errorUtils.hpp"
 #include <string>
@@ -157,6 +159,15 @@ DocumentAnalyzerInstanceInterface* AnalyzerObjectBuilder::createDocumentAnalyzer
 		const analyzer::SegmenterOptions& opts) const
 {
 	return strus::createDocumentAnalyzer( m_textproc.get(), segmenter, opts, m_errorhnd);
+}
+
+PosTaggerInstanceInterface* AnalyzerObjectBuilder::createPosTaggerInstance(
+		const SegmenterInterface* segmenter,
+		const analyzer::SegmenterOptions& opts) const
+{
+	const PosTaggerInterface* postagger = m_textproc->getPosTagger();
+	if (!postagger) return NULL;
+	return postagger->createInstance( segmenter, opts);
 }
 
 QueryAnalyzerInstanceInterface* AnalyzerObjectBuilder::createQueryAnalyzer() const

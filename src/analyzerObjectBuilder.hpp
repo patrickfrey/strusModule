@@ -22,6 +22,8 @@ struct AnalyzerModule;
 /// \brief Forward declaration
 class DocumentAnalyzerInstanceInterface;
 /// \brief Forward declaration
+class PosTaggerInstanceInterface;
+/// \brief Forward declaration
 class QueryAnalyzerInstanceInterface;
 /// \brief Forward declaration
 class DocumentAnalyzerMapInterface;
@@ -50,6 +52,10 @@ public:
 	virtual DocumentAnalyzerInstanceInterface* createDocumentAnalyzer(
 			const SegmenterInterface* segmenter,
 			const analyzer::SegmenterOptions& opts) const;
+	virtual PosTaggerInstanceInterface* createPosTaggerInstance(
+			const SegmenterInterface* segmenter,
+			const analyzer::SegmenterOptions& opts) const;
+
 	virtual QueryAnalyzerInstanceInterface* createQueryAnalyzer() const;
 	virtual DocumentAnalyzerMapInterface* createDocumentAnalyzerMap() const;
 	virtual DocumentClassDetectorInterface* createDocumentClassDetector() const;
