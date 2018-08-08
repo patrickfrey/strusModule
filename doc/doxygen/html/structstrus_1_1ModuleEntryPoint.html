@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.15</span>
+   &#160;<span id="projectnumber">0.16</span>
    </div>
   </td>
  </tr>
@@ -62,6 +62,7 @@
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structstrus_1_1ModuleEntryPoint-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -111,12 +112,19 @@ Public Types</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:adb2ffbee2e2921298fe8cf0140fced92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb53bed0be54347fdac4436a32e32deb"><td class="memItemLeft" align="right" valign="top">typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ModuleEntryPoint.html#adb53bed0be54347fdac4436a32e32deb">Handle</a></td></tr>
+<tr class="separator:adb53bed0be54347fdac4436a32e32deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e89d67acfc824dca991fc30061673d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ModuleEntryPoint.html#a7e89d67acfc824dca991fc30061673d5">ModuleEntryPoint</a> (<a class="el" href="structstrus_1_1ModuleEntryPoint.html#a25a8720aa45fe5fd34dbe39150bf3faf">Type</a> type_, unsigned short version_major, unsigned short version_minor, const char *version_3rdparty_=0, const char *license_3rdparty_=0)</td></tr>
 <tr class="memdesc:a7e89d67acfc824dca991fc30061673d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for derived classes.  <a href="#a7e89d67acfc824dca991fc30061673d5">More...</a><br/></td></tr>
 <tr class="separator:a7e89d67acfc824dca991fc30061673d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a8ea9d1c1d3363ce6c8a0e7b89cf488ce"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstrus_1_1ModuleEntryPoint.html#a8ea9d1c1d3363ce6c8a0e7b89cf488ce">closeHandle</a> (<a class="el" href="structstrus_1_1ModuleEntryPoint.html#adb53bed0be54347fdac4436a32e32deb">Handle</a> &amp;hnd)</td></tr>
+<tr class="separator:a8ea9d1c1d3363ce6c8a0e7b89cf488ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -147,7 +155,20 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Entry point of a module with signature and version info to verify correctness of the dynamic linking. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="adb53bed0be54347fdac4436a32e32deb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void* <a class="el" href="structstrus_1_1ModuleEntryPoint.html#adb53bed0be54347fdac4436a32e32deb">strus::ModuleEntryPoint::Handle</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="adb2ffbee2e2921298fe8cf0140fced92"></a>
 <div class="memitem">
 <div class="memproto">
@@ -261,6 +282,31 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor for derived classes. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a8ea9d1c1d3363ce6c8a0e7b89cf488ce"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void strus::ModuleEntryPoint::closeHandle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstrus_1_1ModuleEntryPoint.html#adb53bed0be54347fdac4436a32e32deb">Handle</a> &amp;&#160;</td>
+          <td class="paramname"><em>hnd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -384,7 +430,7 @@ Public Attributes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 26 2017 22:55:47 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 8 2018 18:59:25 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.15</span>
+   &#160;<span id="projectnumber">0.16</span>
    </div>
   </td>
  </tr>
@@ -85,9 +85,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a984e437dd896680d6acef0730a403950"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a> (const std::string &amp;name)=0</td></tr>
 <tr class="memdesc:a984e437dd896680d6acef0730a403950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a module with name 'name' seeking in all module paths defined in the order of their definition.  <a href="#a984e437dd896680d6acef0730a403950">More...</a><br/></td></tr>
 <tr class="separator:a984e437dd896680d6acef0730a403950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3854e2f1ad3e0b6faaaf7bc78efe58c"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aa3854e2f1ad3e0b6faaaf7bc78efe58c">moduleLoadTryPaths</a> (const std::string &amp;name)=0</td></tr>
+<tr class="memdesc:aa3854e2f1ad3e0b6faaaf7bc78efe58c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of files tried to load for module with a given name.  <a href="#aa3854e2f1ad3e0b6faaaf7bc78efe58c">More...</a><br/></td></tr>
+<tr class="separator:aa3854e2f1ad3e0b6faaaf7bc78efe58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d787c3639d41343dbf7439b73ee0777"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a2d787c3639d41343dbf7439b73ee0777">addResourcePath</a> (const std::string &amp;path)=0</td></tr>
 <tr class="memdesc:a2d787c3639d41343dbf7439b73ee0777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare a path for analyzer components to find resource files.  <a href="#a2d787c3639d41343dbf7439b73ee0777">More...</a><br/></td></tr>
 <tr class="separator:a2d787c3639d41343dbf7439b73ee0777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a219b8b3ae454a1f1ae99b7d0ac81654d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a219b8b3ae454a1f1ae99b7d0ac81654d">defineWorkingDirectory</a> (const std::string &amp;path)=0</td></tr>
+<tr class="memdesc:a219b8b3ae454a1f1ae99b7d0ac81654d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare the root path for all data created and written by strus modules.  <a href="#a219b8b3ae454a1f1ae99b7d0ac81654d">More...</a><br/></td></tr>
+<tr class="separator:a219b8b3ae454a1f1ae99b7d0ac81654d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae84f77768287840b1b0bccde9a9a5322"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ae84f77768287840b1b0bccde9a9a5322">modulePaths</a> () const =0</td></tr>
+<tr class="memdesc:ae84f77768287840b1b0bccde9a9a5322"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the paths where to seek modules to load.  <a href="#ae84f77768287840b1b0bccde9a9a5322">More...</a><br/></td></tr>
+<tr class="separator:ae84f77768287840b1b0bccde9a9a5322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae78fe4596347c40588ace88296bc4aee"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ae78fe4596347c40588ace88296bc4aee">modules</a> () const =0</td></tr>
+<tr class="memdesc:ae78fe4596347c40588ace88296bc4aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the names of loaded modules.  <a href="#ae78fe4596347c40588ace88296bc4aee">More...</a><br/></td></tr>
+<tr class="separator:ae78fe4596347c40588ace88296bc4aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6125a9c471d2d0f1c94c394363fa67d"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ac6125a9c471d2d0f1c94c394363fa67d">resourcePaths</a> () const =0</td></tr>
+<tr class="memdesc:ac6125a9c471d2d0f1c94c394363fa67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the paths for resource files.  <a href="#ac6125a9c471d2d0f1c94c394363fa67d">More...</a><br/></td></tr>
+<tr class="separator:ac6125a9c471d2d0f1c94c394363fa67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076322ba531ba89b62ea27dbc02befe7"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a076322ba531ba89b62ea27dbc02befe7">workingDirectory</a> () const =0</td></tr>
+<tr class="memdesc:a076322ba531ba89b62ea27dbc02befe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the root path for all data created and written by strus modules.  <a href="#a076322ba531ba89b62ea27dbc02befe7">More...</a><br/></td></tr>
+<tr class="separator:a076322ba531ba89b62ea27dbc02befe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca31e5f08b483516de6b87d0c616c070"><td class="memItemLeft" align="right" valign="top">virtual <br class="typebreak"/>
 StorageObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a> () const =0</td></tr>
 <tr class="memdesc:aca31e5f08b483516de6b87d0c616c070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a builder for storage objects build from components loaded from module or the defaults defined.  <a href="#aca31e5f08b483516de6b87d0c616c070">More...</a><br/></td></tr>
@@ -311,6 +329,38 @@ TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"
 
 </div>
 </div>
+<a class="anchor" id="a219b8b3ae454a1f1ae99b7d0ac81654d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void strus::ModuleLoaderInterface::defineWorkingDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Declare the root path for all data created and written by strus modules. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>path to define as root path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ab9bcd25de538ea75acb62078bbc5d575"></a>
 <div class="memitem">
 <div class="memproto">
@@ -395,6 +445,142 @@ TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"
 
 </div>
 </div>
+<a class="anchor" id="aa3854e2f1ad3e0b6faaaf7bc78efe58c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::moduleLoadTryPaths </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the list of files tried to load for module with a given name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>name of the module with or without file extension (default file extension depends on platform) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae84f77768287840b1b0bccde9a9a5322"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::modulePaths </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the paths where to seek modules to load. </p>
+<dl class="section return"><dt>Returns</dt><dd>list of paths in order of their definition </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae78fe4596347c40588ace88296bc4aee"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::modules </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the names of loaded modules. </p>
+<dl class="section return"><dt>Returns</dt><dd>the names of loaded modules in the order of their definition </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac6125a9c471d2d0f1c94c394363fa67d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt;std::string&gt; strus::ModuleLoaderInterface::resourcePaths </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the paths for resource files. </p>
+<dl class="section return"><dt>Returns</dt><dd>the paths for resource files </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a076322ba531ba89b62ea27dbc02befe7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string strus::ModuleLoaderInterface::workingDirectory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the root path for all data created and written by strus modules. </p>
+<dl class="section return"><dt>Returns</dt><dd>data root path </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/patrick/Projects/github/strusModule/include/strus/<a class="el" href="moduleLoaderInterface_8hpp_source.html">moduleLoaderInterface.hpp</a></li>
 </ul>
@@ -402,7 +588,7 @@ TraceObjectBuilderInterface *&#160;</td><td class="memItemRight" valign="bottom"
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 26 2017 22:55:47 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 8 2018 18:59:25 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

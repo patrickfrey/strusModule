@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">strusModule
-   &#160;<span id="projectnumber">0.15</span>
+   &#160;<span id="projectnumber">0.16</span>
    </div>
   </td>
  </tr>
@@ -71,15 +71,21 @@
   <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aaa82f295507542bb391822c6bc2f6ad1">createAnalyzerObjectBuilder</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aca31e5f08b483516de6b87d0c616c070">createStorageObjectBuilder</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a6938606adb84539631685f522957f45f">createTraceObjectBuilder</a>(const std::string &amp;config) const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ab9bcd25de538ea75acb62078bbc5d575">get3rdPartyLicenseTexts</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a8b9be55ab54618f672420a6c5c4864d5">get3rdPartyVersionTexts</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a>(const std::string &amp;name)=0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a219b8b3ae454a1f1ae99b7d0ac81654d">defineWorkingDirectory</a>(const std::string &amp;path)=0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ab9bcd25de538ea75acb62078bbc5d575">get3rdPartyLicenseTexts</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a8b9be55ab54618f672420a6c5c4864d5">get3rdPartyVersionTexts</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a984e437dd896680d6acef0730a403950">loadModule</a>(const std::string &amp;name)=0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#aa3854e2f1ad3e0b6faaaf7bc78efe58c">moduleLoadTryPaths</a>(const std::string &amp;name)=0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ae84f77768287840b1b0bccde9a9a5322">modulePaths</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ae78fe4596347c40588ace88296bc4aee">modules</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#ac6125a9c471d2d0f1c94c394363fa67d">resourcePaths</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a076322ba531ba89b62ea27dbc02befe7">workingDirectory</a>() const =0</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html#a70956486a69ae086bd926295ca37a5b4">~ModuleLoaderInterface</a>()</td><td class="entry"><a class="el" href="classstrus_1_1ModuleLoaderInterface.html">strus::ModuleLoaderInterface</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 26 2017 22:55:47 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 8 2018 18:59:25 for strusModule by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
