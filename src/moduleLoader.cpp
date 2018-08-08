@@ -7,6 +7,7 @@
  */
 #include "moduleLoader.hpp"
 #include "moduleDirectory.hpp"
+#include "strus/lib/filelocator.hpp"
 #include "strus/moduleEntryPoint.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/versionStorage.hpp"
@@ -15,6 +16,7 @@
 #include "strus/traceModule.hpp"
 #include "strus/versionTrace.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/debugTraceInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/lib/traceobj.hpp"
@@ -25,8 +27,8 @@
 #include "strus/base/env.hpp"
 #include "strus/base/configParser.hpp"
 #include "strus/base/local_ptr.hpp"
+#include "strus/base/string_conv.hpp"
 #include "strus/traceLoggerInterface.hpp"
-#include "utils.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
 #include <string>
@@ -37,15 +39,26 @@
 
 using namespace strus;
 
-#undef STRUS_LOWLEVEL_DEBUG
 #define ENV_STRUS_MODULE_PATH "STRUS_MODULE_PATH"
 
 ModuleLoader::ModuleLoader( ErrorBufferInterface* errorhnd_)
-	:m_errorhnd(errorhnd_)
-{}
+	:m_errorhnd(errorhnd_),m_debugtrace(0),m_filelocator(strus::createFileLocator_std(errorhnd_))
+{
+	if (!m_filelocator) throw std::runtime_error(m_errorhnd->fetchError());
+	DebugTraceInterface* dbg = m_errorhnd->debugTrace();
+	if (dbg) m_debugtrace = dbg->createTraceContext( "module");
+}
 
 ModuleLoader::~ModuleLoader()
-{}
+{
+	std::vector<ModuleEntryPoint::Handle>::iterator hi = m_handleList.begin(), he = m_handleList.end();
+	for (; hi != he; ++hi)
+	{
+		ModuleEntryPoint::closeHandle( *hi);
+	}
+	delete m_filelocator;
+	if (m_debugtrace) delete m_debugtrace;
+}
 
 static void addPath_( std::vector<std::string>& paths, const char* pt)
 {
@@ -53,9 +66,9 @@ static void addPath_( std::vector<std::string>& paths, const char* pt)
 	char const* ee = std::strchr( cc, STRUS_MODULE_PATHSEP);
 	for (; ee!=0; cc=ee+1,ee=std::strchr( cc, STRUS_MODULE_PATHSEP))
 	{
-		paths.push_back( utils::trim( std::string( cc, ee)));
+		paths.push_back( string_conv::trim( std::string( cc, ee)));
 	}
-	paths.push_back( utils::trim( std::string( cc)));
+	paths.push_back( string_conv::trim( std::string( cc)));
 }
 
 void ModuleLoader::addSystemModulePath()
@@ -66,7 +79,7 @@ void ModuleLoader::addSystemModulePath()
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report(_TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -78,7 +91,7 @@ void ModuleLoader::addModulePath(const std::string& path)
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report(_TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
 }
 
@@ -86,53 +99,62 @@ void ModuleLoader::addResourcePath( const std::string& path)
 {
 	try
 	{
-		addPath_( m_resourcePaths, path.c_str());
+		m_filelocator->addResourcePath( path);
 	}
 	catch (const std::bad_alloc&)
 	{
-		m_errorhnd->report(_TXT("out of memory in module loader"));
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 	}
+}
+
+void ModuleLoader::defineWorkingDirectory( const std::string& path)
+{
+	try
+	{
+		m_filelocator->defineWorkingDirectory( path);
+	}
+	catch (const std::bad_alloc&)
+	{
+		m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
+	}
+}
+
+const ModuleEntryPoint* ModuleLoader::searchAndLoadEntryPoint( const std::string& name, std::vector<std::string>& paths_tried)
+{
+	const ModuleEntryPoint* entryPoint = loadModuleAlt( name, m_modulePaths, paths_tried);
+	if (!entryPoint)
+	{
+		std::vector<std::string> paths;
+		int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
+		if (ec)
+		{
+			m_errorhnd->report( ec, _TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
+			return 0;
+		}
+		if (m_modulePaths.empty())
+		{
+			addPath_( paths, STRUS_MODULE_DIRECTORIES);
+		}
+		entryPoint = loadModuleAlt( name, paths, paths_tried);
+	}
+	return entryPoint;
 }
 
 bool ModuleLoader::loadModule(const std::string& name)
 {
 	try
 	{
-		const ModuleEntryPoint* entryPoint;
-		if (m_modulePaths.empty())
+		if (hasUpdirReference( name))
 		{
-			std::vector<std::string> paths;
-			try
-			{
-				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
-				if (ec)
-				{
-					m_errorhnd->report(_TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
-					return false;
-				}
-				addPath_( paths, STRUS_MODULE_DIRECTORIES);
-			}
-			catch (const std::bad_alloc&)
-			{
-				m_errorhnd->report(_TXT("out of memory in module loader"));
-				return false;
-			}
-			entryPoint = loadModuleAlt( name, paths);
+			m_errorhnd->report( ErrorCodeInvalidFilePath, _TXT("tried to load module with upper directory reference in the module name"));
+			return false;
 		}
-		else
+		std::vector<std::string> paths_tried;
+		const ModuleEntryPoint* entryPoint = searchAndLoadEntryPoint( name, paths_tried);
+		if (!entryPoint)
 		{
-			entryPoint = loadModuleAlt( name, m_modulePaths);
-			if (!entryPoint)
-			{
-				std::vector<std::string> paths;
-				int ec = getenv_list( ENV_STRUS_MODULE_PATH, separatorPathList(), paths);
-				if (ec)
-				{
-					m_errorhnd->report(_TXT("failed to read environment variable %s in module loader: %s"), ENV_STRUS_MODULE_PATH, ::strerror(ec));
-					return false;
-				}
-				entryPoint = loadModuleAlt( name, paths);
-			}
+			m_errorhnd->report( ErrorCodeLoadModuleFailed, _TXT("failed to load module '%s': "), name.c_str());
+			return false;
 		}
 		if (entryPoint)
 		{
@@ -158,11 +180,19 @@ bool ModuleLoader::loadModule(const std::string& name)
 				{
 					m_version_3rdparty_ar.push_back( entryPoint->version_3rdparty);
 				}
+				std::string pname;
+				int ec = strus::getFileName( name, pname, false);
+				if (ec)
+				{
+					m_errorhnd->report( ec, "%s", ::strerror(ec));
+					return false;
+				}
+				m_modules.push_back( pname);
 				return true;
 			}
 			catch (const std::bad_alloc&)
 			{
-				m_errorhnd->report(_TXT("out of memory in module loader"));
+				m_errorhnd->report( ErrorCodeOutOfMem, _TXT("out of memory in module loader"));
 				return false;
 			}
 		}
@@ -174,11 +204,22 @@ bool ModuleLoader::loadModule(const std::string& name)
 	CATCH_ERROR_MAP_RETURN( _TXT("error loading module: %s"), *m_errorhnd, 0);
 }
 
+std::vector<std::string> ModuleLoader::moduleLoadTryPaths( const std::string& name)
+{
+	try
+	{
+		std::vector<std::string> rt;
+		searchAndLoadEntryPoint( name, rt);
+		return rt;
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error seeking for module (moduleLoadTryPaths): %s"), *m_errorhnd, std::vector<std::string>());
+}
+
 StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_errorhnd));
+		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
@@ -194,13 +235,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_errorhnd));
-		std::vector<std::string>::const_iterator
-			pi = m_resourcePaths.begin(), pe = m_resourcePaths.end();
-		for (; pi != pe; ++pi)
-		{
-			builder->addResourcePath( *pi);
-		}
+		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const AnalyzerModule*>::const_iterator
 			mi = m_analyzerModules.begin(), me = m_analyzerModules.end();
 		for (; mi != me; ++mi)
@@ -222,25 +257,25 @@ TraceLoggerInterface* ModuleLoader::createTraceLogger( const std::string& logger
 		std::size_t ci = 0;
 		for (; car[ci].title; ++ci)
 		{
-			if (utils::caseInsensitiveEquals( loggerName, car[ci].title))
+			if (strus::caseInsensitiveEquals( loggerName, car[ci].title))
 			{
 				return car->create( config, m_errorhnd);
 			}
 		}
 	}
-	if (utils::caseInsensitiveEquals( loggerName, "dump"))
+	if (strus::caseInsensitiveEquals( loggerName, "dump"))
 	{
 		return createTraceLogger_dump( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "json"))
+	else if (strus::caseInsensitiveEquals( loggerName, "json"))
 	{
 		return createTraceLogger_json( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "breakpoint"))
+	else if (strus::caseInsensitiveEquals( loggerName, "breakpoint"))
 	{
 		return createTraceLogger_breakpoint( config, m_errorhnd);
 	}
-	else if (utils::caseInsensitiveEquals( loggerName, "count"))
+	else if (strus::caseInsensitiveEquals( loggerName, "count"))
 	{
 		return createTraceLogger_count( config, m_errorhnd);
 	}
@@ -335,50 +370,61 @@ static bool matchModuleVersion( const ModuleEntryPoint* entryPoint, int& errorco
 
 const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		const std::string& name,
-		const std::vector<std::string>& paths)
+		const std::vector<std::string>& paths,
+		std::vector<std::string>& paths_tried)
 {
 	std::vector<std::string>::const_iterator pi = paths.begin(), pe = paths.end();
 	for (; pi != pe; ++pi)
 	{
-		std::string modfilename( *pi + dirSeparator() + name);
-		std::string altmodfilename( *pi + dirSeparator() + "modstrus_" + name);
-		if (!utils::caseInsensitiveEquals(
+		std::string modfilename;
+		if (stringStartsWith( name, "modstrus_"))
+		{
+			modfilename = strus::joinFilePath( *pi, name);
+		}
+		else if (stringStartsWith( name, "strus_"))
+		{
+			modfilename = strus::joinFilePath( *pi, "mod" + name);
+		}
+		else
+		{
+			modfilename = strus::joinFilePath( *pi, "modstrus_" + name);
+		}
+		if (!strus::caseInsensitiveEquals(
 			modfilename.c_str() + modfilename.size() - std::strlen( STRUS_MODULE_EXTENSION),
 			STRUS_MODULE_EXTENSION))
 		{
 			modfilename.append( STRUS_MODULE_EXTENSION);
-			altmodfilename.append( STRUS_MODULE_EXTENSION);
 		}
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "try to load module '" << modfilename << "'" << std::endl;
-#endif
-		if (isFile( modfilename))
-		{
-			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modfilename.c_str(), status, &matchModuleVersion);
-			if (!entrypoint)
-			{
-				m_errorhnd->report(_TXT("error loading module '%s': %s"), modfilename.c_str(), status.errormsg);
-			}
-			return entrypoint;
-		}
-#ifdef STRUS_LOWLEVEL_DEBUG
-		std::cerr << "try to load module '" << altmodfilename << "'" << std::endl;
-#endif
-		if (isFile( altmodfilename))
-		{
-			ModuleEntryPoint::Status status;
-			const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( altmodfilename.c_str(), status, &matchModuleVersion);
-			if (!entrypoint)
-			{
-				m_errorhnd->report(_TXT("error loading module '%s': %s"), altmodfilename.c_str(), status.errormsg);
-			}
-			return entrypoint;
-		}
+		const ModuleEntryPoint* entrypoint;
+		paths_tried.push_back( modfilename);
+		if (!!(entrypoint = tryLoadPathAsModule( modfilename))) return entrypoint;
 	}
-	m_errorhnd->report(_TXT("failed to find module '%s': "), name.c_str());
 	return 0;
 }
 
+const ModuleEntryPoint* ModuleLoader::tryLoadPathAsModule( const std::string& modpath)
+{
+	if (isFile( modpath))
+	{
+		if (m_debugtrace) m_debugtrace->event( "tryload", "module %s", modpath.c_str());
+
+		ModuleEntryPoint::Status status;
+		ModuleEntryPoint::Handle modhnd = NULL;
+		const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modpath.c_str(), status, modhnd, &matchModuleVersion);
+		if (!entrypoint)
+		{
+			m_errorhnd->report( ErrorCodeLoadModuleFailed, _TXT("error loading module '%s': %s"), modpath.c_str(), status.errormsg);
+		}
+		else
+		{
+			m_handleList.push_back( modhnd);
+		}
+		return entrypoint;
+	}
+	else
+	{
+		return NULL;
+	}
+}
 
 

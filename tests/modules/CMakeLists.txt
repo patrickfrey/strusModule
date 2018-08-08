@@ -9,6 +9,7 @@ include_directories(
   "${strus_INCLUDE_DIRS}"
   "${strusanalyzer_INCLUDE_DIRS}"
   "${strustrace_INCLUDE_DIRS}"
+  "${CMAKE_CURRENT_BINARY_DIR}/include"
 )
 
 link_directories(
@@ -17,6 +18,7 @@ link_directories(
    "${strusanalyzer_LIBRARY_DIRS}"
    "${strustrace_LIBRARY_DIRS}"
    "${Boost_LIBRARY_DIRS}"
+   "${Intl_INCLUDE_DIRS}"
 )
 
 

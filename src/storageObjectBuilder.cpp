@@ -17,13 +17,14 @@
 #include "strus/databaseClientInterface.hpp"
 #include "strus/storageInterface.hpp"
 #include "strus/errorBufferInterface.hpp"
+#include "strus/fileLocatorInterface.hpp"
 #include "strus/postingJoinOperatorInterface.hpp"
 #include "strus/weightingFunctionInterface.hpp"
 #include "strus/summarizerFunctionInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
 #include "strus/base/fileio.hpp"
 #include "strus/base/configParser.hpp"
-#include "utils.hpp"
+#include "strus/base/string_conv.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
 #include <string>
@@ -32,22 +33,23 @@
 
 using namespace strus;
 
-StorageObjectBuilder::StorageObjectBuilder( ErrorBufferInterface* errorhnd_)
-	:m_queryProcessor( strus::createQueryProcessor(errorhnd_))
-	,m_storage(strus::createStorageType_std(errorhnd_))
+StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
+	:m_workdir(filelocator_->getWorkingDirectory())
+	,m_queryProcessor( strus::createQueryProcessor(filelocator_,errorhnd_))
+	,m_storage(strus::createStorageType_std(filelocator_->getWorkingDirectory(),errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 
-	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_errorhnd));
+	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_workdir, m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ "leveldb"] = dbref;
 	m_dbmap[ ""] = dbref;
 
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
-	if (!spref.get()) throw strus::runtime_error( "%s", _TXT( "failed to create handle for default statistics processor"));
+	if (!spref.get()) throw std::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ "default"] = spref;
 	m_statsprocmap[ ""] = spref;
 }
@@ -61,7 +63,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 {
 	if (m_errorhnd->hasError())
 	{
-		m_errorhnd->report( "%s", _TXT( "cannot add storage module with previous unhandled errors"));
+		m_errorhnd->report( ErrorCodeOperationOrder, _TXT( "cannot add storage module with previous unhandled errors"));
 		return;
 	}
 	if (mod->postingIteratorJoinConstructor)
@@ -72,7 +74,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			PostingJoinOperatorInterface* func = pi->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report( "%s", _TXT("error creating posting join operator"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating posting join operator"));
 				return;
 			}
 			else
@@ -81,7 +83,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 				if (m_errorhnd->hasError())
 				{
 					delete func;
-					m_errorhnd->report( "%s", _TXT("error defining posting join operator"));
+					m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining posting join operator"));
 					return;
 				}
 			}
@@ -95,14 +97,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			WeightingFunctionInterface* func = wi->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating weighting function"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating weighting function"));
 				return;
 			}
 			m_queryProcessor->defineWeightingFunction( wi->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining weighting function"));
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining weighting function"));
 				return;
 			}
 		}
@@ -115,14 +117,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			SummarizerFunctionInterface* func = si->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating summarizer function '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating summarizer function '%s'"), si->name);
 				return;
 			}
 			m_queryProcessor->defineSummarizerFunction( si->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining summarizer function '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining summarizer function '%s'"), si->name);
 				return;
 			}
 		}
@@ -135,14 +137,14 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 			ScalarFunctionParserInterface* func = si->create( m_errorhnd);
 			if (!func)
 			{
-				m_errorhnd->report(_TXT("error creating scalar function parser '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error creating scalar function parser '%s'"), si->name);
 				return;
 			}
 			m_queryProcessor->defineScalarFunctionParser( si->name, func);
 			if (m_errorhnd->hasError())
 			{
 				delete func;
-				m_errorhnd->report(_TXT("error defining scalar function parser '%s'"), si->name);
+				m_errorhnd->report( ErrorCodeRuntimeError, _TXT("error defining scalar function parser '%s'"), si->name);
 				return;
 			}
 		}
@@ -153,31 +155,24 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 
 		if (mod->databaseConstructor.create && mod->databaseConstructor.name)
 		{
-			DatabaseReference dbref( mod->databaseConstructor.create( m_errorhnd));
+			DatabaseReference dbref( mod->databaseConstructor.create( m_workdir, m_errorhnd));
 			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base Constructor loaded from module: '%s': %s"), mod->databaseConstructor.name, m_errorhnd->fetchError());
-			m_dbmap[ utils::tolower( mod->databaseConstructor.name)] = dbref;
+			m_dbmap[ string_conv::tolower( mod->databaseConstructor.name)] = dbref;
 		}
 		if (mod->statisticsProcessorConstructor.create && mod->statisticsProcessorConstructor.name)
 		{
 			StatisticsProcessorReference spref( mod->statisticsProcessorConstructor.create( m_errorhnd));
 			if (!spref.get()) throw strus::runtime_error( _TXT( "failed to create statistics processor Constructor loaded from module: '%s': %s"), mod->statisticsProcessorConstructor.name, m_errorhnd->fetchError());
-			m_statsprocmap[ utils::tolower( mod->statisticsProcessorConstructor.name)] = spref;
+			m_statsprocmap[ string_conv::tolower( mod->statisticsProcessorConstructor.name)] = spref;
 		}
 		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
 		{
-			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_errorhnd));
+			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_workdir, m_errorhnd));
 			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
-			m_vsmodelmap[ utils::tolower( mod->vectorStorageConstructor.name)] = ref;
+			m_vsmodelmap[ string_conv::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}
 	}
-	catch (const std::runtime_error& err)
-	{
-		m_errorhnd->report(_TXT("failed to add storage module: %s"), err.what());
-	}
-	catch (const std::bad_alloc&)
-	{
-		m_errorhnd->report(_TXT("out of memory adding storage module"));
-	}
+	CATCH_ERROR_MAP( _TXT("failed to add storage module: %s"), *m_errorhnd);
 }
 
 const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& name) const
@@ -185,7 +180,7 @@ const DatabaseInterface* StorageObjectBuilder::getDatabase( const std::string& n
 	try
 	{
 		std::map<std::string,DatabaseReference>::const_iterator
-			di = m_dbmap.find( utils::tolower( name));
+			di = m_dbmap.find( string_conv::tolower( name));
 		if (di == m_dbmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined key value store database '%s'"), name.c_str());
@@ -203,7 +198,7 @@ const StatisticsProcessorInterface* StorageObjectBuilder::getStatisticsProcessor
 	try
 	{
 		std::map<std::string,StatisticsProcessorReference>::const_iterator
-			si = m_statsprocmap.find( utils::tolower( name));
+			si = m_statsprocmap.find( string_conv::tolower( name));
 		if (si == m_statsprocmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined statistics processor '%s'"), name.c_str());
@@ -221,7 +216,7 @@ const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std:
 	try
 	{
 		std::map<std::string,VectorStorageReference>::const_iterator
-			si = m_vsmodelmap.find( utils::tolower( name));
+			si = m_vsmodelmap.find( string_conv::tolower( name));
 		if (si == m_vsmodelmap.end())
 		{
 			throw strus::runtime_error( _TXT( "undefined vector space model '%s'"), name.c_str());

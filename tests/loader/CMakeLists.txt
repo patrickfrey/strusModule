@@ -8,6 +8,7 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "${strus_INCLUDE_DIRS}"
   "${strusbase_INCLUDE_DIRS}"
+  "${Intl_INCLUDE_DIRS}"
 )
 
 link_directories(

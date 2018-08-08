@@ -20,37 +20,10 @@
 
 using namespace strus;
 
-namespace {
-class ModuleHandleList
+DLL_PUBLIC void ModuleEntryPoint::closeHandle( Handle& hnd)
 {
-public:
-	~ModuleHandleList()
-	{
-		std::vector<void*>::const_iterator
-			hi = m_handleList.begin(), he = m_handleList.end();
-		for (; hi != he; ++hi)
-		{
-			::dlclose( *hi);
-		}
-	}
-
-	void addHandle( void* handle)
-	{
-		m_handleList.push_back( handle);
-	}
-
-	void reserve()
-	{
-		m_handleList.reserve( m_handleList.size()+1);
-	}
-
-private:
-	std::vector<void*> m_handleList;
-
-};
-}// anonymous namespace
-
-static ModuleHandleList g_moduleHandleList;
+	//[+] PH:HACK: Disabled because of segfaults in bindings caused by this: if (hnd) ::dlclose( hnd);
+}
 
 static const char* errorMessage( int error)
 {
@@ -79,14 +52,12 @@ static void initStatusMessage( ModuleEntryPoint::Status& status, const char* msg
 	status.errormsg[ msglen] = '\0';
 }
 
-DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc matchVersion)
+DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, ModuleEntryPoint::Handle& hnd, MatchModuleVersionFunc matchVersion)
 {
 	status.errorcode = 0;
 	status.errormsg[0] = '\0';
 
-	g_moduleHandleList.reserve(); //... do not run into (an unlikely) memory allocation error
-
-	void* hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
+	hnd = ::dlopen( modfilename, RTLD_NOW | RTLD_LOCAL);
 	if (!hnd)
 	{
 		status.errorcode = ModuleEntryPoint::ErrorOpenModule;
@@ -96,6 +67,8 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 	ModuleEntryPoint* entryPoint = (ModuleEntryPoint*)::dlsym( hnd, "entryPoint");
 	if (!entryPoint)
 	{
+		::dlclose( hnd);
+		hnd = 0;
 		status.errorcode = ModuleEntryPoint::ErrorNoEntryPoint;
 		initStatusMessage( status, errorMessage( status.errorcode));
 		return 0;
@@ -103,11 +76,12 @@ DLL_PUBLIC const ModuleEntryPoint* strus::loadModuleEntryPoint( const char* modf
 	int errorcode = 0;
 	if (!(*matchVersion)( entryPoint, errorcode))
 	{
+		::dlclose( hnd);
+		hnd = 0;
 		status.errorcode = errorcode;
 		initStatusMessage( status, errorMessage( status.errorcode));
 		return 0;
 	}
-	g_moduleHandleList.addHandle( hnd);
 	return entryPoint;
 }
 

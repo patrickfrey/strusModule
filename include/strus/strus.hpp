@@ -81,8 +81,8 @@
 // Document/query analyzer (create from text a structure suitable to insert into a storage):
 #include "strus/analyzerObjectBuilderInterface.hpp"
 #include "strus/lib/analyzer.hpp"
-#include "strus/queryAnalyzerInterface.hpp"
-#include "strus/documentAnalyzerInterface.hpp"
+#include "strus/queryAnalyzerInstanceInterface.hpp"
+#include "strus/documentAnalyzerInstanceInterface.hpp"
 #include "strus/documentAnalyzerContextInterface.hpp"
 #include "strus/analyzer/documentAttribute.hpp"
 #include "strus/analyzer/document.hpp"

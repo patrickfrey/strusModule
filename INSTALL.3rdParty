@@ -1,9 +1,0 @@
-Library dependencies of strusModule:
-	- boost (headers and -lboost_system)
-	- LevelDB
-		- libsnappy (needed by LevelDB)
-
-Ubuntu:
-	sudo apt-get install liboost-all-dev
-
-

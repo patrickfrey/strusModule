@@ -41,9 +41,33 @@ public:
 	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
 	virtual bool loadModule( const std::string& name)=0;
 
+	/// \brief Get the list of files tried to load for module with a given name
+	/// \param[in] name name of the module with or without file extension (default file extension depends on platform)
+	virtual std::vector<std::string> moduleLoadTryPaths( const std::string& name)=0;
+
 	/// \brief Declare a path for analyzer components to find resource files
 	/// \param[in] path path to add
 	virtual void addResourcePath( const std::string& path)=0;
+
+	/// \brief Declare the root path for all data created and written by strus modules
+	/// \param[in] path path to define as root path
+	virtual void defineWorkingDirectory( const std::string& path)=0;
+
+	/// \brief Get the paths where to seek modules to load
+	/// \return list of paths in order of their definition
+	virtual std::vector<std::string> modulePaths() const=0;
+
+	/// \brief Get the names of loaded modules
+	/// \return the names of loaded modules in the order of their definition
+	virtual std::vector<std::string> modules() const=0;
+
+	/// \brief Get the paths for resource files
+	/// \return the paths for resource files
+	virtual std::vector<std::string> resourcePaths() const=0;
+
+	/// \brief Get the root path for all data created and written by strus modules
+	/// \return data root path
+	virtual std::string workingDirectory() const=0;
 
 	/// \brief Create a builder for storage objects build from components loaded from module or the defaults defined.
 	/// \return the builder object (with ownership)

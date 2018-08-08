@@ -68,10 +68,13 @@ struct ModuleEntryPoint
 		}
 
 		bool ok() const		{return errorcode==0;}
-	
+
 		int errorcode;
 		char errormsg[ 256];
 	};
+
+	typedef void* Handle;
+	static void closeHandle( Handle& hnd);
 
 private:
 	ModuleEntryPoint( const ModuleEntryPoint&){}	//< non copyable
@@ -79,7 +82,7 @@ private:
 };
 
 typedef bool (*MatchModuleVersionFunc)( const ModuleEntryPoint* entryPoint, int& errorcode);
-const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, MatchModuleVersionFunc);
+const ModuleEntryPoint* loadModuleEntryPoint( const char* modfilename, ModuleEntryPoint::Status& status, ModuleEntryPoint::Handle& hnd, MatchModuleVersionFunc);
 
 }//namespace
 #endif
