@@ -163,12 +163,15 @@ bool ModuleLoader::loadModule(const std::string& name)
 				switch (entryPoint->type)
 				{
 					case ModuleEntryPoint::Analyzer:
+						if (m_debugtrace) m_debugtrace->event( "modtype", "%s", "analyzer");
 						m_analyzerModules.push_back( reinterpret_cast<const AnalyzerModule*>( entryPoint));
 						break;
 					case ModuleEntryPoint::Storage:
+						if (m_debugtrace) m_debugtrace->event( "modtype", "%s", "storage");
 						m_storageModules.push_back( reinterpret_cast<const StorageModule*>( entryPoint));
 						break;
 					case ModuleEntryPoint::Trace:
+						if (m_debugtrace) m_debugtrace->event( "modtype", "%s", "trace");
 						m_traceModules.push_back( reinterpret_cast<const TraceModule*>( entryPoint));
 						break;
 				}
@@ -397,17 +400,20 @@ const ModuleEntryPoint* ModuleLoader::loadModuleAlt(
 		}
 		const ModuleEntryPoint* entrypoint;
 		paths_tried.push_back( modfilename);
-		if (!!(entrypoint = tryLoadPathAsModule( modfilename))) return entrypoint;
+		if (!!(entrypoint = tryLoadPathAsModule( modfilename)))
+		{
+			if (m_debugtrace) m_debugtrace->event( "entrypoint", "module %s", modfilename.c_str());
+			return entrypoint;
+		}
 	}
 	return 0;
 }
 
 const ModuleEntryPoint* ModuleLoader::tryLoadPathAsModule( const std::string& modpath)
 {
+	if (m_debugtrace) m_debugtrace->event( "tryload", "module %s", modpath.c_str());
 	if (isFile( modpath))
 	{
-		if (m_debugtrace) m_debugtrace->event( "tryload", "module %s", modpath.c_str());
-
 		ModuleEntryPoint::Status status;
 		ModuleEntryPoint::Handle modhnd = NULL;
 		const ModuleEntryPoint* entrypoint = strus::loadModuleEntryPoint( modpath.c_str(), status, modhnd, &matchModuleVersion);
