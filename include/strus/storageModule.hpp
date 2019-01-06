@@ -51,7 +51,7 @@ struct StatisticsProcessorConstructor
 	Create create;					///< constructor of the object
 };
 
-/// \brief Structure to declare an alternative vector space model to map vectors to sets of features
+/// \brief Structure to declare an alternative vector storage to map vectors to sets of features
 struct VectorStorageConstructor
 {
 	typedef VectorStorageInterface* (*Create)( const std::string& workdir, ErrorBufferInterface* errorhnd);
@@ -112,8 +112,8 @@ struct StorageModule
 		const DatabaseConstructor* databaseConstructor_,
 		const char* version_3rdparty=0, const char* license_3rdparty=0);
 
-	/// \brief Storage module constructor for alternative vector space model
-	/// \param[in] vectorStorageConstructor_ alternative vector space model
+	/// \brief Storage module constructor for alternative vector storage interface
+	/// \param[in] vectorStorageConstructor_ alternative vector storage interface
 	explicit StorageModule(
 		const VectorStorageConstructor* vectorStorageConstructor_,
 		const char* version_3rdparty=0, const char* license_3rdparty=0);

@@ -168,7 +168,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
 		{
 			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_workdir, m_errorhnd));
-			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector space model loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
+			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector storage interface loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
 			m_vsmodelmap[ string_conv::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}
 	}
@@ -219,14 +219,14 @@ const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std:
 			si = m_vsmodelmap.find( string_conv::tolower( name));
 		if (si == m_vsmodelmap.end())
 		{
-			throw strus::runtime_error( _TXT( "undefined vector space model '%s'"), name.c_str());
+			throw strus::runtime_error( _TXT( "undefined vector storage interface '%s'"), name.c_str());
 		}
 		else
 		{
 			return si->second.get();
 		}
 	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error getting vector space model from storage object builder: %s"), *m_errorhnd, 0);
+	CATCH_ERROR_MAP_RETURN( _TXT("error getting vector storage interface from storage object builder: %s"), *m_errorhnd, 0);
 }
 
 const StorageInterface* StorageObjectBuilder::getStorage() const
