@@ -18,6 +18,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 
 static void printUsage()
 {

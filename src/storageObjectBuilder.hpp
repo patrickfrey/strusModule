@@ -58,7 +58,7 @@ private:
 	typedef Reference<StatisticsProcessorInterface> StatisticsProcessorReference;
 	std::map<std::string,StatisticsProcessorReference> m_statsprocmap;	///< statistics processor interface map
 	typedef Reference<VectorStorageInterface> VectorStorageReference;
-	std::map<std::string,VectorStorageReference> m_vsmodelmap;		///< vector space model handle map
+	std::map<std::string,VectorStorageReference> m_vsmodelmap;		///< vector storage interface handle map
 	ErrorBufferInterface* m_errorhnd;					///< buffer for reporting errors
 };
 
