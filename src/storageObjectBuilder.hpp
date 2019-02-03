@@ -29,6 +29,8 @@ class QueryEvalInterface;
 class ErrorBufferInterface;
 /// \brief Forward declaration
 class FileLocatorInterface;
+/// \brief Forward declaration
+class SentenceAnalyzerInstanceInterface;
 
 /// \brief Implementation of StorageObjectBuilderInterface for the module loader
 class StorageObjectBuilder
@@ -44,6 +46,7 @@ public:
 	virtual const StatisticsProcessorInterface* getStatisticsProcessor( const std::string& name) const;
 	virtual const VectorStorageInterface* getVectorStorage( const std::string& name) const;
 	virtual QueryEvalInterface* createQueryEval() const;
+	virtual SentenceAnalyzerInstanceInterface* createSentenceAnalyzer( const std::string& name) const;
 
 public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);

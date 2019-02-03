@@ -12,6 +12,7 @@
 #include "strus/lib/storage.hpp"
 #include "strus/lib/queryeval.hpp"
 #include "strus/lib/statsproc.hpp"
+#include "strus/lib/sentence.hpp"
 #include "strus/storageModule.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
@@ -237,6 +238,22 @@ const StorageInterface* StorageObjectBuilder::getStorage() const
 QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 {
 	return strus::createQueryEval( m_errorhnd);
+}
+
+SentenceAnalyzerInstanceInterface* StorageObjectBuilder::createSentenceAnalyzer( const std::string& name) const
+{
+	try
+	{
+		if (name.empty() || string_conv::tolower( name) == "default")
+		{
+			return createSentenceAnalyzerInstance_std( m_errorhnd);
+		}
+		else
+		{
+			throw strus::runtime_error(_TXT("unknown sentence analyzer type: '%s'"), name.c_str());
+		}
+	}
+	CATCH_ERROR_MAP_RETURN( _TXT("error creating sentence analyzer: %s"), *m_errorhnd, 0);
 }
 
 
