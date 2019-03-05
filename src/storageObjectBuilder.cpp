@@ -26,6 +26,7 @@
 #include "strus/base/fileio.hpp"
 #include "strus/base/configParser.hpp"
 #include "strus/base/string_conv.hpp"
+#include "strus/constants.hpp"
 #include "errorUtils.hpp"
 #include "internationalization.hpp"
 #include <string>
@@ -46,12 +47,12 @@ StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* fileloca
 
 	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_workdir, m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
-	m_dbmap[ "leveldb"] = dbref;
+	m_dbmap[ strus::Constants::leveldb_database_name()] = dbref;
 	m_dbmap[ ""] = dbref;
 
 	StatisticsProcessorReference spref( strus::createStatisticsProcessor( m_errorhnd));
 	if (!spref.get()) throw std::runtime_error( _TXT( "failed to create handle for default statistics processor"));
-	m_statsprocmap[ "default"] = spref;
+	m_statsprocmap[ strus::Constants::standard_statistics_processor()] = spref;
 	m_statsprocmap[ ""] = spref;
 }
 
@@ -244,7 +245,7 @@ SentenceAnalyzerInstanceInterface* StorageObjectBuilder::createSentenceAnalyzer(
 {
 	try
 	{
-		if (name.empty() || string_conv::tolower( name) == "default")
+		if (name.empty() || string_conv::tolower( name) == strus::Constants::standard_sentence_analyzer())
 		{
 			return createSentenceAnalyzerInstance_std( m_errorhnd);
 		}
