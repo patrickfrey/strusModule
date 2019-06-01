@@ -50,7 +50,7 @@ StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* fileloca
 	m_dbmap[ strus::Constants::leveldb_database_name()] = dbref;
 	m_dbmap[ ""] = dbref;
 
-	StatisticsProcessorReference spref( strus::createStandardStatisticsProcessor( Constants::defaultStatisticsNofBlocks(), Constants::defaultStatisticsMsgChunkSize(), m_errorhnd));
+	StatisticsProcessorReference spref( strus::createStandardStatisticsProcessor( m_errorhnd));
 	if (!spref.get()) throw std::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ strus::Constants::standard_statistics_processor()] = spref;
 	m_statsprocmap[ ""] = spref;
