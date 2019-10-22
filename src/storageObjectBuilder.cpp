@@ -36,21 +36,21 @@
 using namespace strus;
 
 StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
-	:m_workdir(filelocator_->getWorkingDirectory())
+	:m_filelocator(filelocator_)
 	,m_queryProcessor( strus::createQueryProcessor(filelocator_,errorhnd_))
-	,m_storage(strus::createStorageType_std(filelocator_->getWorkingDirectory(),errorhnd_))
+	,m_storage(strus::createStorageType_std(filelocator_,errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
 	if (!m_queryProcessor.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "query processor");
 	if (!m_storage.get()) throw strus::runtime_error(_TXT("error creating '%s'"), "storage");
 
-	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_workdir, m_errorhnd));
+	DatabaseReference dbref( strus::createDatabaseType_leveldb( m_filelocator, m_errorhnd));
 	if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create handle for default key value store database '%s'"), "leveldb");
 	m_dbmap[ strus::Constants::leveldb_database_name()] = dbref;
 	m_dbmap[ ""] = dbref;
 
-	StatisticsProcessorReference spref( strus::createStatisticsProcessor_std( m_workdir, m_errorhnd));
+	StatisticsProcessorReference spref( strus::createStatisticsProcessor_std( m_filelocator, m_errorhnd));
 	if (!spref.get()) throw std::runtime_error( _TXT( "failed to create handle for default statistics processor"));
 	m_statsprocmap[ strus::Constants::standard_statistics_processor()] = spref;
 	m_statsprocmap[ ""] = spref;
@@ -157,7 +157,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 
 		if (mod->databaseConstructor.create && mod->databaseConstructor.name)
 		{
-			DatabaseReference dbref( mod->databaseConstructor.create( m_workdir, m_errorhnd));
+			DatabaseReference dbref( mod->databaseConstructor.create( m_filelocator, m_errorhnd));
 			if (!dbref.get()) throw strus::runtime_error( _TXT( "failed to create data base Constructor loaded from module: '%s': %s"), mod->databaseConstructor.name, m_errorhnd->fetchError());
 			m_dbmap[ string_conv::tolower( mod->databaseConstructor.name)] = dbref;
 		}
@@ -169,7 +169,7 @@ void StorageObjectBuilder::addStorageModule( const StorageModule* mod)
 		}
 		if (mod->vectorStorageConstructor.create && mod->vectorStorageConstructor.name)
 		{
-			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_workdir, m_errorhnd));
+			VectorStorageReference ref( mod->vectorStorageConstructor.create( m_filelocator, m_errorhnd));
 			if (!ref.get()) throw strus::runtime_error( _TXT( "failed to create vector storage interface loaded from module: '%s': %s"), mod->vectorStorageConstructor.name, m_errorhnd->fetchError());
 			m_vsmodelmap[ string_conv::tolower( mod->vectorStorageConstructor.name)] = ref;
 		}

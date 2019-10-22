@@ -32,13 +32,15 @@ class PostingJoinOperatorInterface;
 /// \brief Forward declaration
 class ScalarFunctionParserInterface;
 /// \brief Forward declaration
+class FileLocatorInterface;
+/// \brief Forward declaration
 class ErrorBufferInterface;
 
 
 /// \brief Structure to declare the key value store database to use by the storage as module object
 struct DatabaseConstructor
 {
-	typedef DatabaseInterface* (*Create)( const std::string& workdir, ErrorBufferInterface* errorhnd);
+	typedef DatabaseInterface* (*Create)( const FileLocatorInterface* filelocator, ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the database implementation
 	Create create;					///< constructor of the object
 };
@@ -54,7 +56,7 @@ struct StatisticsProcessorConstructor
 /// \brief Structure to declare an alternative vector storage to map vectors to sets of features
 struct VectorStorageConstructor
 {
-	typedef VectorStorageInterface* (*Create)( const std::string& workdir, ErrorBufferInterface* errorhnd);
+	typedef VectorStorageInterface* (*Create)( const FileLocatorInterface* filelocator, ErrorBufferInterface* errorhnd);
 	const char* name;				///< name of the implementation
 	Create create;					///< constructor of the object
 };

@@ -52,7 +52,7 @@ public/*ModuleLoader*/:
 	void addStorageModule( const StorageModule* mod);
 
 private:
-	std::string m_workdir;							///< working directory for data created or written
+	const FileLocatorInterface* m_filelocator;				///< interface to locate files to read or the working directory where to write files to
 	std::vector<const StorageModule*> m_storageModules;			///< loaded modules
 	Reference<QueryProcessorInterface> m_queryProcessor;			///< query processor handle
 	Reference<StorageInterface> m_storage;					///< storage handle
