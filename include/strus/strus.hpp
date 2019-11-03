@@ -37,7 +37,7 @@
 #include "strus/storageInterface.hpp"
 #include "strus/storageClientInterface.hpp"
 #include "strus/storageTransactionInterface.hpp"
-#include "strus/storageMetaDataTransactionInterface.hpp"
+#include "strus/storageMetaDataTableUpdateInterface.hpp"
 #include "strus/storageDocumentInterface.hpp"
 #include "strus/documentTermIteratorInterface.hpp"
 #include "strus/valueIteratorInterface.hpp"
