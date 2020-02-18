@@ -10,7 +10,7 @@
 #ifndef _STRUS_MAIN_INCLUDE_HPP_INCLUDED
 #define _STRUS_MAIN_INCLUDE_HPP_INCLUDED
 // Basic storage data types:
-#include "strus/index.hpp"
+#include "strus/storage/index.hpp"
 #include "strus/constants.hpp"
 #include "strus/numericVariant.hpp"
 #include "strus/reference.hpp"
@@ -24,7 +24,7 @@
 
 // Key/value store database used by the storage to store its persistent data:
 #include "strus/lib/database_leveldb.hpp"
-#include "strus/databaseOptions.hpp"
+#include "strus/storage/databaseOptions.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/databaseClientInterface.hpp"
 #include "strus/databaseCursorInterface.hpp"
@@ -75,8 +75,8 @@
 #include "strus/lib/queryeval.hpp"
 #include "strus/queryEvalInterface.hpp"
 #include "strus/queryInterface.hpp"
-#include "strus/weightedDocument.hpp"
-#include "strus/resultDocument.hpp"
+#include "strus/storage/weightedDocument.hpp"
+#include "strus/storage/resultDocument.hpp"
 
 // Document/query analyzer (create from text a structure suitable to insert into a storage):
 #include "strus/analyzerObjectBuilderInterface.hpp"
