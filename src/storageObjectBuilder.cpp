@@ -241,20 +241,3 @@ QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
 	return strus::createQueryEval( m_errorhnd);
 }
 
-SentenceAnalyzerInstanceInterface* StorageObjectBuilder::createSentenceAnalyzer( const std::string& name) const
-{
-	try
-	{
-		if (name.empty() || string_conv::tolower( name) == strus::Constants::standard_sentence_analyzer())
-		{
-			return createSentenceAnalyzerInstance_std( m_errorhnd);
-		}
-		else
-		{
-			throw strus::runtime_error(_TXT("unknown sentence analyzer type: '%s'"), name.c_str());
-		}
-	}
-	CATCH_ERROR_MAP_RETURN( _TXT("error creating sentence analyzer: %s"), *m_errorhnd, 0);
-}
-
-
