@@ -31,6 +31,7 @@
 #include <cstring>
 
 using namespace strus;
+using namespace strus::module;
 
 AnalyzerObjectBuilder::AnalyzerObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
 	:m_textproc( strus::createTextProcessor(filelocator_,errorhnd_)),m_errorhnd(errorhnd_),m_filelocator(filelocator_)

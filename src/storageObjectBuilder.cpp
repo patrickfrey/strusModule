@@ -34,6 +34,7 @@
 #include <memory>
 
 using namespace strus;
+using namespace strus::module;
 
 StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* filelocator_, ErrorBufferInterface* errorhnd_)
 	:m_filelocator(filelocator_)

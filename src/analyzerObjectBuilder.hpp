@@ -40,6 +40,9 @@ class ErrorBufferInterface;
 /// \brief Forward declaration
 class FileLocatorInterface;
 
+namespace module
+{
+
 /// \brief Implementation of AnalyzerObjectBuilderInterface for the module loader
 class AnalyzerObjectBuilder
 	:public AnalyzerObjectBuilderInterface
@@ -72,6 +75,6 @@ private:
 	const FileLocatorInterface* m_filelocator;		///< resources and file locator interface
 };
 
-}//namespace
+}}//namespace
 #endif
 

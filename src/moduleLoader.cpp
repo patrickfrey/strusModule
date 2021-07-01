@@ -222,7 +222,7 @@ StorageObjectBuilderInterface* ModuleLoader::createStorageObjectBuilder() const
 {
 	try
 	{
-		strus::local_ptr<StorageObjectBuilder> builder( new StorageObjectBuilder( m_filelocator, m_errorhnd));
+		strus::local_ptr<module::StorageObjectBuilder> builder( new module::StorageObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const StorageModule*>::const_iterator
 			mi = m_storageModules.begin(), me = m_storageModules.end();
 		for (; mi != me; ++mi)
@@ -238,7 +238,7 @@ AnalyzerObjectBuilderInterface* ModuleLoader::createAnalyzerObjectBuilder() cons
 {
 	try
 	{
-		strus::local_ptr<AnalyzerObjectBuilder> builder( new AnalyzerObjectBuilder( m_filelocator, m_errorhnd));
+		strus::local_ptr<module::AnalyzerObjectBuilder> builder( new module::AnalyzerObjectBuilder( m_filelocator, m_errorhnd));
 		std::vector<const AnalyzerModule*>::const_iterator
 			mi = m_analyzerModules.begin(), me = m_analyzerModules.end();
 		for (; mi != me; ++mi)
@@ -313,7 +313,7 @@ TraceObjectBuilderInterface* ModuleLoader::createTraceObjectBuilder( const std::
 std::vector<std::string> ModuleLoader::get3rdPartyLicenseTexts() const
 {
 	return m_license_3rdparty_ar;
-	
+
 }
 std::vector<std::string> ModuleLoader::get3rdPartyVersionTexts() const
 {

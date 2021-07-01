@@ -30,6 +30,9 @@ class ErrorBufferInterface;
 /// \brief Forward declaration
 class FileLocatorInterface;
 
+namespace module
+{
+
 /// \brief Implementation of StorageObjectBuilderInterface for the module loader
 class StorageObjectBuilder
 	:public StorageObjectBuilderInterface
@@ -62,6 +65,6 @@ private:
 	ErrorBufferInterface* m_errorhnd;					///< buffer for reporting errors
 };
 
-}//namespace
+}}//namespace
 #endif
 
