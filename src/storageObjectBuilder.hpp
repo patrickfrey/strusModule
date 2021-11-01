@@ -11,6 +11,7 @@
 #include "strus/reference.hpp"
 #include "strus/queryProcessorInterface.hpp"
 #include "strus/storageInterface.hpp"
+#include "strus/statisticsStorageInterface.hpp"
 #include "strus/databaseInterface.hpp"
 #include "strus/segmenterInterface.hpp"
 #include "strus/statisticsProcessorInterface.hpp"
@@ -42,6 +43,7 @@ public:
 	virtual ~StorageObjectBuilder(){}
 
 	virtual const StorageInterface* getStorage() const;
+	virtual const StatisticsStorageInterface* getStatisticsStorage() const;
 	virtual const DatabaseInterface* getDatabase( const std::string& config) const;
 	virtual const QueryProcessorInterface* getQueryProcessor() const;
 	virtual const StatisticsProcessorInterface* getStatisticsProcessor( const std::string& name) const;
@@ -56,6 +58,7 @@ private:
 	std::vector<const StorageModule*> m_storageModules;			///< loaded modules
 	Reference<QueryProcessorInterface> m_queryProcessor;			///< query processor handle
 	Reference<StorageInterface> m_storage;					///< storage handle
+	Reference<StatisticsStorageInterface> m_statstorage;			///< statistics storage handle
 	typedef Reference<DatabaseInterface> DatabaseReference;
 	std::map<std::string,DatabaseReference> m_dbmap;			///< cached database handles
 	typedef Reference<StatisticsProcessorInterface> StatisticsProcessorReference;

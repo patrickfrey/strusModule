@@ -10,6 +10,7 @@
 #include "strus/lib/queryproc.hpp"
 #include "strus/lib/database_leveldb.hpp"
 #include "strus/lib/storage.hpp"
+#include "strus/lib/statsstorage.hpp"
 #include "strus/lib/queryeval.hpp"
 #include "strus/lib/statsproc.hpp"
 #include "strus/lib/sentence.hpp"
@@ -40,6 +41,7 @@ StorageObjectBuilder::StorageObjectBuilder( const FileLocatorInterface* fileloca
 	:m_filelocator(filelocator_)
 	,m_queryProcessor( strus::createQueryProcessor(filelocator_,errorhnd_))
 	,m_storage(strus::createStorageType_std(filelocator_,errorhnd_))
+	,m_statstorage(strus::createStatisticsStorageType_std(filelocator_,errorhnd_))
 	,m_statsprocmap()
 	,m_errorhnd(errorhnd_)
 {
@@ -235,6 +237,11 @@ const VectorStorageInterface* StorageObjectBuilder::getVectorStorage( const std:
 const StorageInterface* StorageObjectBuilder::getStorage() const
 {
 	return m_storage.get();
+}
+
+const StatisticsStorageInterface* StorageObjectBuilder::getStatisticsStorage() const
+{
+	return m_statstorage.get();
 }
 
 QueryEvalInterface* StorageObjectBuilder::createQueryEval() const
